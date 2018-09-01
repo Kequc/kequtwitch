@@ -3,7 +3,7 @@
 This is a guide here to give you a few code snippets to work with. Many demonstrate how you would mimic behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/).
 
 ---
-## Format of a msg object
+## Learn about the msg object
 
 A `msg` object represents a line of text delivered from the connected Twitch server.
 
@@ -14,21 +14,54 @@ It contains information in a hopefully convenient format for you to make use of,
 | `raw` | The full message in raw form |
 | `tags` | Object containing all tags |
 | `prefix` | Object containing prefix information |
-| `prefix.full` | Full prefix. (Ie: `'mrkequc!mrkequc@mrkequc.tmi.twitch.tv'`) |
-| `prefix.host` | Host. (Ie: `'mrkequc.tmi.twitch.tv'`) |
-| `prefix.user` | User. (Ie: `'mrkequc'`) |
-| `command` | The Twitch command. (Ie. `'PRIVMSG'`) |
-| `params` | Array of parameters that follow the command. (Ie. `['#mrkequc', 'Hi everyone!']`) |
+| `prefix.full` | Full prefix (Ie. `'mrkequc!mrkequc@mrkequc.tmi.twitch.tv'`) |
+| `prefix.host` | Host (Ie. `'mrkequc.tmi.twitch.tv'`) |
+| `prefix.user` | User (Ie. `'mrkequc'`) |
+| `command` | The Twitch command (Ie. `'PRIVMSG'`) |
+| `params` | Array of parameters that follow the command (Ie. `['#mrkequc', 'Hi everyone!']`) |
+| `inferred` | Special object containing additional information (Ie. `{ viewers: 10, autohost: true }`) |
 
 ---
-## Chat
+## Learn about inferences
+
+All `msg` objects contain an `inferred` object.
+
+It is up to you to populate it with any additional information you need out of messages by defining inferences. You can have one inference for every Twitch command, they are defined in the `Twitch` constructor or later on using the `infer` method. All inference methods are syncronous, can only be defined once, and should return an object.
+
+A special parameter called `inferred.type`, if you wish to use it, will emit the message again using the name that you set.
+
+```javascript
+const twitch = new Twitch('your-oauth-token');
+
+twitch.irc.infer('join', function inferenceJoin (msg) {
+    const userBackwards = msg.prefix.user.split('').reverse().join('');
+
+    return {
+        type: 'socks',
+        userBackwards
+    };
+});
+
+twitch.irc.on('twitch-join', (msg) => {
+    console.log(msg.inferred); // { type: 'socks', userBackwards: 'cuqek' }
+});
+
+twitch.irc.on('socks', (msg) => {
+    console.log(msg.inferred); // { type: 'socks', userBackwards: 'cuqek' }
+});
+```
+
+---
+## Say
 
 The [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) Twitch command is used to send and receive chat interactions. If we wanted to send the message `"Hi everyone!"` to the channel `#mrkequc` our IRC message would look like the following.
+
 ```
 PRIVMSG #mrkequc :Hi everyone!
 ```
 
-If this is something you're going to be doing you could add an extension.
+If this is something you're going to be doing you could add an extension to make the interaction easy to remember.
+
 ```javascript
 twitch.irc.say = (channel, message) => {
     twitch.irc.send(`PRIVMSG ${channel} :${message}`);
@@ -37,67 +70,75 @@ twitch.irc.say = (channel, message) => {
 twitch.irc.say('#mrkequc', 'Hi everyone!');
 ```
 
+---
+## Chat
+
 A message someone else posted in chat looks more complicated. As stated this library parses the message for you, however you can extend the library to emit more familiar events with the following. Keeping in mind you can edit this however you want to suit your needs.
 
 Granted the incredibly odd `'jtv'` 'hosting you' `PRIVMSG` Twitch command as seen below makes this all look very complicated, it is still in use by Twitch as of September 01, 2018. You could decide to ignore those messages it's entirely up to you.
 
 The following example mimics behaviour found in the popular [tmi.js](http://www.tmijs.org/) library.
+
 ```javascript
-twitch.irc.on('twitch-privmsg', (msg) => {
+twitch.irc.infer('privmsg', function inferencePrivmsg (msg) {
     if (msg.prefix.user === 'jtv') {
-        if (msg.params[0].includes('hosting you')) {
-            // "ronni is now hosting you for 0 viewers."
-            const txt = msg.params[0];
-            const user = txt.split(' ')[0];
-            msg.inferred = {
-                user,
-                viewers: parseInt(txt.match(/\d+/), 10) || 0,
-                autohost: txt.substring(user.length).includes('auto')
-            };
-            // Emit hosted
-            twitch.irc.emit('hosted', msg);
+        // "ronni is now hosting you for 0 viewers."
+        const message = msg.params[0];
+
+        if (!message.includes('hosting you')) {
+            return;
         }
-    } else if (/^ACTION \//.test(msg.params[1])) {
+
+        const parts = message.split(' ');
+        const user = parts.shift();
+        const viewers = parts.find(part => !isNaN(part));
+        const autoHosting = parts.includes('auto-hosting');
+
+        return {
+            type: 'hosted',
+            user,
+            viewers: parseInt(viewers, 10) || 0,
+            autoHosting
+        };
+    }
+
+    if (msg.params[1].indexOf('ACTION /') === 0) {
         // "ACTION /me is great!"
-        const txt = msg.params[1];
-        const message = txt.replace('ACTION ', '');
-        msg.inferred = {
-            action: message.split(' ')[0],
+        const message = msg.params[1].substring(7);
+
+        return {
+            type: 'action'
             message
         };
-        // Emit action
-        twitch.irc.emit('action', msg);
-    } else {
-        if ((msg.tags.bits || 0) > 0) {
-            // Emit cheer
-            twitch.irc.emit('cheer', msg);
-        }
-        // Emit chat
-        twitch.irc.emit('chat', msg);
     }
+
+    return {
+        type: (msg.tags.bits || 0) > 0 ? 'cheer' : 'chat'
+    };
 });
 
-twitch.irc.on('chat', (msg) => {
-    const { displayName } = msg.tags;
-    const [ channel, message ] = msg.params;
-    console.log(`${displayName} in ${channel} said "${message}"!`);
+twitch.irc.on('hosted', function onHosted (msg) {
+    const { user, viewers } = msg.inferred;
+    console.log(`${user} is now hosting you for ${viewers} viewers!`);
 });
 
-twitch.irc.on('cheer', (msg) => {
-    const { displayName, bits } = msg.tags;
-    const [ channel, message ] = msg.params;
-    console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
-});
-
-twitch.irc.on('action', (msg) => {
+twitch.irc.on('action', function onAction (msg) {
     const { displayName } = msg.tags;
     const { message } = msg.inferred;
     console.log(`${displayName} in ${channel} actioned "${message}"!`);
 });
 
-twitch.irc.on('hosted', (msg) => {
-    const { user, viewers } = msg.inferred;
-    console.log(`${user} is now hosting you for ${viewers} viewers!`);
+twitch.irc.on('cheer', function onCheer (msg) {
+    const { displayName, bits } = msg.tags;
+    const [ channel, message ] = msg.params;
+    console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
+    twitch.irc.emit('chat', msg);
+});
+
+twitch.irc.on('chat', function onChat (msg) {
+    const { displayName } = msg.tags;
+    const [ channel, message ] = msg.params;
+    console.log(`${displayName} in ${channel} said "${message}"!`);
 });
 ```
 
@@ -107,10 +148,11 @@ twitch.irc.on('hosted', (msg) => {
 Emitting emotesets whenever they are updated can be a relatively simple thing to set up. We might use this if we were parsing messages to use emoticons and always want to keep them up to date.
 
 Add an extension that watches for a change and fetches the new emotes.
+
 ```javascript
 let last;
 
-async function checkEmotesets (msg) {
+async function checkEmoteSets (msg) {
     const emotesets = msg.tags.emoteSets;
 
     // Look for new emotesets
@@ -130,10 +172,10 @@ async function checkEmotesets (msg) {
     twitch.irc.emit('emotesets', result);
 }
 
-twitch.irc.on('twitch-userstate', checkEmotesets);
-twitch.irc.on('twitch-globaluserstate', checkEmotesets);
+twitch.irc.on('twitch-userstate', checkEmoteSets);
+twitch.irc.on('twitch-globaluserstate', checkEmoteSets);
 
-twitch.irc.on('emotesets', (emotesets) => {
+twitch.irc.on('emotesets', function onEmotesets (emotesets) {
     // Updated emotes arrived!
 });
 ```
@@ -142,26 +184,23 @@ twitch.irc.on('emotesets', (emotesets) => {
 ## Mod and unmod
 
 The [MODE](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands) Twitch command delivers a slightly cryptic payload. Twitch still uses these `'jtv'` events as of September 1, 2018. You may choose to extend the library separating this data into different events.
-```javascript
-twitch.irc.on('twitch-mode', (msg) => {
-    // This would be strange
-    if (msg.prefix.host !== 'jtv') return;
 
-    if (msg.params[1] === '-o') {
-        // Emit unmod
-        irc.emit('unmod', msg);
-    } else if (msg.params[1] === '+o') {
-        // Emit mod
-        irc.emit('mod', msg);
-    }
+```javascript
+twitch.irc.infer('mode', function inferenceMode (msg) {
+    const key = msg.params[1];
+    const types = { '+o': 'mod', '-o': 'unmod' };
+
+    return {
+        type: types[key]
+    };
 });
 
-twitch.irc.on('mod', (msg) => {
+twitch.irc.on('mod', function onMod (msg) {
     const [ channel, , user ] = msg.params;
     console.log(`${user} is now modding ${channel}!`);
 });
 
-twitch.irc.on('unmod', (msg) => {
+twitch.irc.on('unmod', function onUnmod (msg) {
     const [ channel, , user ] = msg.params;
     console.log(`${user} is no longer a mod on ${channel}!`);
 });
@@ -171,24 +210,25 @@ twitch.irc.on('unmod', (msg) => {
 ## Ban and timeout
 
 The [CLEARCHAT](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands) Twitch command often contains information about users being banned or given a timeout.
+
 ```javascript
-twitch.irc.on('twitch-clearchat', (msg) => {
+twitch.irc.infer('clearchat', function inferenceClearchat (msg) {
+    let type;
+
     if (msg.params.length < 2) {
-        // Emit clearchat
-        twitch.irc.emit('clearchat', msg);
-    } else if (msg.tags['ban-duration'] === null) {
-        // Emit ban
-        twitch.irc.emit('ban', msg);
-    } else {
-        // Emit timeout
-        twitch.irc.emit('timeout', msg);
+        type = 'clearchat';
+    } else if (msg.tags.banDuration === null) {
+        type = 'ban';
+    } else  {
+        type = 'timeout';
     }
+
+    return { type };
 });
 
-twitch.irc.on('timeout', (msg) => {
-    const [ channel, user ] = msg.params;
-    const { banReason, banDuration } = msg.tags;
-    console.log(`${user} has been given a timeout from ${channel} for ${banDuration} seconds. Reason: ${banReason}`);
+twitch.irc.on('clearchat', (msg) => {
+    const [ channel ] = msg.params;
+    console.log(`Chat in ${channel} has been cleared by a moderator!`);
 });
 
 twitch.irc.on('ban', (msg) => {
@@ -197,9 +237,10 @@ twitch.irc.on('ban', (msg) => {
     console.log(`${user} has been banned from ${channel}. Reason: ${banReason}`);
 });
 
-twitch.irc.on('clearchat', (msg) => {
-    const [ channel ] = msg.params;
-    console.log(`Chat in ${channel} has been cleared by a moderator.`);
+twitch.irc.on('timeout', (msg) => {
+    const [ channel, user ] = msg.params;
+    const { banReason, banDuration } = msg.tags;
+    console.log(`${user} has been given a timeout from ${channel} for ${banDuration} seconds. Reason: ${banReason}`);
 });
 ```
 
@@ -207,33 +248,35 @@ twitch.irc.on('clearchat', (msg) => {
 ## Host and unhost
 
 The [HOSTTARGET](https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands) Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.
+
 ```javascript
-twitch.irc.on('twitch-hosttarget', (msg) => {
+twitch.irc.infer('hosttarget', function inferenceHosttarget (msg) {
+    let type;
+    let viewers;
+
     if (msg.params[1][0] === '-') {
         // "- 10"
-        msg.inferred = {
-            viewers: parseInt(msg.params[1].replace('- ', ''), 10) || 0;
-        };
-        // Emit unhost
-        twitch.irc.emit('unhost', msg);
+        type = 'unhost';
+        viewers = msg.params[1].replace('- ', '');
     } else {
-        const count = ;
-        msg.inferred = {
-            viewers: parseInt(msg.params[2], 10) || 0;
-        };
-        // Emit host
-        twitch.irc.emit('host', msg);
+        type = 'host';
+        viewers = msg.params[2];
     }
+
+    return {
+        type,
+        viewers: parseInt(viewers, 10) || 0;
+    };
 });
 
 twitch.irc.on('host', (msg) => {
     const [ channel ] = msg.params;
     const { viewers } = msg.inferred;
-    console.log(`Hosting ${channel} with ${viewers} viewers!`);
+    console.log(`Hosting ${viewers} viewers from ${channel}!`);
 });
 
 twitch.irc.on('unhost', (msg) => {
     const { viewers } = msg.inferred;
-    console.log(`Stopped hosting with ${viewers} viewers!`);
+    console.log(`Stopped hosting ${viewers} viewers!`);
 });
 ```

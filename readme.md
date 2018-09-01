@@ -6,22 +6,26 @@ This is a node library for interfacing with twitch. It contains Helix, Kraken, a
 
 ---
 ## Installation
+
 ```
 npm i --save kequtwitch
 ```
 
 ---
 ## Usage
+
 ```javascript
 const Twitch = require('kequtwitch');
 ```
 
 Create a new instance of Twitch passing an [OAuth token](http://twitchapps.com/tmi/) as the first parameter.
+
 ```javascript
 const twitch = new Twitch('your-oauth-token');
 ```
 
 Enjoy a promise-based interface.
+
 ```javascript
 async function init () {
     await twitch.irc.connect();
@@ -30,11 +34,10 @@ async function init () {
 ```
 
 Connect to channels automatically.
+
 ```javascript
 const twitch = new Twitch('your-oauth-token', {
-    irc: {
-        channels: ['#mrkequc']
-    }
+    irc: { channels: ['#mrkequc'] }
 });
 
 async function init () {
@@ -44,6 +47,7 @@ async function init () {
 ```
 
 Leverage events.
+
 ```javascript
 twitch.irc.on('ready', () => {
     // Success!
@@ -53,6 +57,7 @@ twitch.irc.connect();
 ```
 
 Make API calls.
+
 ```javascript
 async function requestEmotesets (emotesets) {
     return await twitch.api.request('/chat/emoticon_images', {
@@ -68,6 +73,7 @@ async function requestEmotesets (emotesets) {
 | parameter | description |
 | - | - |
 | `irc.channels` | Array of channels you want joined. (Default: `[]`) |
+| `irc.inferences` | Object of inferences you want added. (Default: `{}`) |
 | `irc.port` | IRC port. (Default: `6667`) |
 | `irc.host` | IRC host. (Default: `'irc.chat.twitch.tv'`) |
 | `irc.timeout` | Timeout for connection, join, etc. (Default: `7000`) |
@@ -94,6 +100,7 @@ twitch.userId; // Your user id
 ```
 
 If you want to you can trigger validatation manually.
+
 ```javascript
 async function validate () {
     await twitch.validate();
@@ -112,8 +119,9 @@ async function isValidated () {
 While connected to IRC, every line is parsed into an object and then emitted via node `EventEmitter` on the `irc` instance. Event names are the Twitch command in lowercase prepended with `twitch-` if found, otherwise `twitch-unknown`. In addition all messages emit the `message` event.
 
 There are also connection status events.
+
 ```javascript
-twitch.irc.on('message', (msg) => {
+twitch.irc.on('message', function onMessage (msg) {
     console.log(msg.raw);
 });
 ```
@@ -137,6 +145,7 @@ Examples of listening to and making use of IRC events can be found on the [IRC e
 #### request()
 
 The `request` method takes a `path` as a first parameter, an `options` object, and returns a promise.
+
 ```javascript
 async function requestUser (id) {
     return await twitch.api.request('/users', {
@@ -158,17 +167,18 @@ async function requestUser (id) {
 #### webhook ()
 
 The `webhook` method is used to subscribe and unsubscribe to [Twitch webhooks](https://dev.twitch.tv/docs/api/webhooks-reference/). This causes post updates to be sent to your application. It takes three parameters, the `path` of the topic, a `callback` url where notifications should be sent, and `options` object.
+
 ```javascript
 async function requestWebhookFollows (leaseSeconds = 36000) {
     const callback = 'https://mywebsite.com/webhooks/follows';
-    const options = {
+
+    return await twitch.api.webhook('/users/follows', callback, {
         data: {
             first: 1,
             to_id: '$userId'
         },
         leaseSeconds
-    };
-    return await twitch.api.webhook('/users/follows', callback, options);
+    });
 }
 ```
 

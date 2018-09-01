@@ -363,7 +363,7 @@ const EXAMPLES = {
 
 for (const raw of Object.keys(EXAMPLES)) {
     test(raw, function () {
-        const expected = Object.assign({ raw }, EXAMPLES[raw]);
+        const expected = Object.assign({ raw, inferred: {} }, EXAMPLES[raw]);
         expect(parseMsg(raw)).toEqual(expected);
     });
 }

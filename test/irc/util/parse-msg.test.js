@@ -221,7 +221,8 @@ describe('parseMsg', function () {
             tags: {},
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
-            params: ['#dallas', 'cheer100']
+            params: ['#dallas', 'cheer100'],
+            inferred: {}
         });
     });
 
@@ -232,7 +233,8 @@ describe('parseMsg', function () {
             tags: {},
             prefix: { full: null, host: null, user: null },
             command: 'COMMAND',
-            params: ['params', 'hello']
+            params: ['params', 'hello'],
+            inferred: {}
         });
     });
 
@@ -243,7 +245,8 @@ describe('parseMsg', function () {
             tags: {},
             prefix: { full: 'tmi.twitch.tv', host: 'tmi.twitch.tv', user: null },
             command: 'COMMAND',
-            params: []
+            params: [],
+            inferred: {}
         });
     });
 
@@ -251,7 +254,11 @@ describe('parseMsg', function () {
         const raw = 'CO66ND params hello';
         expect(parseMsg(raw)).toEqual({
             raw,
-            malformed: true
+            malformed: true,
+            tags: {},
+            prefix: {},
+            params: [],
+            inferred: {}
         });
     });
 
@@ -264,7 +271,8 @@ describe('parseMsg', function () {
             tags: { hi: null, how: 'areyou' },
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
-            params: ['#dallas', 'cheer100']
+            params: ['#dallas', 'cheer100'],
+            inferred: {}
         });
     });
 
@@ -277,7 +285,8 @@ describe('parseMsg', function () {
             tags: { hi: null, how: 'areyou' },
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
-            params: ['#dallas', 'cheer100']
+            params: ['#dallas', 'cheer100'],
+            inferred: {}
         });
     });
 });
