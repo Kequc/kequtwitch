@@ -132,12 +132,14 @@ twitch.irc.on('message', (msg) => {
 Examples of listening to and making use of IRC events can be found on the [IRC examples page](docs/irc-examples.md).
 
 ---
-## API request
+## API
+
+#### request()
 
 The `request` method takes a `path` as a first parameter, an `options` object, and returns a promise.
 ```javascript
 async function requestUser (id) {
-    return await twitch.api.request('/helix/users', {
+    return await twitch.api.request('/users', {
         data: { id }
     });
 }
@@ -153,21 +155,20 @@ async function requestUser (id) {
 | `headers` | Object containing additional headers. (Default: `{}`) |
 | `maxRetries` | Number of times to retry failed requests. (Default: `2`) |
 
----
-## API webhook
+#### webhook ()
 
-The `webhook` method is used to create and destroy subscriptions to [Twitch webhooks](https://dev.twitch.tv/docs/api/webhooks-reference/). This causes post events to be sent to your application. It takes three parameters, the topic `path`, a `callbackUrl` where notifications should be sent, and `options` object.
+The `webhook` method is used to subscribe and unsubscribe to [Twitch webhooks](https://dev.twitch.tv/docs/api/webhooks-reference/). This causes post updates to be sent to your application. It takes three parameters, the `path` of the topic, a `callback` url where notifications should be sent, and `options` object.
 ```javascript
 async function requestWebhookFollows (leaseSeconds = 36000) {
-    const callbackUrl = 'https://mywebsite.com/webhooks/follows';
+    const callback = 'https://mywebsite.com/webhooks/follows';
     const options = {
         data: {
             first: 1,
-            to_id: 'your-user-id'
+            to_id: '$userId'
         },
         leaseSeconds
     };
-    return await twitch.api.webhook('/users/follows', callbackUrl, options);
+    return await twitch.api.webhook('/users/follows', callback, options);
 }
 ```
 
@@ -175,4 +176,4 @@ async function requestWebhookFollows (leaseSeconds = 36000) {
 | - | - |
 | `mode` | Must be either `'subscribe'` or `'unsubscribe'`. (Default: `'subscribe'`) |
 | `data` | Object containing post data. (Default: `{}`) |
-| `leaseSeconds` | Number of seconds to send messages to your callback. (Default: `0`) |
+| `leaseSeconds` | Amount of time you wish to receive updates. (Default: `0`) |

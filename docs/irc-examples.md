@@ -1,6 +1,6 @@
 # IRC examples
 
-Many here are to demonstrate how you would mimic the behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/). It is intended to help you understand what a `msg` object looks like and give you a few code snippets to work with.
+This is a guide here to give you a few code snippets to work with. Many demonstrate how you would mimic behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/).
 
 ---
 ## Format of a msg object
