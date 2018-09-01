@@ -3,6 +3,25 @@
 This is a guide here to give you a few code snippets to work with. Many demonstrate how you would mimic behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/).
 
 ---
+## Say
+
+The [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) Twitch command is used to send and receive chat interactions. If we wanted to send the message `"Hi everyone!"` to the channel `#mrkequc` our IRC message would look like the following.
+
+```
+PRIVMSG #mrkequc :Hi everyone!
+```
+
+If this is something you're going to be doing you could add an extension to make the interaction easy to remember.
+
+```javascript
+twitch.irc.say = (channel, message) => {
+    twitch.irc.send(`PRIVMSG ${channel} :${message}`);
+};
+
+twitch.irc.say('#mrkequc', 'Hi everyone!');
+```
+
+---
 ## Learn about the msg object
 
 A `msg` object represents a line of text delivered from the connected Twitch server.
@@ -33,7 +52,7 @@ A special parameter called `inferred.type`, if you wish to use it, will emit the
 ```javascript
 const twitch = new Twitch('your-oauth-token');
 
-twitch.irc.infer('join', function inferenceJoin (msg) {
+twitch.irc.infer('join', function inferJoin (msg) {
     const userBackwards = msg.prefix.user.split('').reverse().join('');
 
     return {
@@ -52,25 +71,6 @@ twitch.irc.on('socks', (msg) => {
 ```
 
 ---
-## Say
-
-The [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) Twitch command is used to send and receive chat interactions. If we wanted to send the message `"Hi everyone!"` to the channel `#mrkequc` our IRC message would look like the following.
-
-```
-PRIVMSG #mrkequc :Hi everyone!
-```
-
-If this is something you're going to be doing you could add an extension to make the interaction easy to remember.
-
-```javascript
-twitch.irc.say = (channel, message) => {
-    twitch.irc.send(`PRIVMSG ${channel} :${message}`);
-};
-
-twitch.irc.say('#mrkequc', 'Hi everyone!');
-```
-
----
 ## Chat
 
 A message someone else posted in chat looks more complicated. As stated this library parses the message for you, however you can extend the library to emit more familiar events with the following. Keeping in mind you can edit this however you want to suit your needs.
@@ -80,7 +80,7 @@ Granted the incredibly odd `'jtv'` 'hosting you' `PRIVMSG` Twitch command as see
 The following example mimics behaviour found in the popular [tmi.js](http://www.tmijs.org/) library.
 
 ```javascript
-twitch.irc.infer('privmsg', function inferencePrivmsg (msg) {
+twitch.irc.infer('privmsg', function inferPrivmsg (msg) {
     if (msg.prefix.user === 'jtv') {
         // "ronni is now hosting you for 0 viewers."
         const message = msg.params[0];
@@ -132,7 +132,6 @@ twitch.irc.on('cheer', function onCheer (msg) {
     const { displayName, bits } = msg.tags;
     const [ channel, message ] = msg.params;
     console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
-    twitch.irc.emit('chat', msg);
 });
 
 twitch.irc.on('chat', function onChat (msg) {
@@ -186,7 +185,7 @@ twitch.irc.on('emotesets', function onEmotesets (emotesets) {
 The [MODE](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands) Twitch command delivers a slightly cryptic payload. Twitch still uses these `'jtv'` events as of September 1, 2018. You may choose to extend the library separating this data into different events.
 
 ```javascript
-twitch.irc.infer('mode', function inferenceMode (msg) {
+twitch.irc.infer('mode', function inferMode (msg) {
     const key = msg.params[1];
     const types = { '+o': 'mod', '-o': 'unmod' };
 
@@ -212,7 +211,7 @@ twitch.irc.on('unmod', function onUnmod (msg) {
 The [CLEARCHAT](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands) Twitch command often contains information about users being banned or given a timeout.
 
 ```javascript
-twitch.irc.infer('clearchat', function inferenceClearchat (msg) {
+twitch.irc.infer('clearchat', function inferClearchat (msg) {
     let type;
 
     if (msg.params.length < 2) {
@@ -250,7 +249,7 @@ twitch.irc.on('timeout', (msg) => {
 The [HOSTTARGET](https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands) Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.
 
 ```javascript
-twitch.irc.infer('hosttarget', function inferenceHosttarget (msg) {
+twitch.irc.infer('hosttarget', function inferHosttarget (msg) {
     let type;
     let viewers;
 
