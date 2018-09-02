@@ -1,1 +1,268 @@
-<h1>Test</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Mukta" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
+    <body>
+        <div id="header">
+            <img src="/assets/images/pow.png" alt="" />
+        </div>
+
+<div id="content">
+<h1>kequtwitch (Work in progress)</h1>
+<hr />
+<h2>Installation</h2>
+<pre><code>npm i --save kequtwitch
+</code></pre>
+<hr />
+<h2>Usage</h2>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);
+</code></pre>
+<p>Create a new instance of Twitch passing an <a href="http://twitchapps.com/tmi/">OAuth token</a> as the first parameter.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>);
+</code></pre>
+<p>Enjoy a promise-based interface.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">await</span> twitch.irc.connect();
+    <span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#mrkequc'</span>);
+}
+</code></pre>
+<p>Connect to channels automatically.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, {
+    <span class="hljs-attr">irc</span>: { <span class="hljs-attr">channels</span>: [<span class="hljs-string">'#mrkequc'</span>] }
+});
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">await</span> twitch.irc.connect();
+    <span class="hljs-comment">// Now in #mrkequc</span>
+}
+</code></pre>
+<p>Leverage events.</p>
+<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'ready'</span>, () =&gt; {
+    <span class="hljs-comment">// Success!</span>
+});
+
+twitch.irc.connect();
+</code></pre>
+<p>Make API calls.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requestEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+        <span class="hljs-attr">data</span>: { emotesets },
+        <span class="hljs-attr">kraken</span>: <span class="hljs-literal">true</span>
+    });
+}
+</code></pre>
+<hr />
+<h2>Options</h2>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>irc.channels</code></td>
+<td>Array of channels you want joined (Default: <code>[]</code>)</td>
+</tr>
+<tr>
+<td><code>irc.inferences</code></td>
+<td>Object of inferences you want added (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>irc.port</code></td>
+<td>IRC port (Default: <code>6667</code>)</td>
+</tr>
+<tr>
+<td><code>irc.host</code></td>
+<td>IRC host (Default: <code>'irc.chat.twitch.tv'</code>)</td>
+</tr>
+<tr>
+<td><code>irc.timeout</code></td>
+<td>Timeout for connection join, etc. (Default: <code>7000</code>)</td>
+</tr>
+<tr>
+<td><code>api.helixUrl</code></td>
+<td>URL for the Helix API (Default: <code>'https://api.twitch.tv/helix'</code>)</td>
+</tr>
+<tr>
+<td><code>api.krakenUrl</code></td>
+<td>URL for the Kraken API (Default: <code>'https://api.twitch.tv/kraken'</code>)</td>
+</tr>
+<tr>
+<td><code>api.webhooksPath</code></td>
+<td>Path for Helix webhooks (Default: <code>'/webhooks/hub'</code>)</td>
+</tr>
+<tr>
+<td><code>logger</code></td>
+<td>Custom logger with the methods <code>log</code>, <code>info</code>, <code>warn</code>, and <code>error</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>How it works</h2>
+<p>Twitch uses IRC to enable interaction with chat as well as offering several HTTP endpoints.</p>
+<p>When you use this library to connect to IRC or access any of those endpoints the token you provide is validated on Twitch's servers. Validation is repeated once an hour when needed automatically as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything it's handled for you.</p>
+<p>This validation step gives us a few parameters which become available on our <code>twitch</code> instance making it easy to interact with services.</p>
+<pre><code class="language-javascript">twitch.token; <span class="hljs-comment">// Token provided in constructor</span>
+twitch.validatedAt; <span class="hljs-comment">// Time the token was validated</span>
+twitch.clientId; <span class="hljs-comment">// Your client id</span>
+twitch.login; <span class="hljs-comment">// Your username</span>
+twitch.userId; <span class="hljs-comment">// Your user id</span>
+</code></pre>
+<p>If you want to you can trigger validatation manually.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validate</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">await</span> twitch.validate();
+    <span class="hljs-comment">// User information has been populated</span>
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isValidated</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">await</span> twitch.isValidated();
+    <span class="hljs-comment">// User information has been populated within the last hour</span>
+}
+</code></pre>
+<hr />
+<h2>IRC</h2>
+<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command in lowercase prepended with <code>twitch-</code> if found, otherwise <code>twitch-unknown</code>. In addition all messages emit the <code>message</code> event.</p>
+<p>There are also connection status events.</p>
+<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMessage</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(msg.raw);
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>event</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disconnected</code></td>
+<td>IRC has disconnected.</td>
+</tr>
+<tr>
+<td><code>connecting</code></td>
+<td>IRC is connecting.</td>
+</tr>
+<tr>
+<td><code>connected</code></td>
+<td>IRC is connected.</td>
+</tr>
+<tr>
+<td><code>authenticated</code></td>
+<td>IRC has successfully authenticated.</td>
+</tr>
+<tr>
+<td><code>ready</code></td>
+<td>The above and IRC has re-joined channels.</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Message.</td>
+</tr>
+<tr>
+<td><code>twitch-&lt;command&gt;</code></td>
+<td>Message.</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>An error has occurred.</td>
+</tr>
+</tbody>
+</table>
+<p>Examples of listening to and making use of IRC events can be found on the <a href="/pages/irc-examples.html">IRC examples page</a>.</p>
+<hr />
+<h2>API</h2>
+<h4>request()</h4>
+<p>The <code>request</code> method takes a <code>path</code> as a first parameter, an <code>options</code> object, and returns a promise.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requestUser</span> (<span class="hljs-params">id</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+        <span class="hljs-attr">data</span>: { id }
+    });
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>param</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skipValidation</code></td>
+<td>Skip waiting for validation (Default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Url of the API (Default: <code>https://api.twitch.tv/helix</code> or <code>https://api.twitch.tv/kraken</code>)</td>
+</tr>
+<tr>
+<td><code>kraken</code></td>
+<td>Request is made to the 'Kraken' API instead of 'Helix' (Default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>Request method (Default: <code>'GET'</code>)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Object containing post data or search parameters (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>headers</code></td>
+<td>Object containing additional headers (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>maxRetries</code></td>
+<td>Number of times to retry failed requests (Default: <code>2</code>)</td>
+</tr>
+</tbody>
+</table>
+<h4>webhook ()</h4>
+<p>The <code>webhook</code> method is used to subscribe and unsubscribe to <a href="https://dev.twitch.tv/docs/api/webhooks-reference/">Twitch webhooks</a>. This causes post updates to be sent to your application. It takes three parameters, the <code>path</code> of the topic, a <code>callback</code> url where notifications should be sent, and <code>options</code> object.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">requestWebhookFollows</span> (<span class="hljs-params">leaseSeconds = <span class="hljs-number">36000</span></span>) </span>{
+    <span class="hljs-keyword">const</span> callback = <span class="hljs-string">'https://mywebsite.com/webhooks/follows'</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> twitch.api.webhook(<span class="hljs-string">'/users/follows'</span>, callback, {
+        <span class="hljs-attr">data</span>: {
+            <span class="hljs-attr">first</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-attr">to_id</span>: <span class="hljs-string">'$userId'</span>
+        },
+        leaseSeconds
+    });
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>param</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mode</code></td>
+<td>Must be either <code>'subscribe'</code> or <code>'unsubscribe'</code> (Default: <code>'subscribe'</code>)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Object containing post data (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>leaseSeconds</code></td>
+<td>Amount of time you wish to receive updates (Default: <code>0</code>)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+    </body>
+</html>

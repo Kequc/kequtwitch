@@ -1,8 +1,4 @@
-# kequtwitch
-
-This is a node library for interfacing with twitch. It contains Helix, Kraken, and IRC support. Only what you need and nothing else.
-
-![Picture](docs/assets/terminal.png)
+# kequtwitch (Work in progress)
 
 ---
 ## Installation
@@ -72,14 +68,14 @@ async function requestEmotesets (emotesets) {
 
 | parameter | description |
 | - | - |
-| `irc.channels` | Array of channels you want joined. (Default: `[]`) |
-| `irc.inferences` | Object of inferences you want added. (Default: `{}`) |
-| `irc.port` | IRC port. (Default: `6667`) |
-| `irc.host` | IRC host. (Default: `'irc.chat.twitch.tv'`) |
-| `irc.timeout` | Timeout for connection, join, etc. (Default: `7000`) |
-| `api.helixUrl` | URL for the Helix API. (Default: `'https://api.twitch.tv/helix'`) |
-| `api.krakenUrl` | URL for the Kraken API. (Default: `'https://api.twitch.tv/kraken'`) |
-| `api.webhooksPath` | Path for Helix webhooks. (Default: `'/webhooks/hub'`) |
+| `irc.channels` | Array of channels you want joined (Default: `[]`) |
+| `irc.inferences` | Object of inferences you want added (Default: `{}`) |
+| `irc.port` | IRC port (Default: `6667`) |
+| `irc.host` | IRC host (Default: `'irc.chat.twitch.tv'`) |
+| `irc.timeout` | Timeout for connection join, etc. (Default: `7000`) |
+| `api.helixUrl` | URL for the Helix API (Default: `'https://api.twitch.tv/helix'`) |
+| `api.krakenUrl` | URL for the Kraken API (Default: `'https://api.twitch.tv/kraken'`) |
+| `api.webhooksPath` | Path for Helix webhooks (Default: `'/webhooks/hub'`) |
 | `logger` | Custom logger with the methods `log`, `info`, `warn`, and `error`. |
 
 ---
@@ -156,13 +152,13 @@ async function requestUser (id) {
 
 | param | description |
 | - | - |
-| `skipValidation` | Skip waiting for validation. (Default: `false`) |
-| `url` | Url of the API. (Default: ``https://api.twitch.tv/helix`` or ``https://api.twitch.tv/kraken``) |
-| `kraken` | Request is made to the 'Kraken' API instead of 'Helix'. (Default: `false`) |
-| `method` | Request method. (Default: `'GET'`) |
-| `data` | Object containing post data or search parameters. (Default: `{}`) |
-| `headers` | Object containing additional headers. (Default: `{}`) |
-| `maxRetries` | Number of times to retry failed requests. (Default: `2`) |
+| `skipValidation` | Skip waiting for validation (Default: `false`) |
+| `url` | Url of the API (Default: ``https://api.twitch.tv/helix`` or ``https://api.twitch.tv/kraken``) |
+| `kraken` | Request is made to the 'Kraken' API instead of 'Helix' (Default: `false`) |
+| `method` | Request method (Default: `'GET'`) |
+| `data` | Object containing post data or search parameters (Default: `{}`) |
+| `headers` | Object containing additional headers (Default: `{}`) |
+| `maxRetries` | Number of times to retry failed requests (Default: `2`) |
 
 #### webhook ()
 
@@ -184,6 +180,6 @@ async function requestWebhookFollows (leaseSeconds = 36000) {
 
 | param | description |
 | - | - |
-| `mode` | Must be either `'subscribe'` or `'unsubscribe'`. (Default: `'subscribe'`) |
-| `data` | Object containing post data. (Default: `{}`) |
-| `leaseSeconds` | Amount of time you wish to receive updates. (Default: `0`) |
+| `mode` | Must be either `'subscribe'` or `'unsubscribe'` (Default: `'subscribe'`) |
+| `data` | Object containing post data (Default: `{}`) |
+| `leaseSeconds` | Amount of time you wish to receive updates (Default: `0`) |
