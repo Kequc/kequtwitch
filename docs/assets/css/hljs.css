@@ -34,10 +34,5 @@
 }
 
 pre code {
-  display: block;
   color: #eaeaea;
-  font-family: Menlo, Monaco, Consolas, monospace;
-  line-height: 1.5;
-  border: 1px solid #ccc;
-  padding: 10px;
 }
