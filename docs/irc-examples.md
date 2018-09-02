@@ -5,13 +5,13 @@ This is a guide here to give you a few code snippets to work with. Many demonstr
 ---
 ## Say
 
-The [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) Twitch command is used to send and receive chat interactions. If we wanted to send the message `"Hi everyone!"` to the channel `#mrkequc` our IRC message would look like the following.
+The [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) Twitch command is used to send and receive chat instructions. If we wanted to send the message `"Hi everyone!"` to the channel `#mrkequc` our IRC message would look like the following.
 
 ```
 PRIVMSG #mrkequc :Hi everyone!
 ```
 
-If this is something you're going to be doing you could add an extension to make the interaction easy to remember.
+If this is something you're going to be doing you could add an extension to make the interaction easier.
 
 ```javascript
 twitch.irc.say = (channel, message) => {
@@ -38,12 +38,12 @@ It contains information in a hopefully convenient format for you to make use of,
 | `prefix.user` | User (Ie. `'mrkequc'`) |
 | `command` | The Twitch command (Ie. `'PRIVMSG'`) |
 | `params` | Array of parameters that follow the command (Ie. `['#mrkequc', 'Hi everyone!']`) |
-| `inferred` | Special object containing additional information (Ie. `{ viewers: 10, autohost: true }`) |
+| `inferred` | Object containing special inferred information (Ie. `{ viewers: 10 }`) |
 
 ---
 ## Learn about inferences
 
-All `msg` objects contain an `inferred` object.
+All `msg` objects have a `inferred` object.
 
 It is up to you to populate it with any additional information you need out of messages by defining inferences. You can have one inference for every Twitch command, they are defined in the `Twitch` constructor or later on using the `infer` method. All inference methods are syncronous, can only be defined once, and should return an object.
 
