@@ -1,6 +1,6 @@
 # IRC examples
 
-This is a guide here to give you a few code snippets to work with. Many demonstrate how you would mimic behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/).
+This guide is here to give you a few code snippets to work with. Many demonstrate how you would mimic behaviour found in more user-friendly libraries like [tmi.js](http://www.tmijs.org/).
 
 ---
 ## Say
