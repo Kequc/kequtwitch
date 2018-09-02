@@ -2,7 +2,7 @@
 
 This is a node library for interfacing with twitch. It contains Helix, Kraken, and IRC support. Only what you need and nothing else.
 
-![Picture](assets/terminal.png)
+![Picture](docs/assets/terminal.png)
 
 ---
 ## Installation
@@ -137,7 +137,7 @@ twitch.irc.on('message', function onMessage (msg) {
 | `twitch-<command>` | Message. |
 | `error` | An error has occurred. |
 
-Examples of listening to and making use of IRC events can be found on the [IRC examples page](docs/irc-examples.md).
+Examples of listening to and making use of IRC events can be found on the [IRC examples page](md/irc-examples.md).
 
 ---
 ## API
