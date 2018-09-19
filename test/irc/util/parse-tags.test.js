@@ -1,31 +1,31 @@
-const { emoteSets, generic, tagValue, parseTags } = require('../../../lib/irc/util/parse-tags');
+const { parseEmoteSets, parseGeneric, tagValue, parseTags } = require('../../../lib/irc/util/parse-tags');
 
-describe('emoteSets', function () {
+describe('parseEmoteSets', function () {
     test('should return the value', function () {
-        expect(emoteSets('hello')).toBe('hello');
-        expect(emoteSets('1000')).toBe('1000');
-        expect(emoteSets('1')).toBe('1');
-        expect(emoteSets('0')).toBe('0');
-        expect(emoteSets('')).toBe('');
+        expect(parseEmoteSets('hello')).toBe('hello');
+        expect(parseEmoteSets('1000')).toBe('1000');
+        expect(parseEmoteSets('1')).toBe('1');
+        expect(parseEmoteSets('0')).toBe('0');
+        expect(parseEmoteSets('')).toBe('');
     });
 });
 
-describe('generic', function () {
+describe('parseGeneric', function () {
     test('should parse numbers', function () {
-        expect(generic('1000')).toBe(1000);
-        expect(generic('1')).toBe(1);
-        expect(generic('-1')).toBe(-1);
-        expect(generic('0')).toBe(0);
-        expect(generic('07')).toBe(7);
+        expect(parseGeneric('1000')).toBe(1000);
+        expect(parseGeneric('1')).toBe(1);
+        expect(parseGeneric('-1')).toBe(-1);
+        expect(parseGeneric('0')).toBe(0);
+        expect(parseGeneric('07')).toBe(7);
     });
 
     test('should return strings', function () {
-        expect(generic('hello')).toBe('hello');
+        expect(parseGeneric('hello')).toBe('hello');
     });
 
     test('should sanitise strings', function () {
-        expect(generic('String\\swith\\sspaces')).toBe('String with spaces');
-        expect(generic('Ignore\\n!')).toBe('Ignore!');
+        expect(parseGeneric('String\\swith\\sspaces')).toBe('String with spaces');
+        expect(parseGeneric('Ignore\\n!')).toBe('Ignore!');
     });
 });
 
@@ -81,7 +81,7 @@ describe('parseTags', function () {
     test('should handle lots of tags', function () {
         const raw = '@badges=staff/1,bits/1000;bits=100;color=;display-name=dallas;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=1337;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=7331;user-type=staff';
         expect(parseTags(raw)).toEqual({
-            badges: 'staff/1,bits/1000',
+            badges: ['staff/1', 'bits/1000'],
             bits: 100,
             color: null,
             displayName: 'dallas',

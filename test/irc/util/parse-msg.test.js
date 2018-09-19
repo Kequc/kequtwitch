@@ -2,6 +2,7 @@ const { grabParameter, parsePrefix, parseParams, findPositionIndexes, parseMsg }
 
 describe('grabParameter', function () {
     let raw;
+
     beforeEach(function () {
         raw = ':ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #dallas :cheer100';
     });
