@@ -1,4 +1,4 @@
-const findPositionIndexes = require('../../../../lib/irc/util/parse-msg/find-position-indexes.js');
+const findPositionIndexes = require('../../../twitch/irc/parse-msg/find-position-indexes.js');
 
 describe('findPositionIndexes', function () {
     test('should find positions', function () {

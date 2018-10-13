@@ -1,4 +1,4 @@
-const parseTags = require('../../../../lib/irc/util/parse-msg/parse-tags.js');
+const parseTags = require('../../../twitch/irc/parse-msg/parse-tags.js');
 
 describe('parseTags', function () {
     test('should return empty if raw is empty', function () {

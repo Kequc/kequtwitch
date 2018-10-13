@@ -1,4 +1,4 @@
-const parseMsg = require('../../../lib/irc/util/parse-msg.js');
+const parseMsg = require('../../twitch/irc/parse-msg.js');
 
 describe('parseMsg', function () {
     test('should parse a message', function () {

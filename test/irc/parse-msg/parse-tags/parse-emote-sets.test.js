@@ -1,4 +1,4 @@
-const parseEmoteSets = require('../../../../../lib/irc/util/parse-msg/parse-tags/parse-emote-sets.js');
+const parseEmoteSets = require('../../../../twitch/irc/parse-msg/parse-tags/parse-emote-sets.js');
 
 describe('parseEmoteSets', function () {
     test('should return the value', function () {

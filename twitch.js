@@ -1,6 +1,6 @@
-const Irc = require('./irc/index.js');
-const Api = require('./api/index.js');
-const Logger = require('./logger.js');
+const Irc = require('./twitch/irc.js');
+const Api = require('./twitch/api.js');
+const Logger = require('./twitch/logger.js');
 
 function validateLogger (logger) {
     if (typeof logger !== 'object') {

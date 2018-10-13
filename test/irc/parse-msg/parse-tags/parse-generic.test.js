@@ -1,4 +1,4 @@
-const parseGeneric = require('../../../../../lib/irc/util/parse-msg/parse-tags/parse-generic.js');
+const parseGeneric = require('../../../../twitch/irc/parse-msg/parse-tags/parse-generic.js');
 
 describe('parseGeneric', function () {
     test('should parse numbers', function () {

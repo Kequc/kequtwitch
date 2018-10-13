@@ -2,7 +2,7 @@
   "name": "kequtwitch",
   "version": "0.1.0",
   "description": "This is a node library for interfacing with twitch",
-  "main": "main.js",
+  "main": "twitch.js",
   "scripts": {
     "test": "jest",
     "docs": "node ./scripts/docs.js",

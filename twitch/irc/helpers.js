@@ -1,4 +1,4 @@
-const STATUS = require('../connection-status.js');
+const STATUS = require('./connection-status.js');
 
 function isValidChannel (channel) {
     if (!/^#[0-9a-z]+$/.test(channel)) {

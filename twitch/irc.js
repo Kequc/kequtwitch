@@ -1,11 +1,11 @@
 const EventEmitter = require('events');
-const authenticate = require('./actions/authenticate.js');
-const connect = require('./actions/connect.js');
-const join = require('./actions/join.js');
-const part = require('./actions/part.js');
-const { isValidChannel, isValidInference, isSafeToWrite } = require('./util/helpers.js');
-const Reader = require('./util/reader.js');
-const STATUS = require('./connection-status.js');
+const authenticate = require('./irc/actions/authenticate.js');
+const connect = require('./irc/actions/connect.js');
+const join = require('./irc/actions/join.js');
+const part = require('./irc/actions/part.js');
+const { isValidChannel, isValidInference, isSafeToWrite } = require('./irc/helpers.js');
+const Reader = require('./irc/reader.js');
+const STATUS = require('./irc/connection-status.js');
 
 function validateChannels (channels) {
     if (!Array.isArray(channels)) {

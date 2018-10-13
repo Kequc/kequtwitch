@@ -1,5 +1,5 @@
 const tinyreq = require('tinyreq');
-const buildReq = require('./util/build-req.js');
+const buildReq = require('./api/build-req.js');
 
 class Api {
     constructor (twitch, opt) {

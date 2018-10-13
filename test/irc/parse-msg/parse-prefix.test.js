@@ -1,4 +1,4 @@
-const parsePrefix = require('../../../../lib/irc/util/parse-msg/parse-prefix.js');
+const parsePrefix = require('../../../twitch/irc/parse-msg/parse-prefix.js');
 
 describe('parsePrefix', function () {
     test('should return nulls when param is empty', function () {
