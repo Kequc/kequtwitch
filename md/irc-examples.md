@@ -154,20 +154,20 @@ let last;
 async function checkEmoteSets (msg) {
     const emotesets = msg.tags.emoteSets;
 
-    // Look for new emotesets
+    // look for new emotesets
     if (typeof emotesets !== 'string') return;
     if (last === emotesets) return;
 
     // Emotesets have changed
     last = emotesets;
 
-    // Fetch
+    // fetch
     const result = await twitch.api.request('/chat/emoticon_images', {
         data: { emotesets },
         kraken: true
     });
 
-    // Emit result
+    // emit result
     twitch.irc.emit('emotesets', result);
 }
 
@@ -175,7 +175,7 @@ twitch.irc.on('twitch-userstate', checkEmoteSets);
 twitch.irc.on('twitch-globaluserstate', checkEmoteSets);
 
 twitch.irc.on('emotesets', function onEmotesets (emotesets) {
-    // Updated emotes arrived!
+    // updated emotes arrived!
 });
 ```
 

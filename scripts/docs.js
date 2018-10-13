@@ -1,5 +1,5 @@
-// This is here to render all the stuff in the /docs folder
-// Because github pages tried to make me use jekyll.
+// this is here to render all the stuff in the /docs folder because
+// github pages tried to make me use jekyll.
 
 const hljs = require('highlight.js/lib/highlight');
 const hljsJs = require('highlight.js/lib/languages/javascript');

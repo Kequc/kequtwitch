@@ -38,7 +38,7 @@ const twitch = new Twitch('your-oauth-token', {
 
 async function init () {
     await twitch.irc.connect();
-    // Now in #mrkequc
+    // now in #mrkequc
 }
 ```
 
@@ -46,7 +46,7 @@ Leverage events.
 
 ```javascript
 twitch.irc.on('ready', () => {
-    // Success!
+    // success!
 });
 
 twitch.irc.connect();
@@ -88,11 +88,11 @@ When you use this library to connect to IRC or access any of those endpoints the
 This validation step gives us a few parameters which become available on our `twitch` instance making it easy to interact with services.
 
 ```javascript
-twitch.token; // Token provided in constructor
-twitch.validatedAt; // Time the token was validated
-twitch.clientId; // Your client id
-twitch.login; // Your username
-twitch.userId; // Your user id
+twitch.token; // token provided in constructor
+twitch.validatedAt; // time the token was validated
+twitch.clientId; // your client id
+twitch.login; // your username
+twitch.userId; // your user id
 ```
 
 If you want to you can trigger validatation manually.
@@ -100,12 +100,12 @@ If you want to you can trigger validatation manually.
 ```javascript
 async function validate () {
     await twitch.validate();
-    // User information has been populated
+    // user information has been populated
 }
 
 async function isValidated () {
     await twitch.isValidated();
-    // User information has been populated within the last hour
+    // user information has been populated within the last hour
 }
 ```
 
