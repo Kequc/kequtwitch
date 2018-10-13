@@ -1,10 +1,10 @@
-const Twitch = require('./main');
+const Twitch = require('./main.js');
 
-const webhooks = {
-    secret: 'secret',
-    callbackUrl: 'http://ptsv2.com/t/x25l6-1537758245/post'
-};
-const twitch = new Twitch('6cif3751lfrrccedcn9omldu5t5dhp', { api: { webhooks } });
+const twitch = new Twitch('6cif3751lfrrccedcn9omldu5t5dhp', { irc: { channels: ['#ryukahr'] } });
 
-const webhook = twitch.api.webhooks.build('/users/follows', { from_id: 1336 });
-webhook.subscribe(5);
+twitch.irc.connect();
+
+twitch.irc.on('twitch-unknown', (msg) => {
+    console.log(msg);
+});
+

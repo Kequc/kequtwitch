@@ -1,4 +1,4 @@
-const parseEmotes = require('../../../lib/irc/util/parse-emotes');
+const parseEmotes = require('../../../../../lib/irc/util/parse-msg/parse-tags/parse-emotes.js');
 
 describe('parseEmotes', function () {
     test('should return null', function () {
