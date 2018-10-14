@@ -50,7 +50,7 @@
 <hr />
 <h2>Inferred type</h2>
 <p>A special parameter called <code>inferred.type</code>, if you wish to use it, will emit the message again using the name that you set.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'twitch-join'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferenceJoin</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.infer(<span class="hljs-string">'join'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">join</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">return</span> {
         <span class="hljs-attr">type</span>: <span class="hljs-string">'socks-and-jelly'</span>,
         <span class="hljs-attr">userBackwards</span>: msg.prefix.user.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)

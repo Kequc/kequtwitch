@@ -9,9 +9,9 @@ Many are easy to understand and consistent such as the [JOIN](https://dev.twitch
 | `raw` | The full message in raw form |
 | `tags` | Object containing all tags |
 | `prefix` | Object containing prefix information |
-| `prefix.full` | Full prefix (Ie. `'mrkequc!mrkequc@mrkequc.tmi.twitch.tv'`) |
-| `prefix.host` | Host (Ie. `'mrkequc.tmi.twitch.tv'`) |
-| `prefix.user` | User (Ie. `'mrkequc'`) |
+| `prefix.full` | Full prefix (Ie. `'ronni!ronni@ronni.tmi.twitch.tv'`) |
+| `prefix.host` | Host (Ie. `'ronni.tmi.twitch.tv'`) |
+| `prefix.user` | User (Ie. `'ronni'`) |
 | `command` | The Twitch command (Ie. `'PRIVMSG'`) |
 | `params` | Array of parameters that follow the command (Ie. `['#mrkequc', 'Hi everyone!']`) |
 | `inferred` | Object containing special inferred information (Ie. `{}`) |

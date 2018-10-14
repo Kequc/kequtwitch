@@ -3,9 +3,9 @@ const authenticate = require('./irc/actions/authenticate.js');
 const connect = require('./irc/actions/connect.js');
 const join = require('./irc/actions/join.js');
 const part = require('./irc/actions/part.js');
-const { isValidChannel, isValidInference, isSafeToWrite } = require('./irc/helpers.js');
-const Reader = require('./irc/reader.js');
 const STATUS = require('./irc/connection-status.js');
+const Reader = require('./irc/reader.js');
+const { isValidChannel, isValidInference, isSafeToWrite } = require('./irc/util.js');
 
 function validateChannels (channels) {
     if (!Array.isArray(channels)) {
@@ -93,21 +93,23 @@ class Irc extends EventEmitter {
     }
 
     async join (channel) {
+        isValidChannel(channel);
+
         if (this.channels.includes(channel)) {
             throw new Error(`Already joined ${channel}`);
         }
 
-        isValidChannel(channel);
         this.channels.push(channel);
         await join(this, channel);
     }
 
     async part (channel) {
+        isValidChannel(channel);
+
         if (!this.channels.includes(channel)) {
             throw new Error(`Not joined ${channel}`);
         }
 
-        isValidChannel(channel);
         this.channels.splice(this.channels.indexOf(channel), 1);
         await part(this, channel);
     }

@@ -210,7 +210,7 @@ const EXAMPLES = {
             badges: ['staff/1'],
             color: '#0D4200',
             displayName: 'dallas',
-            emoteSets: '0,33,50,237,793,2126,3517,4578,5569,9400,10337,12239',
+            emoteSets: [0, 33, 50, 237, 793, 2126, 3517, 4578, 5569, 9400, 10337, 12239],
             turbo: 0,
             userId: 1337,
             userType: 'admin'

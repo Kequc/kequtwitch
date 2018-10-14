@@ -12,7 +12,7 @@ The object you return becomes `inferred` on the `msg` object. By default if you 
 A special parameter called `inferred.type`, if you wish to use it, will emit the message again using the name that you set.
 
 ```javascript
-twitch.irc.infer('twitch-join', function inferenceJoin (msg) {
+twitch.infer('join', function join (msg) {
     return {
         type: 'socks-and-jelly',
         userBackwards: msg.prefix.user.split('').reverse().join('')
