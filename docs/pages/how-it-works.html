@@ -43,24 +43,28 @@
             </div>
 
 <div id="content">
-<h1>Home</h1>
+<h1>How it works</h1>
+<p>Twitch uses IRC for chat interaction and HTTP endpoints.</p>
 <hr />
-<h2>Installation</h2>
-<p>This library is available on NPM. Make sure you have <a href="https://nodejs.org/en/">Node</a> installed and create a new project, then install the <code>kequtwitch</code> module.</p>
-<pre><code>npm install --save kequtwitch
+<h2>Validation</h2>
+<p>Validation is handled automatically but is key to the inner working of the library.</p>
+<p>When you connect to IRC or use the HTTP endpoints, the token you provided as a parameter in the <a href="../readme.html">&quot;Usage&quot; section</a> is validated on Twitch servers. Validation is repeated passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
+<p>This validation step gives us a few additional parameters which become available on our instance making it easy to interact with services.</p>
+<pre><code class="language-javascript">twitch.token; <span class="hljs-comment">// token that was provided during instantiation</span>
+twitch.validatedAt; <span class="hljs-comment">// time the token was validated</span>
+twitch.clientId; <span class="hljs-comment">// your client id</span>
+twitch.login; <span class="hljs-comment">// your username</span>
+twitch.userId; <span class="hljs-comment">// your user id</span>
 </code></pre>
-<hr />
-<h2>Usage</h2>
-<p>In your project require <code>kequtwitch</code> at the top.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);
+<p>If you want you can trigger validatation manually.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.validate();
+<span class="hljs-comment">// user information has been populated</span>
+
+<span class="hljs-keyword">await</span> twitch.isValidated();
+<span class="hljs-comment">// user information populated within the last hour</span>
 </code></pre>
-<p>Create an instance of <code>kequtwitch</code> passing a valid <a href="http://twitchapps.com/tmi/">OAuth token</a> as the first parameter.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>);
-</code></pre>
-<p>You are now setup to use the library. Please view the sidebar on the right if you are on <a href="https://kequtwitch.kequc.com">the website</a> or <a href="https://github.com/Kequc/kequtwitch/tree/master/md">Github</a> for further documentation.</p>
 
 </div>
 
-        </div>
     </body>
 </html>

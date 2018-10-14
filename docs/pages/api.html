@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>API</h1>
+<p>This module is intended to make interaction with Twitch HTTP endpoints as easy as possible, utilising both Helix and Kraken API's.</p>
+<hr />
+<h2>API options</h2>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> api = {
+    <span class="hljs-attr">helixUrl</span>: <span class="hljs-string">'https://api.twitch.tv/helix'</span>,
+    <span class="hljs-attr">krakenUrl</span>: <span class="hljs-string">'https://api.twitch.tv/kraken'</span>
+};
+
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { api });
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>helixUrl</code></td>
+<td>URL for the Helix API (Default: <code>'https://api.twitch.tv/helix'</code>)</td>
+</tr>
+<tr>
+<td><code>krakenUrl</code></td>
+<td>URL for the Kraken API (Default: <code>'https://api.twitch.tv/kraken'</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Request</h2>
+<p>The <code>request</code> method takes a <code>path</code> as a first parameter, an options object, and returns a promise.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+    <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: <span class="hljs-string">'user-id'</span> }
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>param</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skipValidation</code></td>
+<td>Skip waiting for validation (Default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>Url of the API (Default: <code>https://api.twitch.tv/helix</code> or <code>https://api.twitch.tv/kraken</code>)</td>
+</tr>
+<tr>
+<td><code>kraken</code></td>
+<td>Request is made to the &quot;Kraken&quot; API instead of &quot;Helix&quot; (Default: <code>false</code>)</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>Request method (Default: <code>'GET'</code>)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Object containing post data or search parameters (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>headers</code></td>
+<td>Object containing additional headers (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>maxRetries</code></td>
+<td>Number of times to retry failed requests (Default: <code>2</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Special values</h2>
+<p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data parameter to one of these strings will use corresponding real information.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+    <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: <span class="hljs-string">'$userId'</span> }
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$clientId</code></td>
+<td>Uses value found at <code>twitch.clientId</code></td>
+</tr>
+<tr>
+<td><code>$login</code></td>
+<td>Uses value found at <code>twitch.login</code></td>
+</tr>
+<tr>
+<td><code>$userId</code></td>
+<td>Uses value found at <code>twitch.userId</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+    </body>
+</html>

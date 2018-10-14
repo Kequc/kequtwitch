@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>Msg object</h1>
+<p>A <code>msg</code> object represents a line of text delivered from the connected Twitch server. It is formatted to be easier to use than a raw line of text from IRC would normally be. But it's still a generic format.</p>
+<p>Many are easy to understand and consistent such as the <a href="https://dev.twitch.tv/docs/irc/chat-rooms/#join-twitch-chat-rooms">JOIN</a> Twitch command, some can also be a little bit more difficult. This library lets you do anything you want with all available message information. Examples of what raw messages look like can be found on the <a href="https://dev.twitch.tv/docs/irc/guide/">Twitch IRC guide</a>.</p>
+<table>
+<thead>
+<tr>
+<th>param</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>raw</code></td>
+<td>The full message in raw form</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>Object containing all tags</td>
+</tr>
+<tr>
+<td><code>prefix</code></td>
+<td>Object containing prefix information</td>
+</tr>
+<tr>
+<td><code>prefix.full</code></td>
+<td>Full prefix (Ie. <code>'mrkequc!mrkequc@mrkequc.tmi.twitch.tv'</code>)</td>
+</tr>
+<tr>
+<td><code>prefix.host</code></td>
+<td>Host (Ie. <code>'mrkequc.tmi.twitch.tv'</code>)</td>
+</tr>
+<tr>
+<td><code>prefix.user</code></td>
+<td>User (Ie. <code>'mrkequc'</code>)</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td>The Twitch command (Ie. <code>'PRIVMSG'</code>)</td>
+</tr>
+<tr>
+<td><code>params</code></td>
+<td>Array of parameters that follow the command (Ie. <code>['#mrkequc', 'Hi everyone!']</code>)</td>
+</tr>
+<tr>
+<td><code>inferred</code></td>
+<td>Object containing special inferred information (Ie. <code>{}</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Tags</h2>
+<p>Tags are converted into an object with keys that are in camelCase. If you are looking for a tag named <code>'display-name'</code> for example it can be found in the msg object at <code>msg.tags.displayName</code>. When the value is a number it is converted into a number otherwise all tags resolve a string.</p>
+<p>A few of the tags returned have special rendering.</p>
+<h4>badges</h4>
+<p>Badges are split by <code>','</code> so that they are an array, for example <code>['subscriber/0', 'premium/1']</code>.</p>
+<h4>emotes</h4>
+<p>Emotes denote where in the message an emote was used and is rendered as an array containing objects with <code>id</code>, <code>start</code>, <code>end</code>, and <code>length</code> attributes. For example <code>[{ id: 25, start: 27, end: 31, length: 4 }]</code></p>
+<h4>emoteSets</h4>
+<p>Emote sets are split by <code>','</code> and turned into numbers for example <code>[0]</code>.</p>
+<hr />
+<h2>Params</h2>
+<p>The first parameter is commonly the channel, therefore very often when you want to know what channel the command is related to check <code>msg.params[0]</code>. This isn't true for all commands but is good general rule to keep in mind.</p>
+
+</div>
+
+    </body>
+</html>

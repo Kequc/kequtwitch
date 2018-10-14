@@ -3,11 +3,6 @@ class Logger {
         this.show = show || Logger.methods;
     }
 
-    debug (...params) {
-        if (!this.show.includes('debug')) return;
-        console.debug(...params);
-    }
-
     log (...params) {
         if (!this.show.includes('log')) return;
         console.log(...params);
@@ -30,6 +25,6 @@ class Logger {
     }
 }
 
-Logger.methods = ['debug', 'log', 'info', 'warn', 'error'];
+Logger.methods = ['log', 'info', 'warn', 'error'];
 
 module.exports = Logger;

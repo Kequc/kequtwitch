@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>IRC</h1>
+<p>Twitch uses IRC for the chatroom you see on the side of livestreams, and it coordinates with the livestream to deliver events. The IRC implementation can be used to listen to the chat, and even interact with it.</p>
+<hr />
+<h2>IRC options</h2>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> irc = {
+    <span class="hljs-attr">channels</span>: [],
+    <span class="hljs-attr">interfaces</span>: {},
+    <span class="hljs-attr">port</span>: <span class="hljs-number">6667</span>,
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'irc.chat.twitch.tv'</span>,
+    <span class="hljs-attr">timeout</span>: <span class="hljs-number">7000</span>
+};
+
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { irc });
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>parameter</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>channels</code></td>
+<td>Array of channels you want to join (Default: <code>[]</code>)</td>
+</tr>
+<tr>
+<td><code>inferences</code></td>
+<td>Object of inferences you want to use (Default: <code>{}</code>)</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>IRC port (Default: <code>6667</code>)</td>
+</tr>
+<tr>
+<td><code>host</code></td>
+<td>IRC host (Default: <code>'irc.chat.twitch.tv'</code>)</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>Timeout for connection join, etc. (Default: <code>7000</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Connect join and part</h2>
+<p>When connecting to irc your channels are joined automatically however you may also dynamically join and part from channels.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.irc.connect();
+<span class="hljs-comment">// irc is now connected</span>
+
+<span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#my-channel'</span>);
+<span class="hljs-comment">// #my-channel is now joined</span>
+
+<span class="hljs-keyword">await</span> twitch.irc.part(<span class="hljs-string">'#my-channel'</span>);
+<span class="hljs-comment">// #my-channel is now parted</span>
+</code></pre>
+<hr />
+<h2>Events</h2>
+<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command in lowercase prepended with <code>twitch-</code> if found, otherwise <code>twitch-unknown</code>. In addition all messages emit the <code>message</code> event.</p>
+<p>There are also connection status events.</p>
+<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMessage</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-comment">// msg received from irc</span>
+});
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>event</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disconnected</code></td>
+<td>IRC has disconnected</td>
+</tr>
+<tr>
+<td><code>connecting</code></td>
+<td>IRC is connecting</td>
+</tr>
+<tr>
+<td><code>connected</code></td>
+<td>IRC is connected</td>
+</tr>
+<tr>
+<td><code>authenticated</code></td>
+<td>IRC has successfully authenticated</td>
+</tr>
+<tr>
+<td><code>ready</code></td>
+<td>The above and IRC has re-joined channels</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td>Message</td>
+</tr>
+<tr>
+<td><code>twitch-&lt;command&gt;</code></td>
+<td>Message</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>An error has occurred</td>
+</tr>
+</tbody>
+</table>
+<p>Examples of listening to and making use of IRC events can be found on the <a href="/pages/irc-examples.html">IRC examples page</a>.</p>
+
+</div>
+
+    </body>
+</html>

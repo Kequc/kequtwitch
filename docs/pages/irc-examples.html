@@ -1,35 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Kequtwitch</title>
-        <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-    </head>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
     <body>
-        <div id="header">
-            <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-            <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
-        </div>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
         <div id="container">
             <div id="sidebar">
-                <ul class="list">
-                    <li>
-                        <h4><a href="">IRC</a></h4>
-                        <ul>
-                            <li><a href="/pages/irc-examples.html">IRC examples</a></li>
-                            <li><a href="">Item</a></li>
-                            <li><a href="">Item</a></li>
-                            <li><a href="">Item</a></li>
-                            <li><a href="">Item</a></li>
-                            <li><a href="">Item</a></li>
-                            <li><a href="">Item</a></li>
-                        </ul>
-                    </li>
-                </ul>
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
             </div>
 
 <div id="content">
@@ -195,20 +205,20 @@ twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-functio
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkEmoteSets</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> emotesets = msg.tags.emoteSets;
 
-    <span class="hljs-comment">// Look for new emotesets</span>
+    <span class="hljs-comment">// look for new emotesets</span>
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> emotesets !== <span class="hljs-string">'string'</span>) <span class="hljs-keyword">return</span>;
     <span class="hljs-keyword">if</span> (last === emotesets) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-comment">// Emotesets have changed</span>
     last = emotesets;
 
-    <span class="hljs-comment">// Fetch</span>
+    <span class="hljs-comment">// fetch</span>
     <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
         <span class="hljs-attr">data</span>: { emotesets },
         <span class="hljs-attr">kraken</span>: <span class="hljs-literal">true</span>
     });
 
-    <span class="hljs-comment">// Emit result</span>
+    <span class="hljs-comment">// emit result</span>
     twitch.irc.emit(<span class="hljs-string">'emotesets'</span>, result);
 }
 
@@ -216,7 +226,7 @@ twitch.irc.on(<span class="hljs-string">'twitch-userstate'</span>, checkEmoteSet
 twitch.irc.on(<span class="hljs-string">'twitch-globaluserstate'</span>, checkEmoteSets);
 
 twitch.irc.on(<span class="hljs-string">'emotesets'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
-    <span class="hljs-comment">// Updated emotes arrived!</span>
+    <span class="hljs-comment">// updated emotes arrived!</span>
 });
 </code></pre>
 <hr />

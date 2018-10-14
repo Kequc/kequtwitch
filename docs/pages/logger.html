@@ -43,24 +43,28 @@
             </div>
 
 <div id="content">
-<h1>Home</h1>
-<hr />
-<h2>Installation</h2>
-<p>This library is available on NPM. Make sure you have <a href="https://nodejs.org/en/">Node</a> installed and create a new project, then install the <code>kequtwitch</code> module.</p>
-<pre><code>npm install --save kequtwitch
+<h1>Logger</h1>
+<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, <code>warn</code>, and <code>error</code>. Alternatively, to only enable specific logs they can be specified as an array <code>{ logger: ['warn', 'error'] }</code>. To disable the logger completely pass false <code>{ logger: false }</code></p>
+<p>In general, <code>log</code> will output irc communication, <code>info</code> contains status information, <code>warn</code> when there was a problem, <code>error</code> only when something unexpected happens.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> logger = {
+    log (...params) {
+        <span class="hljs-built_in">console</span>.log(...params);
+    },
+    info (...params) {
+        <span class="hljs-built_in">console</span>.info(...params);
+    },
+    warn (...params) {
+        <span class="hljs-built_in">console</span>.warn(...params);
+    },
+    error (...params) {
+        <span class="hljs-built_in">console</span>.error(...params);
+    }
+};
+
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { logger });
 </code></pre>
-<hr />
-<h2>Usage</h2>
-<p>In your project require <code>kequtwitch</code> at the top.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);
-</code></pre>
-<p>Create an instance of <code>kequtwitch</code> passing a valid <a href="http://twitchapps.com/tmi/">OAuth token</a> as the first parameter.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>);
-</code></pre>
-<p>You are now setup to use the library. Please view the sidebar on the right if you are on <a href="https://kequtwitch.kequc.com">the website</a> or <a href="https://github.com/Kequc/kequtwitch/tree/master/md">Github</a> for further documentation.</p>
 
 </div>
 
-        </div>
     </body>
 </html>

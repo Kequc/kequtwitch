@@ -17,11 +17,19 @@ function highlight (str, lang) {
 }
 
 const TEMPLATES = {};
+const PARTIALS = {};
 
 async function loadTemplates () {
     const location = __dirname + '/templates/';
     TEMPLATES.index = await fs.readFile(location + 'index.mustache', 'utf-8');
     TEMPLATES.page = await fs.readFile(location + 'page.mustache', 'utf-8');
+}
+
+async function loadPartials () {
+    const location = __dirname + '/partials/';
+    PARTIALS.contents = await fs.readFile(location + 'contents.mustache', 'utf-8');
+    PARTIALS.head = await fs.readFile(location + 'head.mustache', 'utf-8');
+    PARTIALS.header = await fs.readFile(location + 'header.mustache', 'utf-8');
 }
 
 function fixLinks (str) {
@@ -34,7 +42,7 @@ function fixLinks (str) {
 async function processDoc (file, template, view = {}) {
     const raw = await fs.readFile(file, 'utf-8');
     const md = markdown.render(fixLinks(raw));
-    return mustache.render(TEMPLATES[template], Object.assign({ md }, variables, view));
+    return mustache.render(TEMPLATES[template], Object.assign({ md }, variables, view), PARTIALS);
 }
 
 async function savePages () {
@@ -63,6 +71,7 @@ async function saveIndex () {
 
 async function buildHtml () {
     await loadTemplates();
+    await loadPartials();
     await savePages();
     await saveIndex();
 }
