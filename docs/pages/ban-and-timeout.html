@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>Ban and timeout</h1>
+<p>The <a href="https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands">CLEARCHAT</a> Twitch command often contains information about users being banned or given a timeout.</p>
+<p>Messages with fewer than 2 parameters are a real <code>clearchat</code> event where the chatroom was emptied. Messages with 3 parameters and a <code>banDuration</code> are only a temporary ban, and otherwise a permanent one.</p>
+<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'clearchat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferClearchat</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-keyword">let</span> type;
+
+    <span class="hljs-keyword">if</span> (msg.params.length &lt; <span class="hljs-number">2</span>) {
+        type = <span class="hljs-string">'clearchat'</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (msg.tags.banDuration === <span class="hljs-literal">null</span>) {
+        type = <span class="hljs-string">'ban'</span>;
+    } <span class="hljs-keyword">else</span>  {
+        type = <span class="hljs-string">'timeout'</span>;
+    }
+
+    <span class="hljs-keyword">return</span> { type };
+});
+
+twitch.irc.on(<span class="hljs-string">'clearchat'</span>, (msg) =&gt; {
+    <span class="hljs-keyword">const</span> channel = msg.params[<span class="hljs-number">0</span>];
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Chat in <span class="hljs-subst">${channel}</span> has been cleared by a moderator!`</span>);
+});
+
+twitch.irc.on(<span class="hljs-string">'ban'</span>, (msg) =&gt; {
+    <span class="hljs-keyword">const</span> [channel, user] = msg.params;
+    <span class="hljs-keyword">const</span> banReason = msg.tags.banReason;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> has been banned from <span class="hljs-subst">${channel}</span>. Reason: <span class="hljs-subst">${banReason}</span>`</span>);
+});
+
+twitch.irc.on(<span class="hljs-string">'timeout'</span>, (msg) =&gt; {
+    <span class="hljs-keyword">const</span> [channel, user] = msg.params;
+    <span class="hljs-keyword">const</span> banReason = msg.tags.banReason;
+    <span class="hljs-keyword">const</span> banDuration = msg.tags.banDuration;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> has been given a timeout from <span class="hljs-subst">${channel}</span> for <span class="hljs-subst">${banDuration}</span> seconds. Reason: <span class="hljs-subst">${banReason}</span>`</span>);
+});
+</code></pre>
+
+</div>
+
+    </body>
+</html>

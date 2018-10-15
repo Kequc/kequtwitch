@@ -29,10 +29,11 @@
         </ul>
     </li>
     <li>
-        <h4><a href="/">Examples</a></h4>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
         <ul>
             <li><a href="/pages/chat.html">Chat</a></li>
             <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
             <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
@@ -44,11 +45,10 @@
 
 <div id="content">
 <h1>How it works</h1>
-<p>Twitch uses IRC for chat interaction and HTTP endpoints.</p>
+<p>Twitch uses IRC for chat interaction and offers several HTTP endpoints.</p>
 <hr />
 <h2>Validation</h2>
-<p>Validation is handled automatically but is key to the inner working of the library.</p>
-<p>When you connect to IRC or use the HTTP endpoints, the token you provided as a parameter in the <a href="../readme.html">&quot;Usage&quot; section</a> is validated on Twitch servers. Validation is repeated passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
+<p>When you connect to IRC or use any of the HTTP endpoints, the token you provided as a parameter in the &quot;Usage&quot; section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
 <p>This validation step gives us a few additional parameters which become available on our instance making it easy to interact with services.</p>
 <pre><code class="language-javascript">twitch.token; <span class="hljs-comment">// token that was provided during instantiation</span>
 twitch.validatedAt; <span class="hljs-comment">// time the token was validated</span>
@@ -61,7 +61,7 @@ twitch.userId; <span class="hljs-comment">// your user id</span>
 <span class="hljs-comment">// user information has been populated</span>
 
 <span class="hljs-keyword">await</span> twitch.isValidated();
-<span class="hljs-comment">// user information populated within the last hour</span>
+<span class="hljs-comment">// user information was populated within the last hour or now is</span>
 </code></pre>
 
 </div>

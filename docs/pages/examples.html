@@ -44,27 +44,8 @@
             </div>
 
 <div id="content">
-<h1>Logger</h1>
-<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, <code>warn</code>, and <code>error</code>. Alternatively, to only enable specific logs they can be set using an array <code>{ logger: ['warn', 'error'] }</code>. To disable the logger use false <code>{ logger: false }</code></p>
-<p>In general, <code>log</code> will output irc communication, <code>info</code> contains status information, <code>warn</code> when there was a problem, <code>error</code> only when something unexpected happens.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> logger = {
-    log (...params) {
-        <span class="hljs-built_in">console</span>.log(...params);
-    },
-    info (...params) {
-        <span class="hljs-keyword">const</span> first = params.shift();
-        <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`[ <span class="hljs-subst">${first}</span> ]`</span>, ...params);
-    },
-    warn (...params) {
-        <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Warning:'</span>, ...params);
-    },
-    error (...params) {
-        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, ...params);
-    }
-};
-
-<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { logger });
-</code></pre>
+<h1>Examples</h1>
+<p>With basic use of the library under your belt, none of that is really useful without some examples showing you how to do some common tasks. Keeping in mind you can edit these examples however you need.</p>
 
 </div>
 

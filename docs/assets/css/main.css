@@ -72,6 +72,9 @@ a:hover {
 #sidebar h4 {
     margin: 0;
 }
+#sidebar .list > li {
+    margin-bottom: 20px;
+}
 #sidebar .list a {
     display: block;
     line-height: 1.4rem;

@@ -29,10 +29,11 @@
         </ul>
     </li>
     <li>
-        <h4><a href="/">Examples</a></h4>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
         <ul>
             <li><a href="/pages/chat.html">Chat</a></li>
             <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
             <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
@@ -44,7 +45,7 @@
 
 <div id="content">
 <h1>API</h1>
-<p>This module is intended to make interaction with Twitch HTTP endpoints as easy as possible, utilising both Helix and Kraken API's.</p>
+<p>Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.</p>
 <hr />
 <h2>API options</h2>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> api = {
@@ -89,7 +90,7 @@
 <tbody>
 <tr>
 <td><code>skipValidation</code></td>
-<td>Skip waiting for validation (Default: <code>false</code>)</td>
+<td>Skip waiting for validation not recommended (Default: <code>false</code>)</td>
 </tr>
 <tr>
 <td><code>url</code></td>
@@ -119,7 +120,7 @@
 </table>
 <hr />
 <h2>Special values</h2>
-<p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data parameter to one of these strings will use corresponding real information.</p>
+<p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data value to one of these strings will use your corresponding information.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
     <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: <span class="hljs-string">'$userId'</span> }
 });

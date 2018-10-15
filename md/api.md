@@ -1,6 +1,6 @@
 # API
 
-This module is intended to make interaction with Twitch HTTP endpoints as easy as possible, utilising both Helix and Kraken API's.
+Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.
 
 ---
 ## API options
@@ -32,7 +32,7 @@ const response = await twitch.api.request('/users', {
 
 | param | description |
 | - | - |
-| `skipValidation` | Skip waiting for validation (Default: `false`) |
+| `skipValidation` | Skip waiting for validation not recommended (Default: `false`) |
 | `url` | Url of the API (Default: ``https://api.twitch.tv/helix`` or ``https://api.twitch.tv/kraken``) |
 | `kraken` | Request is made to the "Kraken" API instead of "Helix" (Default: `false`) |
 | `method` | Request method (Default: `'GET'`) |
@@ -43,7 +43,7 @@ const response = await twitch.api.request('/users', {
 ---
 ## Special values
 
-There are special values which can be used to make use of information returned on the `kequtwitch` instance during validation. Setting any data parameter to one of these strings will use corresponding real information.
+There are special values which can be used to make use of information returned on the `kequtwitch` instance during validation. Setting any data value to one of these strings will use your corresponding information.
 
 ```javascript
 const response = await twitch.api.request('/users', {

@@ -29,10 +29,11 @@
         </ul>
     </li>
     <li>
-        <h4><a href="/">Examples</a></h4>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
         <ul>
             <li><a href="/pages/chat.html">Chat</a></li>
             <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
             <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
@@ -44,7 +45,7 @@
 
 <div id="content">
 <h1>IRC</h1>
-<p>Twitch uses IRC for the chatroom you see on the side of livestreams, and it coordinates with the livestream to deliver events. The IRC implementation can be used to listen to the chat, and even interact with it.</p>
+<p>Twitch uses IRC for the chatroom on the side of livestreams. This IRC implementation can be used to listen to the chat, and even interact with it.</p>
 <hr />
 <h2>IRC options</h2>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> irc = {
@@ -89,7 +90,7 @@
 </table>
 <hr />
 <h2>Connect join and part</h2>
-<p>When connecting to irc your channels are joined automatically however you may also dynamically join and part from channels.</p>
+<p>When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.irc.connect();
 <span class="hljs-comment">// irc is now connected</span>
 
@@ -101,7 +102,7 @@
 </code></pre>
 <hr />
 <h2>Events</h2>
-<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command in lowercase prepended with <code>twitch-</code> if found, otherwise <code>twitch-unknown</code>. In addition all messages emit the <code>message</code> event.</p>
+<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command in lowercase prepended with <code>twitch-</code>, otherwise <code>twitch-unknown</code>. In addition all messages emit the <code>message</code> event.</p>
 <p>There are also connection status events.</p>
 <pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMessage</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg received from irc</span>
@@ -150,6 +151,26 @@
 </tbody>
 </table>
 <p>Examples of listening to and making use of IRC events can be found on the <a href="/pages/irc-examples.html">IRC examples page</a>.</p>
+<hr />
+<h2>Send</h2>
+<p>To write a message safely into IRC use the <code>send</code> method. The first parameter is what you want to write, the second parameter is the minimum connection status it needs to wait for (Default: <code>'ready'</code>).</p>
+<p>Useful in case the chat is reconnecting.</p>
+<pre><code class="language-javascript">twitch.irc.send(<span class="hljs-string">'PRIVMSG #channel :Hello everyone!'</span>);
+</code></pre>
+<hr />
+<h2>Write</h2>
+<p>To write a message directly into IRC without any protection use the <code>write</code> method.</p>
+<pre><code class="language-javascript">twitch.irc.write(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
+</code></pre>
+<hr />
+<h2>Say extension</h2>
+<p>If you are going to be posting messages in the chat often it might be helpful to extend the <code>irc</code> instance with a <code>say</code> command.</p>
+<pre><code class="language-javascript">twitch.irc.say = <span class="hljs-function">(<span class="hljs-params">channel, message</span>) =&gt;</span> {
+    twitch.irc.send(<span class="hljs-string">`PRIVMSG <span class="hljs-subst">${channel}</span> :<span class="hljs-subst">${message}</span>`</span>);
+};
+
+twitch.irc.say(<span class="hljs-string">'#channel'</span>, <span class="hljs-string">'Hello everyone!'</span>);
+</code></pre>
 
 </div>
 

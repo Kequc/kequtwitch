@@ -44,26 +44,41 @@
             </div>
 
 <div id="content">
-<h1>Logger</h1>
-<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, <code>warn</code>, and <code>error</code>. Alternatively, to only enable specific logs they can be set using an array <code>{ logger: ['warn', 'error'] }</code>. To disable the logger use false <code>{ logger: false }</code></p>
-<p>In general, <code>log</code> will output irc communication, <code>info</code> contains status information, <code>warn</code> when there was a problem, <code>error</code> only when something unexpected happens.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> logger = {
-    log (...params) {
-        <span class="hljs-built_in">console</span>.log(...params);
-    },
-    info (...params) {
-        <span class="hljs-keyword">const</span> first = params.shift();
-        <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`[ <span class="hljs-subst">${first}</span> ]`</span>, ...params);
-    },
-    warn (...params) {
-        <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">'Warning:'</span>, ...params);
-    },
-    error (...params) {
-        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, ...params);
-    }
-};
+<h1>Emotesets</h1>
+<p>Emitting emotesets whenever they are updated can be relatively simple. We might use this if we were parsing messages to use emoticons and always want to keep them up to date.</p>
+<p>Add a quick extension that watches for a change and fetches the new emotes.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">let</span> lastEmotesets;
 
-<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { logger });
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkEmotesets</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-comment">// look for new emotesets</span>
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">Array</span>.isArray(msg.tags.emoteSets)) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">const</span> emotesets = msg.tags.emoteSets.join(<span class="hljs-string">','</span>);
+
+    <span class="hljs-comment">// Emotesets have changed</span>
+    <span class="hljs-keyword">if</span> (lastEmotesets === emotesets) {
+        <span class="hljs-keyword">return</span>;
+    }
+    lastEmotesets = emotesets;
+
+    <span class="hljs-comment">// fetch</span>
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+        <span class="hljs-attr">data</span>: { emotesets },
+        <span class="hljs-attr">kraken</span>: <span class="hljs-literal">true</span>
+    });
+
+    <span class="hljs-comment">// emit result</span>
+    twitch.irc.emit(<span class="hljs-string">'emotesets'</span>, result);
+}
+
+twitch.irc.on(<span class="hljs-string">'twitch-userstate'</span>, checkEmotesets);
+twitch.irc.on(<span class="hljs-string">'twitch-globaluserstate'</span>, checkEmotesets);
+
+twitch.irc.on(<span class="hljs-string">'emotesets'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
+    <span class="hljs-comment">// updated emotes arrived!</span>
+});
 </code></pre>
 
 </div>

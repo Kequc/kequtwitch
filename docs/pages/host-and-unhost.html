@@ -44,26 +44,38 @@
             </div>
 
 <div id="content">
-<h1>Inferences</h1>
-<p>All <code>msg</code> objects have a <code>inferred</code> object.</p>
-<p>It is up to you to populate it with any additional information you need out of messages by defining inferences. You can have one inference for every Twitch command, they are defined in the instantiation options or dynamically using the <code>infer</code> method. All inference methods are syncronous, can only be defined once, and should return an object.</p>
-<p>The object you return becomes <code>inferred</code> on the <code>msg</code> object. By default if you don't specify an inference or return an object then <code>inferred</code> is empty.</p>
-<hr />
-<h2>Inferred type</h2>
-<p>A special parameter called <code>inferred.type</code>, if you wish to use it, will emit the message again using the name that you want.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'join'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">join</span> (<span class="hljs-params">msg</span>) </span>{
+<h1>Host and unhost</h1>
+<p>The <a href="https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands">HOSTTARGET</a> Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.</p>
+<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'hosttarget'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferHosttarget</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-keyword">let</span> type;
+    <span class="hljs-keyword">let</span> viewers;
+
+    <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] === <span class="hljs-string">'-'</span>) {
+        <span class="hljs-comment">// "- 10"</span>
+        type = <span class="hljs-string">'unhost'</span>;
+        viewers = msg.params[<span class="hljs-number">1</span>].replace(<span class="hljs-string">'- '</span>, <span class="hljs-string">''</span>);
+    } <span class="hljs-keyword">else</span> {
+        type = <span class="hljs-string">'host'</span>;
+        viewers = msg.params[<span class="hljs-number">2</span>];
+    }
+
     <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">'socks-and-jelly'</span>,
-        <span class="hljs-attr">userBackwards</span>: msg.prefix.user.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)
+        type,
+        <span class="hljs-attr">viewers</span>: <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>;
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'twitch-join'</span>, (msg) =&gt; {
-    <span class="hljs-comment">// msg.inferred ~= { type: 'socks-and-jelly', userBackwards: 'cuqek' }</span>
+twitch.irc.on(<span class="hljs-string">'host'</span>, (msg) =&gt; {
+    <span class="hljs-keyword">const</span> channel = msg.params.channel;
+    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'socks-and-jelly'</span>, (msg) =&gt; {
-    <span class="hljs-comment">// msg.inferred ~= { type: 'socks-and-jelly', userBackwards: 'cuqek' }</span>
+twitch.irc.on(<span class="hljs-string">'unhost'</span>, (msg) =&gt; {
+    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 </code></pre>
 

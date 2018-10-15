@@ -24,4 +24,21 @@ Create an instance of `kequtwitch` passing a valid [OAuth token](http://twitchap
 const twitch = new Twitch('your-oauth-token');
 ```
 
-You are now setup to use the library. Please view the sidebar on the right if you are on [the website](https://kequtwitch.kequc.com) or [Github](https://github.com/Kequc/kequtwitch/tree/master/md) for further documentation.
+You are now setup to use the library. If you are on [the website](https://kequtwitch.kequc.com) please view the sidebar on the right or use [Github](https://github.com/Kequc/kequtwitch/tree/master/md) for further documentation.
+
+---
+## Quick start
+
+The easiest way to see the library working is to login to a chatroom. A streamer's channel is their username prepended with `#` in lowercase.
+
+```javascript
+const Twitch = require('kequtwitch');
+const twitch = new Twitch('your-oauth-token');
+
+async function init () {
+    await twitch.irc.connect();
+    await twitch.irc.join('#channel');
+}();
+```
+
+Then you can watch the chat activity in your console.

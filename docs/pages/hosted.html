@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>Hosted</h1>
+<p>In order to know when we are being hosted by another channel we need to peek into the <code>privmsg</code> command when it's delivered by <code>'jtv'</code> which is a Twitch mechanism that is arguably a little bit old.</p>
+<p>In this example we need to parse the message to find out what is happening.</p>
+<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'privmsg'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferPrivmsg</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-keyword">if</span> (msg.prefix.user !== <span class="hljs-string">'jtv'</span>) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// "ronni is now hosting you for 0 viewers."</span>
+    <span class="hljs-comment">// "ronni is now auto-hosting you for 0 viewers."</span>
+    <span class="hljs-keyword">if</span> (!msg.params[<span class="hljs-number">0</span>].includes(<span class="hljs-string">'hosting you'</span>)) {
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">const</span> parts = msg.params[<span class="hljs-number">0</span>].split(<span class="hljs-string">' '</span>);
+
+    <span class="hljs-keyword">const</span> user = parts.shift();
+    <span class="hljs-keyword">const</span> viewers = parts.find(<span class="hljs-function"><span class="hljs-params">part</span> =&gt;</span> !<span class="hljs-built_in">isNaN</span>(part));
+    <span class="hljs-keyword">const</span> autoHosting = parts.includes(<span class="hljs-string">'auto-hosting'</span>);
+
+    <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'hosted'</span>,
+        user,
+        <span class="hljs-attr">viewers</span>: <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>,
+        autoHosting
+    };
+});
+
+twitch.irc.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onHosted</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-keyword">const</span> user = msg.inferred.user;
+    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
+    <span class="hljs-keyword">const</span> hosting = msg.inferred.autoHosting ? <span class="hljs-string">'autohosting'</span> : <span class="hljs-string">'hosting'</span>;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is now <span class="hljs-subst">${hosting}</span> you for <span class="hljs-subst">${viewers}</span> viewers!`</span>);
+});
+</code></pre>
+
+</div>
+
+    </body>
+</html>

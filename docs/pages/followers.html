@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kequtwitch</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+</head>
+    <body>
+<div id="header">
+    <a href="/" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+    <a href="/" class="home"><em>Kequ</em><strong>twitch</strong> <span class="headline">is a twitch library</span></a>
+</div>
+        <div id="container">
+            <div id="sidebar">
+<ul class="list">
+    <li>
+        <h4><a href="/">Home</a></h4>
+        <ul>
+            <li><a href="/pages/how-it-works.html">How it works</a></li>
+            <li><a href="/pages/api.html">API</a></li>
+            <li><a href="/pages/irc.html">IRC</a></li>
+            <li><a href="/pages/msg-object.html">Msg object</a></li>
+            <li><a href="/pages/inferences.html">Inferences</a></li>
+            <li><a href="/pages/logger.html">Logger</a></li>
+        </ul>
+    </li>
+    <li>
+        <h4><a href="/pages/examples.html">Examples</a></h4>
+        <ul>
+            <li><a href="/pages/chat.html">Chat</a></li>
+            <li><a href="/pages/emotesets.html">Emotesets</a></li>
+            <li><a href="/pages/followers.html">Followers</a></li>
+            <li><a href="/pages/mod-and-unmod.html">Mod and unmod</a></li>
+            <li><a href="/pages/ban-and-timeout.html">Ban and timeout</a></li>
+            <li><a href="/pages/host-and-unhost.html">Host and unhost</a></li>
+            <li><a href="/pages/hosted.html">Hosted</a></li>
+        </ul>
+    </li>
+</ul>
+            </div>
+
+<div id="content">
+<h1>Followers</h1>
+<p>A common interest is when someone new follows your channel, unfortunately this is only achievable through HTTP endpoints currently. You would need to use webhooks or poll the <code>/users/follows</code> url.</p>
+<p>This solution uses polling to find new user ids, then looks up those users.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">let</span> lastCheckedAt = <span class="hljs-built_in">Date</span>.now();
+<span class="hljs-keyword">const</span> INTERVAL = <span class="hljs-number">1000</span> * <span class="hljs-number">60</span> * <span class="hljs-number">2</span>; <span class="hljs-comment">// 2 minutes</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNewFollow</span> (<span class="hljs-params">follow</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(follow.followed_at).getTime() &gt; lastCheckedAt;
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkFollowers</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-comment">// fetch</span>
+    <span class="hljs-keyword">const</span> follows = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users/follows'</span>, {
+        <span class="hljs-attr">data</span>: { <span class="hljs-attr">to_id</span>: <span class="hljs-string">'$userId'</span> }
+    });
+
+    <span class="hljs-keyword">const</span> userIds = follows.filter(isNewFollow).map(<span class="hljs-function"><span class="hljs-params">follow</span> =&gt;</span> follow.from_id);
+    lastCheckedAt += INTERVAL;
+
+    <span class="hljs-keyword">const</span> followers = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+        <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: userIds }
+    })
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> follower <span class="hljs-keyword">of</span> followers) {
+        <span class="hljs-comment">// emit result</span>
+        twitch.irc.emit(<span class="hljs-string">'follower'</span>, follower);
+    }
+}
+
+setInterval(checkFollowers, INTERVAL);
+
+twitch.irc.on(<span class="hljs-string">'follower'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onFollower</span> (<span class="hljs-params">follower</span>) </span>{
+    <span class="hljs-keyword">const</span> displayName = follower.display_name;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`New follower: <span class="hljs-subst">${displayName}</span>!`</span>);
+});
+</code></pre>
+
+</div>
+
+    </body>
+</html>
