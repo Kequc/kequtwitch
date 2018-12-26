@@ -16,7 +16,7 @@ a:hover {
 #header {
     line-height: 70px;
     height: 70px;
-    background: #000 url('/assets/images/header.png') repeat;
+    background: #000;
     box-shadow: #193236 0 0 1px;
     padding: 0 10px;
 }
@@ -37,7 +37,7 @@ a:hover {
     width: 30px;
 }
 #header .badge:hover {
-    background-color: #0C0C0C !important;
+    background-color: #404040 !important;
 }
 #header a.home {
     float: left;

@@ -65,7 +65,7 @@ twitch.irc.on('message', function onMessage (msg) {
 | `twitch-<command>` | Message |
 | `error` | An error has occurred |
 
-Examples of listening to and making use of IRC events can be found on the [IRC examples page](md/irc-examples.md).
+Examples of listening to and making use of IRC events can be found on the [IRC examples page](docs-md/examples).
 
 ---
 ## Send

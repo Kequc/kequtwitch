@@ -1,0 +1,19 @@
+{
+    "outputDir": "docs",
+    "templateDir": "docs-template",
+    "mdDir": "docs-md",
+    "readme": "readme.md",
+    "important": [
+        "CNAME"
+    ],
+    "templates": {},
+    "view": {
+        "title": "Kequtwitch",
+        "npmUrl": "https://www.npmjs.com/package/kequtwitch",
+        "gitUrl": "https://github.com/Kequc/kequtwitch",
+        "name": "Kequtwitch",
+        "headline": "is a twitch library"
+    },
+    "port": 9090,
+    "repo": "https://github.com/Kequc/github-pages-render"
+}

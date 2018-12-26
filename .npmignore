@@ -1,6 +1,7 @@
 docs
-md
+docs-md
+docts-template
 node_modules
-scripts
 test
+github-pages.json
 testing.js
