@@ -24,7 +24,7 @@ Create an instance of `kequtwitch` passing a valid [OAuth token](http://twitchap
 const twitch = new Twitch('your-oauth-token');
 ```
 
-You are now setup to use the library. If you are on [the website](https://kequtwitch.kequc.com) please view the sidebar on the right or use [Github](https://github.com/Kequc/kequtwitch/tree/master/md) for further documentation.
+You are now setup to use the library. If you are on [the website](https://kequtwitch.kequc.com) please view the sidebar on the right or use [Github](docs-md) for further documentation.
 
 ---
 ## Quick start
