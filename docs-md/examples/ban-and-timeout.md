@@ -6,17 +6,17 @@ Messages with fewer than 2 parameters are a real `CLEARCHAT` event where the cha
 
 ```javascript
 twitch.irc.inference('CLEARCHAT', function (msg) {
-    let type;
+    let command;
 
     if (msg.params.length < 2) {
-        type = 'clear';
+        command = 'clear';
     } else if (msg.tags.banDuration === null) {
-        type = 'ban';
+        command = 'ban';
     } else  {
-        type = 'timeout';
+        command = 'timeout';
     }
 
-    return { type };
+    return { command };
 });
 
 twitch.irc.on('clear', function (msg) {

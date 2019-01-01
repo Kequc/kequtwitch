@@ -4,20 +4,20 @@ The [HOSTTARGET](https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-comm
 
 ```javascript
 twitch.irc.inference('HOSTTARGET', function (msg) {
-    let type;
+    let command;
     let viewers;
 
     if (msg.params[1][0] === '-') {
         // "- 10"
-        type = 'unhost';
+        command = 'unhost';
         viewers = msg.params[1].replace('- ', '');
     } else {
-        type = 'host';
+        command = 'host';
         viewers = msg.params[2];
     }
 
     return {
-        type,
+        command,
         viewers: parseInt(viewers, 10) || 0;
     };
 });

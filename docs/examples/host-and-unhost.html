@@ -47,20 +47,20 @@
 <h1>Host and unhost</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands">HOSTTARGET</a> Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.</p>
 <pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'HOSTTARGET'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">let</span> type;
+    <span class="hljs-keyword">let</span> command;
     <span class="hljs-keyword">let</span> viewers;
 
     <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] === <span class="hljs-string">'-'</span>) {
         <span class="hljs-comment">// "- 10"</span>
-        type = <span class="hljs-string">'unhost'</span>;
+        command = <span class="hljs-string">'unhost'</span>;
         viewers = msg.params[<span class="hljs-number">1</span>].replace(<span class="hljs-string">'- '</span>, <span class="hljs-string">''</span>);
     } <span class="hljs-keyword">else</span> {
-        type = <span class="hljs-string">'host'</span>;
+        command = <span class="hljs-string">'host'</span>;
         viewers = msg.params[<span class="hljs-number">2</span>];
     }
 
     <span class="hljs-keyword">return</span> {
-        type,
+        command,
         <span class="hljs-attr">viewers</span>: <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>;
     };
 });

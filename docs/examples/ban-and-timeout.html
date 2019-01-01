@@ -48,17 +48,17 @@
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands">CLEARCHAT</a> Twitch command often contains information about users being banned or given a timeout.</p>
 <p>Messages with fewer than 2 parameters are a real <code>CLEARCHAT</code> event where the chatroom was emptied. Messages with 3 parameters and a <code>banDuration</code> are only a temporary ban, and otherwise a permanent one.</p>
 <pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'CLEARCHAT'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">let</span> type;
+    <span class="hljs-keyword">let</span> command;
 
     <span class="hljs-keyword">if</span> (msg.params.length &lt; <span class="hljs-number">2</span>) {
-        type = <span class="hljs-string">'clear'</span>;
+        command = <span class="hljs-string">'clear'</span>;
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (msg.tags.banDuration === <span class="hljs-literal">null</span>) {
-        type = <span class="hljs-string">'ban'</span>;
+        command = <span class="hljs-string">'ban'</span>;
     } <span class="hljs-keyword">else</span>  {
-        type = <span class="hljs-string">'timeout'</span>;
+        command = <span class="hljs-string">'timeout'</span>;
     }
 
-    <span class="hljs-keyword">return</span> { type };
+    <span class="hljs-keyword">return</span> { command };
 });
 
 twitch.irc.on(<span class="hljs-string">'clear'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
