@@ -9,7 +9,7 @@ The object you return becomes `inferred` on the `msg` object. By default if you 
 ---
 ## Inferred type
 
-A special parameter called `inferred.command`, if you wish to use it, will emit the message again using the name that you want.
+A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want.
 
 ```javascript
 twitch.irc.inference('JOIN', function (msg) {
