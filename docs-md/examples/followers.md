@@ -17,8 +17,8 @@ async function checkFollowers (msg) {
         data: { to_id: '$userId' }
     });
 
-    lastCheckedAt = Date.now();
     const userIds = follows.filter(isNewFollow).map(follow => follow.from_id);
+    lastCheckedAt = Date.now();
 
     if (userIds.length < 1) {
         return;
