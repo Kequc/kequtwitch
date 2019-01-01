@@ -50,7 +50,7 @@
 <p>The object you return becomes <code>inferred</code> on the <code>msg</code> object. By default if you don't specify an inference or return an object then <code>inferred</code> is empty.</p>
 <hr />
 <h2>Inferred type</h2>
-<p>A special parameter called <code>inferred.command</code>, if you wish to use it, will emit the message again using the name that you want.</p>
+<p>A special parameter called <code>command</code>, if you wish to use it, will emit the message again using the name that you want.</p>
 <pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">return</span> {
         <span class="hljs-attr">command</span>: <span class="hljs-string">'socks-and-jelly'</span>,
