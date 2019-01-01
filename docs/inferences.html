@@ -58,11 +58,11 @@
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'JOIN'</span>, (msg) =&gt; {
+twitch.irc.on(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }</span>
 });
 
-twitch.irc.on(<span class="hljs-string">'socks-and-jelly'</span>, (msg) =&gt; {
+twitch.irc.on(<span class="hljs-string">'socks-and-jelly'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }</span>
 });
 </code></pre>

@@ -19,11 +19,11 @@ twitch.irc.inference('JOIN', function (msg) {
     };
 });
 
-twitch.irc.on('JOIN', (msg) => {
+twitch.irc.on('JOIN', function (msg) {
     // msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }
 });
 
-twitch.irc.on('socks-and-jelly', (msg) => {
+twitch.irc.on('socks-and-jelly', function (msg) {
     // msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }
 });
 ```
