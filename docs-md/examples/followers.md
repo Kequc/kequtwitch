@@ -11,7 +11,7 @@ function isNewFollow (follow) {
     return new Date(follow.followed_at).getTime() > lastCheckedAt;
 }
 
-async function checkFollowers (msg) {
+async function checkFollowers () {
     // fetch
     const follows = await twitch.api.request('/users/follows', {
         data: { to_id: '$userId' }
