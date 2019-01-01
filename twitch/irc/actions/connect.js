@@ -5,7 +5,7 @@ async function connect (irc) {
     irc.status = STATUS.CONNECTING;
 
     await new Promise((resolve, reject) => {
-        irc.twitch.logger.info('Connecting...');
+        irc.logger.info('Connecting...');
         irc.client = net.connect(irc.port, irc.host);
         irc.client.setEncoding('utf8');
 
@@ -13,7 +13,7 @@ async function connect (irc) {
 
         function onConnect () {
             clearTimeout(timeout);
-            irc.twitch.logger.log('!', 'CONNECTED');
+            irc.logger.log('!', 'CONNECTED');
             irc.status = STATUS.CONNECTED;
             resolve();
         }
@@ -23,13 +23,13 @@ async function connect (irc) {
         }
 
         function onError (err) {
-            irc.twitch.logger.error(`Error occurred on irc connection: ${err.message}`);
+            irc.logger.error(`Error occurred on irc connection: ${err.message}`);
             irc.emit('error', err);
         }
 
         function onEnd () {
             removeListeners();
-            irc.twitch.logger.log('!', 'DISCONNECTED');
+            irc.logger.log('!', 'DISCONNECTED');
             irc.status = STATUS.DISCONNECTED;
         }
 

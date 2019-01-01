@@ -1,11 +1,11 @@
 # Hosted
 
-In order to know when we are being hosted by another channel we need to peek into the `privmsg` command when it's delivered by `'jtv'` which is a Twitch mechanism that is arguably a little bit old.
+In order to know when we are being hosted by another channel we need to peek into the `PRIVMSG` command when it's delivered by `'jtv'` which is a Twitch mechanism that is arguably a little bit old.
 
 In this example we need to parse the message to find out what is happening.
 
 ```javascript
-twitch.irc.infer('privmsg', function inferPrivmsg (msg) {
+twitch.irc.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user !== 'jtv') {
         return;
     }
@@ -23,14 +23,14 @@ twitch.irc.infer('privmsg', function inferPrivmsg (msg) {
     const autoHosting = parts.includes('auto-hosting');
 
     return {
-        type: 'hosted',
+        command: 'hosted',
         user,
         viewers: parseInt(viewers, 10) || 0,
         autoHosting
     };
 });
 
-twitch.irc.on('hosted', function onHosted (msg) {
+twitch.irc.on('hosted', function (msg) {
     const user = msg.inferred.user;
     const viewers = msg.inferred.viewers;
     const hosting = msg.inferred.autoHosting ? 'autohosting' : 'hosting';

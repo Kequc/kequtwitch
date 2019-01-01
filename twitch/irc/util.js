@@ -1,7 +1,7 @@
 const STATUS = require('./connection-status.js');
 
 function isValidChannel (channel) {
-    if (!/^#[0-9a-z]+$/.test(channel)) {
+    if (!/^#[_0-9a-z]+$/.test(channel)) {
         throw new Error('Channels should be in lower case and prepended with #');
     }
 }

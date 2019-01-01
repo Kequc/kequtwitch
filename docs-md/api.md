@@ -18,6 +18,7 @@ const twitch = new Twitch('your-oauth-token', { api });
 | - | - |
 | `helixUrl` | URL for the Helix API (Default: `'https://api.twitch.tv/helix'`) |
 | `krakenUrl` | URL for the Kraken API (Default: `'https://api.twitch.tv/kraken'`) |
+| `logger` | Logger override |
 
 ---
 ## Request

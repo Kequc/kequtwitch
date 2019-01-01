@@ -70,15 +70,15 @@
     });
 
     <span class="hljs-comment">// emit result</span>
-    twitch.irc.emit(<span class="hljs-string">'emotesets'</span>, result);
+    handleEmotesets(result);
 }
 
-twitch.irc.on(<span class="hljs-string">'twitch-userstate'</span>, checkEmotesets);
-twitch.irc.on(<span class="hljs-string">'twitch-globaluserstate'</span>, checkEmotesets);
-
-twitch.irc.on(<span class="hljs-string">'emotesets'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
     <span class="hljs-comment">// updated emotes arrived!</span>
-});
+}
+
+twitch.irc.on(<span class="hljs-string">'USERSTATE'</span>, checkEmotesets);
+twitch.irc.on(<span class="hljs-string">'GLOBALUSERSTATE'</span>, checkEmotesets);
 </code></pre>
 
 </div>

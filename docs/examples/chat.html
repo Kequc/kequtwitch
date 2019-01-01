@@ -45,10 +45,10 @@
 
 <div id="content">
 <h1>Chat</h1>
-<p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <code>privmsg</code> command it's generally information related to whether someone is hosting your channel.</p>
+<p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <code>PRIVMSG</code> command it's generally information related to whether someone is hosting your channel.</p>
 <p>Actions are chat messages prefixed with the string <code>ACTION /</code>, so while not necessary to deliver a different event, it's nice to be able to with the start of the message stripped off to where the user started typing.</p>
 <p>Then we check if there are bits attached to the <code>msg</code>. Probably the implementation you really want is less complicated than this.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'privmsg'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">privmsg</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user === <span class="hljs-string">'jtv'</span>) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>].indexOf(<span class="hljs-string">'ACTION /'</span>) === <span class="hljs-number">0</span>) {
@@ -56,17 +56,17 @@
         <span class="hljs-keyword">const</span> message = msg.params[<span class="hljs-number">1</span>].substring(<span class="hljs-number">7</span>);
 
         <span class="hljs-keyword">return</span> {
-            <span class="hljs-attr">type</span>: <span class="hljs-string">'action'</span>
+            <span class="hljs-attr">command</span>: <span class="hljs-string">'action'</span>
             message
         };
     }
 
     <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">type</span>: (msg.tags.bits || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'cheer'</span> : <span class="hljs-string">'chat'</span>
+        <span class="hljs-attr">command</span>: (msg.tags.bits || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'cheer'</span> : <span class="hljs-string">'chat'</span>
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onAction</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
     <span class="hljs-keyword">const</span> channel = msg.params[<span class="hljs-number">0</span>];
     <span class="hljs-keyword">const</span> message = msg.inferred.message;
@@ -74,7 +74,7 @@ twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-funct
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> actioned "<span class="hljs-subst">${message}</span>"!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onCheer</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
     <span class="hljs-keyword">const</span> bits = msg.tags.bits;
     <span class="hljs-keyword">const</span> [channel, message] = msg.params;
@@ -82,7 +82,7 @@ twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-functi
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> cheered <span class="hljs-subst">${bits}</span> and said "<span class="hljs-subst">${message}</span>"!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onChat</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
     <span class="hljs-keyword">const</span> [channel, message] = msg.params;
 

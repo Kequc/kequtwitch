@@ -20,7 +20,7 @@ function deepFreeze (data) {
 }
 
 function handleMsg (irc, msg) {
-    const command = (msg.command || 'unknown').toLowerCase();
+    const command = msg.command || 'UNKNOWN';
 
     Object.freeze(msg);
     Object.freeze(msg.tags);
@@ -34,10 +34,10 @@ function handleMsg (irc, msg) {
     deepFreeze(msg.inferred);
 
     irc.emit('message', msg);
-    irc.emit(`twitch-${command}`, msg);
+    irc.emit(command, msg);
 
-    if (typeof msg.inferred.type === 'string') {
-        irc.emit(msg.inferred.type, msg);
+    if (typeof msg.inferred.command === 'string') {
+        irc.emit(msg.inferred.command, msg);
     }
 
     serverStuff(irc, msg);

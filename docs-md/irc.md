@@ -24,6 +24,7 @@ const twitch = new Twitch('your-oauth-token', { irc });
 | `port` | IRC port (Default: `6667`) |
 | `host` | IRC host (Default: `'irc.chat.twitch.tv'`) |
 | `timeout` | Timeout for connection join, etc. (Default: `7000`) |
+| `logger` | Logger override |
 
 ---
 ## Connect join and part
@@ -44,12 +45,12 @@ await twitch.irc.part('#my-channel');
 ---
 ## Events
 
-While connected to IRC, every line is parsed into an object and then emitted via node `EventEmitter` on the `irc` instance. Event names are the Twitch command in lowercase prepended with `twitch-`, otherwise `twitch-unknown`. In addition all messages emit the `message` event.
+While connected to IRC, every line is parsed into an object and then emitted via node `EventEmitter` on the `irc` instance. Event names are the Twitch command, otherwise `UNKNOWN`. In addition all messages emit the `message` event.
 
 There are also connection status events.
 
 ```javascript
-twitch.irc.on('message', function onMessage (msg) {
+twitch.irc.on('message', function (msg) {
     // msg received from irc
 });
 ```
@@ -62,7 +63,7 @@ twitch.irc.on('message', function onMessage (msg) {
 | `authenticated` | IRC has successfully authenticated |
 | `ready` | The above and IRC has re-joined channels |
 | `message` | Message |
-| `twitch-<command>` | Message |
+| `<COMMAND>` | Message |
 | `error` | An error has occurred |
 
 Examples of listening to and making use of IRC events can be found on the [IRC examples page](docs-md/examples).

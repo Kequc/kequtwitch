@@ -6,7 +6,6 @@ This solution uses polling to find new user ids, then looks up those users.
 
 ```javascript
 let lastCheckedAt = Date.now();
-const INTERVAL = 1000 * 60 * 2; // 2 minutes
 
 function isNewFollow (follow) {
     return new Date(follow.followed_at).getTime() > lastCheckedAt;
@@ -19,7 +18,7 @@ async function checkFollowers (msg) {
     });
 
     const userIds = follows.filter(isNewFollow).map(follow => follow.from_id);
-    lastCheckedAt += INTERVAL;
+    lastCheckedAt = Date.now();
 
     if (userIds.length < 1) {
         return;
@@ -35,11 +34,11 @@ async function checkFollowers (msg) {
     }
 }
 
-setInterval(checkFollowers, INTERVAL);
-
-twitch.irc.on('follower', function onFollower (follower) {
+function handleFollower (follower) {
     const displayName = follower.display_name;
 
     console.log(`New follower: ${displayName}!`);
-});
-```
+}
+
+// 2 minutes
+setInterval(checkFollowers, 1000 * 60 * 2);

@@ -28,13 +28,12 @@ async function checkEmotesets (msg) {
     });
 
     // emit result
-    twitch.irc.emit('emotesets', result);
+    handleEmotesets(result);
 }
 
-twitch.irc.on('twitch-userstate', checkEmotesets);
-twitch.irc.on('twitch-globaluserstate', checkEmotesets);
-
-twitch.irc.on('emotesets', function onEmotesets (emotesets) {
+function handleEmotesets (emotesets) {
     // updated emotes arrived!
-});
-```
+}
+
+twitch.irc.on('USERSTATE', checkEmotesets);
+twitch.irc.on('GLOBALUSERSTATE', checkEmotesets);

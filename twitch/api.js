@@ -1,5 +1,18 @@
 const tinyreq = require('tinyreq');
 const buildReq = require('./api/build-req.js');
+const logger = require('./api/logger.js');
+
+function validateLogger (logger) {
+    if (typeof logger !== 'object') {
+        throw new Error('Logger must be an object');
+    }
+
+    for (const key of ['debug', 'error']) {
+        if (typeof logger[key] !== 'function') {
+            throw new Error(`Logger missing required method: ${key}`);
+        }
+    }
+}
 
 class Api {
     constructor (twitch, opt) {
@@ -7,6 +20,14 @@ class Api {
 
         this.helixUrl = opt.helixUrl || 'https://api.twitch.tv/helix';
         this.krakenUrl = opt.krakenUrl || 'https://api.twitch.tv/kraken';
+
+        if (opt.logger === false) {
+            this.logger = logger.empty;
+        } else {
+            this.logger = opt.logger || logger.basic;
+        }
+
+        validateLogger(this.logger);
     }
 
     async request (path, opt = {}, retries = 0) {
@@ -31,7 +52,7 @@ class Api {
             if (retries < (opt.maxRetries || 2)) {
                 return await this.request(path, opt, retries + 1);
             } else {
-                this.twitch.logger.error(`Unable to resolve request ${req.method}: ${req.url}`);
+                this.logger.error(`Unable to resolve request ${req.method}: ${req.url}`);
                 throw err;
             }
         }

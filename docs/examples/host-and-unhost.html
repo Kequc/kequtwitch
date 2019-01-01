@@ -46,7 +46,7 @@
 <div id="content">
 <h1>Host and unhost</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands">HOSTTARGET</a> Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'hosttarget'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferHosttarget</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'HOSTTARGET'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">let</span> type;
     <span class="hljs-keyword">let</span> viewers;
 
@@ -65,14 +65,14 @@
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'host'</span>, (msg) =&gt; {
+twitch.irc.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> channel = msg.params.channel;
     <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'unhost'</span>, (msg) =&gt; {
+twitch.irc.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting with <span class="hljs-subst">${viewers}</span> viewers!`</span>);

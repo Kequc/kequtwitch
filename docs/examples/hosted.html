@@ -45,9 +45,9 @@
 
 <div id="content">
 <h1>Hosted</h1>
-<p>In order to know when we are being hosted by another channel we need to peek into the <code>privmsg</code> command when it's delivered by <code>'jtv'</code> which is a Twitch mechanism that is arguably a little bit old.</p>
+<p>In order to know when we are being hosted by another channel we need to peek into the <code>PRIVMSG</code> command when it's delivered by <code>'jtv'</code> which is a Twitch mechanism that is arguably a little bit old.</p>
 <p>In this example we need to parse the message to find out what is happening.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'privmsg'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inferPrivmsg</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user !== <span class="hljs-string">'jtv'</span>) {
         <span class="hljs-keyword">return</span>;
     }
@@ -65,14 +65,14 @@
     <span class="hljs-keyword">const</span> autoHosting = parts.includes(<span class="hljs-string">'auto-hosting'</span>);
 
     <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">'hosted'</span>,
+        <span class="hljs-attr">command</span>: <span class="hljs-string">'hosted'</span>,
         user,
         <span class="hljs-attr">viewers</span>: <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>,
         autoHosting
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onHosted</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> user = msg.inferred.user;
     <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
     <span class="hljs-keyword">const</span> hosting = msg.inferred.autoHosting ? <span class="hljs-string">'autohosting'</span> : <span class="hljs-string">'hosting'</span>;

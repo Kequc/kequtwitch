@@ -30,13 +30,13 @@ async function authenticate (irc) {
         }
 
         function addListeners () {
-            irc.on('twitch-372', onAuthenticated);
-            irc.on('twitch-notice', onNotice);
+            irc.on('372', onAuthenticated);
+            irc.on('NOTICE', onNotice);
         }
 
         function removeListeners () {
-            irc.off('twitch-372', onAuthenticated);
-            irc.off('twitch-notice', onNotice);
+            irc.off('372', onAuthenticated);
+            irc.off('NOTICE', onNotice);
         }
 
         function onTimeout () {

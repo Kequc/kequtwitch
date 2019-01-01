@@ -86,6 +86,10 @@
 <td><code>timeout</code></td>
 <td>Timeout for connection join, etc. (Default: <code>7000</code>)</td>
 </tr>
+<tr>
+<td><code>logger</code></td>
+<td>Logger override</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -102,9 +106,9 @@
 </code></pre>
 <hr />
 <h2>Events</h2>
-<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command in lowercase prepended with <code>twitch-</code>, otherwise <code>twitch-unknown</code>. In addition all messages emit the <code>message</code> event.</p>
+<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command, otherwise <code>UNKNOWN</code>. In addition all messages emit the <code>message</code> event.</p>
 <p>There are also connection status events.</p>
-<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMessage</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg received from irc</span>
 });
 </code></pre>
@@ -141,7 +145,7 @@
 <td>Message</td>
 </tr>
 <tr>
-<td><code>twitch-&lt;command&gt;</code></td>
+<td><code>&lt;COMMAND&gt;</code></td>
 <td>Message</td>
 </tr>
 <tr>

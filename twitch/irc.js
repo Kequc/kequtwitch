@@ -4,6 +4,7 @@ const connect = require('./irc/actions/connect.js');
 const join = require('./irc/actions/join.js');
 const part = require('./irc/actions/part.js');
 const STATUS = require('./irc/connection-status.js');
+const logger = require('./irc/logger.js');
 const Reader = require('./irc/reader.js');
 const { isValidChannel, isValidInference, isSafeToWrite } = require('./irc/util.js');
 
@@ -23,6 +24,18 @@ function validateInferences (inferences) {
     Object.values(inferences).forEach(isValidInference);
 }
 
+function validateLogger (logger) {
+    if (typeof logger !== 'object') {
+        throw new Error('Logger must be an object');
+    }
+
+    for (const key of ['log', 'info', 'error']) {
+        if (typeof logger[key] !== 'function') {
+            throw new Error(`Logger missing required method: ${key}`);
+        }
+    }
+}
+
 class Irc extends EventEmitter {
     constructor (twitch, opt = {}) {
         super();
@@ -36,8 +49,15 @@ class Irc extends EventEmitter {
         this.host = opt.host || 'irc.chat.twitch.tv';
         this.timeout = opt.timeout || 7000;
 
+        if (opt.logger === false) {
+            this.logger = logger.empty;
+        } else {
+            this.logger = opt.logger || logger.basic;
+        }
+
         validateChannels(this.channels);
         validateInferences(this.inferences);
+        validateLogger(this.logger);
 
         this.reader = new Reader(this);
     }
@@ -55,7 +75,7 @@ class Irc extends EventEmitter {
         this.status = STATUS.READY;
     }
 
-    infer (command, callback) {
+    inference (command, callback) {
         if (this.inferences[command]) {
             throw new Error(`Inference already exists: ${command}`);
         }
@@ -73,7 +93,7 @@ class Irc extends EventEmitter {
     }
 
     write (message) {
-        this.twitch.logger.log('<', message);
+        this.logger.log('<', message);
         this.client.write(`${message}\r\n`);
     }
 

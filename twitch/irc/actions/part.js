@@ -12,11 +12,11 @@ async function part (irc, channel) {
         }
 
         function addListeners () {
-            irc.on('twitch-part', onChannelPart);
+            irc.on('PART', onChannelPart);
         }
 
         function removeListeners () {
-            irc.off('twitch-part', onChannelPart);
+            irc.off('PART', onChannelPart);
         }
 
         function onTimeout () {

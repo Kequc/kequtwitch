@@ -12,11 +12,11 @@ async function join (irc, channel) {
         }
 
         function addListeners () {
-            irc.on('twitch-join', onChannelJoin);
+            irc.on('JOIN', onChannelJoin);
         }
 
         function removeListeners () {
-            irc.off('twitch-join', onChannelJoin);
+            irc.off('JOIN', onChannelJoin);
         }
 
         function onTimeout () {

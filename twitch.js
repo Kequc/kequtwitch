@@ -1,18 +1,5 @@
 const Irc = require('./twitch/irc.js');
 const Api = require('./twitch/api.js');
-const Logger = require('./twitch/logger.js');
-
-function validateLogger (logger) {
-    if (typeof logger !== 'object') {
-        throw new Error('Logger must be an object');
-    }
-
-    for (const key of Logger.methods) {
-        if (typeof logger[key] !== 'function') {
-            throw new Error(`Logger missing required method: ${key}`);
-        }
-    }
-}
 
 class Twitch {
     constructor (token, opt = {}) {
@@ -25,16 +12,6 @@ class Twitch {
         this.validatedAt = undefined;
 
         this.waiting = [];
-
-        if (opt.logger === false) {
-            this.logger = new Logger([]);
-        } else if (!opt.logger || Array.isArray(opt.logger)) {
-            this.logger = new Logger(opt.logger);
-        } else {
-            this.logger = opt.logger;
-        }
-
-        validateLogger(this.logger);
 
         this.validateUrl = opt.validateUrl || 'https://id.twitch.tv/oauth2';
         this.validatePath = opt.validatePath || '/validate';
@@ -57,7 +34,7 @@ class Twitch {
 
     async validate () {
         this.isValidating = true;
-        this.logger.info('Validating...');
+        this.api.logger.info('Validating...');
 
         const result = await this.api.request(this.validatePath, {
             url: this.validateUrl,

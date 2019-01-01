@@ -46,22 +46,22 @@
 <div id="content">
 <h1>Mod and unmod</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands">MODE</a> Twitch command delivers a slightly cryptic payload. We can expect <code>'+o'</code> as a middle parameter to mean <code>'mod'</code> and <code>'-o'</code> to mean <code>'unmod'</code>.</p>
-<pre><code class="language-javascript">twitch.irc.infer(<span class="hljs-string">'mode'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mode</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'MODE'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> key = msg.params[<span class="hljs-number">1</span>];
-    <span class="hljs-keyword">const</span> types = { <span class="hljs-string">'+o'</span>: <span class="hljs-string">'mod'</span>, <span class="hljs-string">'-o'</span>: <span class="hljs-string">'unmod'</span> };
+    <span class="hljs-keyword">const</span> commands = { <span class="hljs-string">'+o'</span>: <span class="hljs-string">'mod'</span>, <span class="hljs-string">'-o'</span>: <span class="hljs-string">'unmod'</span> };
 
     <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">type</span>: types[key]
+        <span class="hljs-attr">command</span>: commands[key]
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'mod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onMod</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'mod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> [channel, , user] = msg.params;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is now modding <span class="hljs-subst">${channel}</span>!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'unmod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onUnmod</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.irc.on(<span class="hljs-string">'unmod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> [channel, , user] = msg.params;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is no longer a mod on <span class="hljs-subst">${channel}</span>!`</span>);

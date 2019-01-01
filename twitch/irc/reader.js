@@ -25,7 +25,7 @@ class Reader {
         this.data = '';
 
         splitIntoLines(lines).forEach((line) => {
-            this.irc.twitch.logger.log('>', line);
+            this.irc.logger.log('>', line);
             handleMsg(this.irc, parseMsg(line));
         });
     }
