@@ -17,8 +17,8 @@ async function checkFollowers (msg) {
         data: { to_id: '$userId' }
     });
 
-    const userIds = follows.filter(isNewFollow).map(follow => follow.from_id);
     lastCheckedAt = Date.now();
+    const userIds = follows.filter(isNewFollow).map(follow => follow.from_id);
 
     if (userIds.length < 1) {
         return;
@@ -29,8 +29,7 @@ async function checkFollowers (msg) {
     })
 
     for (const follower of followers) {
-        // emit result
-        twitch.irc.emit('follower', follower);
+        handleFollower(follower);
     }
 }
 

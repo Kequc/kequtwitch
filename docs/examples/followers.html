@@ -59,8 +59,8 @@
         <span class="hljs-attr">data</span>: { <span class="hljs-attr">to_id</span>: <span class="hljs-string">'$userId'</span> }
     });
 
-    <span class="hljs-keyword">const</span> userIds = follows.filter(isNewFollow).map(<span class="hljs-function"><span class="hljs-params">follow</span> =&gt;</span> follow.from_id);
     lastCheckedAt = <span class="hljs-built_in">Date</span>.now();
+    <span class="hljs-keyword">const</span> userIds = follows.filter(isNewFollow).map(<span class="hljs-function"><span class="hljs-params">follow</span> =&gt;</span> follow.from_id);
 
     <span class="hljs-keyword">if</span> (userIds.length &lt; <span class="hljs-number">1</span>) {
         <span class="hljs-keyword">return</span>;
@@ -71,8 +71,7 @@
     })
 
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> follower <span class="hljs-keyword">of</span> followers) {
-        <span class="hljs-comment">// emit result</span>
-        twitch.irc.emit(<span class="hljs-string">'follower'</span>, follower);
+        handleFollower(follower);
     }
 }
 
