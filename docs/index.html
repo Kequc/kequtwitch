@@ -34,6 +34,7 @@
             <li><a href="/examples/chat.html">Chat</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
+            <li><a href="/examples/subscribes.html">Subscribes</a></li>
             <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
@@ -65,10 +66,10 @@
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);
 <span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>);
 
-<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span> (<span class="hljs-params"></span>) </span>{
+(<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">await</span> twitch.irc.connect();
     <span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#channel'</span>);
-}();
+})();
 </code></pre>
 <p>Then you can watch the chat activity in your console.</p>
 

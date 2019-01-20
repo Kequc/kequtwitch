@@ -8,16 +8,16 @@ This solution uses polling to find new user ids, then looks up those users.
 let lastCheckedAt = Date.now();
 
 function isNewFollow (follow) {
-    return new Date(follow.followed_at).getTime() > lastCheckedAt;
+    return new Date(follow.followedAt).getTime() > lastCheckedAt;
 }
 
 async function checkFollowers () {
     // fetch
     const follows = await twitch.api.request('/users/follows', {
-        data: { to_id: '$userId' }
+        data: { toId: '$userId' }
     });
 
-    const userIds = follows.filter(isNewFollow).map(follow => follow.from_id);
+    const userIds = follows.filter(isNewFollow).map(follow => follow.fromId);
     lastCheckedAt = Date.now();
 
     if (userIds.length < 1) {
@@ -34,7 +34,7 @@ async function checkFollowers () {
 }
 
 function handleFollower (follower) {
-    const displayName = follower.display_name;
+    const displayName = follower.displayName;
 
     console.log(`New follower: ${displayName}!`);
 }

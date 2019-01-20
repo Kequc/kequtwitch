@@ -42,9 +42,9 @@ class Twitch {
             kraken: true
         });
 
-        this.clientId = result.client_id;
+        this.clientId = result.clientId;
         this.login = result.login;
-        this.userId = result.user_id;
+        this.userId = result.userId;
         this.isValidating = false;
         this.validatedAt = Date.now();
 

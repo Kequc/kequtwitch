@@ -1,6 +1,6 @@
 # Logger
 
-You can specify a custom logger with the methods `log`, `info`, and `error` for IRC. Additionally with the methods `debug`, and `error` for API. To disable the logger use false `{ logger: false }`
+You can specify a custom logger with the methods `log`, `info`, and `error` for IRC. Additionally with the methods `debug`, `info`, and `error` for API. To disable the logger use false `{ logger: false }`
 
 In general `log` will output irc communication, `info` contains status information, `error` only when something unexpected happens.
 

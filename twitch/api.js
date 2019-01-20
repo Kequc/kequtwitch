@@ -1,18 +1,8 @@
 const tinyreq = require('tinyreq');
 const buildReq = require('./api/build-req.js');
+const convertKeys = require('./api/convert-keys.js');
 const logger = require('./api/logger.js');
-
-function validateLogger (logger) {
-    if (typeof logger !== 'object') {
-        throw new Error('Logger must be an object');
-    }
-
-    for (const key of ['debug', 'error']) {
-        if (typeof logger[key] !== 'function') {
-            throw new Error(`Logger missing required method: ${key}`);
-        }
-    }
-}
+const { validateLogger } = require('./api/util.js');
 
 class Api {
     constructor (twitch, opt) {
@@ -47,7 +37,7 @@ class Api {
                 throw err;
             }
 
-            return result;
+            return convertKeys(result);
         } catch (err) {
             if (retries < (opt.maxRetries || 2)) {
                 return await this.request(path, opt, retries + 1);

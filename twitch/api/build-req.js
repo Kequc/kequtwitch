@@ -26,6 +26,10 @@ function parseValue (api, value) {
     }
 }
 
+function snakecase (key) {
+    return key.replace( /([A-Z])/g, '_$1').toLowerCase();
+}
+
 function buildData (api, data) {
     if (typeof data !== 'object') {
         return parseValue(api, data);
@@ -34,7 +38,7 @@ function buildData (api, data) {
     const result = {};
 
     for (const key of Object.keys(data)) {
-        result[key] = buildData(api, data[key]);
+        result[snakecase(key)] = buildData(api, data[key]);
     }
 
     return result;

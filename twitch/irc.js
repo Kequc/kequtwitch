@@ -1,40 +1,13 @@
 const EventEmitter = require('events');
 const authenticate = require('./irc/actions/authenticate.js');
 const connect = require('./irc/actions/connect.js');
+const disconnect = require('./irc/actions/disconnect.js');
 const join = require('./irc/actions/join.js');
 const part = require('./irc/actions/part.js');
 const STATUS = require('./irc/connection-status.js');
 const logger = require('./irc/logger.js');
 const Reader = require('./irc/reader.js');
-const { isValidChannel, isValidInference, isSafeToWrite } = require('./irc/util.js');
-
-function validateChannels (channels) {
-    if (!Array.isArray(channels)) {
-        throw new Error('Channels must be an array');
-    }
-
-    channels.forEach(isValidChannel);
-}
-
-function validateInferences (inferences) {
-    if (typeof inferences !== 'object') {
-        throw new Error('Inferences must be an object');
-    }
-
-    Object.values(inferences).forEach(isValidInference);
-}
-
-function validateLogger (logger) {
-    if (typeof logger !== 'object') {
-        throw new Error('Logger must be an object');
-    }
-
-    for (const key of ['log', 'info', 'error']) {
-        if (typeof logger[key] !== 'function') {
-            throw new Error(`Logger missing required method: ${key}`);
-        }
-    }
-}
+const { isSafeToWrite, isValidChannel, validateChannels, isValidInference, validateInferences, validateLogger } = require('./irc/util.js');
 
 class Irc extends EventEmitter {
     constructor (twitch, opt = {}) {
@@ -64,7 +37,7 @@ class Irc extends EventEmitter {
 
     async connect () {
         if (this.status !== STATUS.DISCONNECTED) {
-            throw new Error('Already connected');
+            await this.disconnect();
         }
 
         await this.twitch.isValidated();
@@ -73,6 +46,11 @@ class Irc extends EventEmitter {
         await Promise.all(this.channels.map(channel => join(this, channel)));
 
         this.status = STATUS.READY;
+    }
+
+    async disconnect () {
+        await this.twitch.isValidated();
+        await disconnect(this);
     }
 
     inference (command, callback) {

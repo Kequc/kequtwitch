@@ -34,6 +34,7 @@
             <li><a href="/examples/chat.html">Chat</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
+            <li><a href="/examples/subscribes.html">Subscribes</a></li>
             <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
@@ -93,16 +94,19 @@
 </tbody>
 </table>
 <hr />
-<h2>Connect join and part</h2>
-<p>When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
+<h2>Connect join part and disconnect</h2>
+<p>The <code>connect</code> method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.irc.connect();
 <span class="hljs-comment">// irc is now connected</span>
 
-<span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#my-channel'</span>);
+<span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#mychannel'</span>);
 <span class="hljs-comment">// #my-channel is now joined</span>
 
-<span class="hljs-keyword">await</span> twitch.irc.part(<span class="hljs-string">'#my-channel'</span>);
+<span class="hljs-keyword">await</span> twitch.irc.part(<span class="hljs-string">'#mychannel'</span>);
 <span class="hljs-comment">// #my-channel is now parted</span>
+
+<span class="hljs-keyword">await</span> twitch.irc.disconnect();
+<span class="hljs-comment">// irc is now disconnected</span>
 </code></pre>
 <hr />
 <h2>Events</h2>

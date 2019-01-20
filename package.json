@@ -1,12 +1,12 @@
 {
     "name": "kequtwitch",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "This is a node library for interfacing with twitch",
     "main": "twitch.js",
     "scripts": {
         "test": "jest",
         "docs": "github-pages-render exec .",
-        "server": "github-pages-render server ."
+        "docs:server": "github-pages-render server ."
     },
     "repository": {
         "type": "git",
@@ -28,6 +28,6 @@
         "jest": "^23.6.0"
     },
     "dependencies": {
-        "tinyreq": "^3.4.0"
+        "tinyreq": "^3.4.1"
     }
 }

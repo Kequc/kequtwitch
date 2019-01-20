@@ -34,6 +34,7 @@
             <li><a href="/examples/chat.html">Chat</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
+            <li><a href="/examples/subscribes.html">Subscribes</a></li>
             <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
@@ -45,19 +46,19 @@
 
 <div id="content">
 <h1>Chat</h1>
-<p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <code>PRIVMSG</code> command it's generally information related to whether someone is hosting your channel.</p>
-<p>Actions are chat messages prefixed with the string <code>ACTION /</code>, so while not necessary to deliver a different event, it's nice to be able to with the start of the message stripped off to where the user started typing.</p>
+<p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <a href="https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms">PRIVMSG</a> command it's generally information related to whether someone is hosting your channel.</p>
+<p>Actions are chat messages prefixed with <code>/me</code> which are delivered in IRC in the format <code>ACTION</code>, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.</p>
 <p>Then we check if there are bits attached to the <code>msg</code>. Probably the implementation you really want is less complicated than this.</p>
 <pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user === <span class="hljs-string">'jtv'</span>) <span class="hljs-keyword">return</span>;
 
-    <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>].indexOf(<span class="hljs-string">'ACTION /'</span>) === <span class="hljs-number">0</span>) {
-        <span class="hljs-comment">// "ACTION /me is great!"</span>
-        <span class="hljs-keyword">const</span> message = msg.params[<span class="hljs-number">1</span>].substring(<span class="hljs-number">7</span>);
+    <span class="hljs-comment">// "/me is great!" #=&gt; "ACTION me is great!"</span>
+    <span class="hljs-keyword">const</span> parts = msg.params[<span class="hljs-number">1</span>].match(<span class="hljs-regexp">/^\u0001ACTION (.+)\u0001$/</span>);
 
+    <span class="hljs-keyword">if</span> (parts !== <span class="hljs-literal">null</span>) {
         <span class="hljs-keyword">return</span> {
-            <span class="hljs-attr">command</span>: <span class="hljs-string">'action'</span>
-            message
+            <span class="hljs-attr">command</span>: <span class="hljs-string">'action'</span>,
+            <span class="hljs-attr">message</span>: parts[<span class="hljs-number">1</span>] <span class="hljs-comment">// "me is great!"</span>
         };
     }
 

@@ -4,7 +4,7 @@ function serverStuff (irc, msg) {
         irc.write(`PONG :${msg.params[0]}`);
         break;
     case 'RECONNECT':
-        // TODO
+        irc.connect();
         break;
     }
 }

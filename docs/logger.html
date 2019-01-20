@@ -34,6 +34,7 @@
             <li><a href="/examples/chat.html">Chat</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
+            <li><a href="/examples/subscribes.html">Subscribes</a></li>
             <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
@@ -45,7 +46,7 @@
 
 <div id="content">
 <h1>Logger</h1>
-<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, and <code>error</code> for IRC. Additionally with the methods <code>debug</code>, and <code>error</code> for API. To disable the logger use false <code>{ logger: false }</code></p>
+<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, and <code>error</code> for IRC. Additionally with the methods <code>debug</code>, <code>info</code>, and <code>error</code> for API. To disable the logger use false <code>{ logger: false }</code></p>
 <p>In general <code>log</code> will output irc communication, <code>info</code> contains status information, <code>error</code> only when something unexpected happens.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> options = {
     <span class="hljs-attr">irc</span>: {

@@ -35,10 +35,10 @@ The easiest way to see the library working is to login to a chatroom. A streamer
 const Twitch = require('kequtwitch');
 const twitch = new Twitch('your-oauth-token');
 
-async function init () {
+(async function init () {
     await twitch.irc.connect();
     await twitch.irc.join('#channel');
-}();
+})();
 ```
 
 Then you can watch the chat activity in your console.

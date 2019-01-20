@@ -27,19 +27,22 @@ const twitch = new Twitch('your-oauth-token', { irc });
 | `logger` | Logger override |
 
 ---
-## Connect join and part
+## Connect join part and disconnect
 
-When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
+The `connect` method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
 
 ```javascript
 await twitch.irc.connect();
 // irc is now connected
 
-await twitch.irc.join('#my-channel');
+await twitch.irc.join('#mychannel');
 // #my-channel is now joined
 
-await twitch.irc.part('#my-channel');
+await twitch.irc.part('#mychannel');
 // #my-channel is now parted
+
+await twitch.irc.disconnect();
+// irc is now disconnected
 ```
 
 ---

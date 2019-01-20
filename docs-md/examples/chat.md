@@ -1,8 +1,8 @@
 # Chat
 
-The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from `'jtv'`, which is a legacy (or out of date) way Twitch delivers some status messages. In the `PRIVMSG` command it's generally information related to whether someone is hosting your channel.
+The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from `'jtv'`, which is a legacy (or out of date) way Twitch delivers some status messages. In the [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) command it's generally information related to whether someone is hosting your channel.
 
-Actions are chat messages prefixed with the string `ACTION /`, so while not necessary to deliver a different event, it's nice to be able to with the start of the message stripped off to where the user started typing.
+Actions are chat messages prefixed with `/me` which are delivered in IRC in the format `ACTION`, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.
 
 Then we check if there are bits attached to the `msg`. Probably the implementation you really want is less complicated than this.
 
@@ -10,13 +10,13 @@ Then we check if there are bits attached to the `msg`. Probably the implementati
 twitch.irc.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user === 'jtv') return;
 
-    if (msg.params[1].indexOf('ACTION /') === 0) {
-        // "ACTION /me is great!"
-        const message = msg.params[1].substring(7);
+    // "/me is great!" #=> "ACTION me is great!"
+    const parts = msg.params[1].match(/^\u0001ACTION (.+)\u0001$/);
 
+    if (parts !== null) {
         return {
-            command: 'action'
-            message
+            command: 'action',
+            message: parts[1] // "me is great!"
         };
     }
 
