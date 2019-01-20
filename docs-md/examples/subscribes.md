@@ -21,10 +21,10 @@ twitch.irc.on('sub', function (msg) {
 });
 
 twitch.irc.on('subgift', function (msg) {
-    const from = msg.tags.displayName || 'Anonymous';
-    const to = msg.tags.msgParamRecipientDisplayName;
+    const displayName = msg.tags.displayName || 'Anonymous';
+    const recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
     const [channel, message] = msg.params;
 
-    console.log(`${from} has gifted a sub for ${to} to ${channel}!`);
+    console.log(`${displayName} has gifted a sub for ${recipientDisplayName} to ${channel}!`);
 });
 ```

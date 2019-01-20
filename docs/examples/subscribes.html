@@ -65,11 +65,11 @@ twitch.irc.on(<span class="hljs-string">'sub'</span>, <span class="hljs-function
 });
 
 twitch.irc.on(<span class="hljs-string">'subgift'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">from</span> = msg.tags.displayName || <span class="hljs-string">'Anonymous'</span>;
-    <span class="hljs-keyword">const</span> to = msg.tags.msgParamRecipientDisplayName;
+    <span class="hljs-keyword">const</span> displayName = msg.tags.displayName || <span class="hljs-string">'Anonymous'</span>;
+    <span class="hljs-keyword">const</span> recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
     <span class="hljs-keyword">const</span> [channel, message] = msg.params;
 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">from</span>}</span> has gifted a sub for <span class="hljs-subst">${to}</span> to <span class="hljs-subst">${channel}</span>!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> has gifted a sub for <span class="hljs-subst">${recipientDisplayName}</span> to <span class="hljs-subst">${channel}</span>!`</span>);
 });
 </code></pre>
 
