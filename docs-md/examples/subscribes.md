@@ -17,7 +17,7 @@ twitch.irc.on('sub', function (msg) {
     const months = msg.tags.msgParamMonths;
     const [channel, message] = msg.params;
 
-    console.log(`${displayName} has subbed for ${months} months to ${channel}!`);
+    console.log(`${displayName} has subbed for ${months} months to ${channel} and said: "${message}"!`);
 });
 
 twitch.irc.on('subgift', function (msg) {
@@ -25,6 +25,6 @@ twitch.irc.on('subgift', function (msg) {
     const recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
     const [channel, message] = msg.params;
 
-    console.log(`${displayName} has gifted a sub for ${recipientDisplayName} to ${channel}!`);
+    console.log(`${displayName} has gifted a sub for ${recipientDisplayName} to ${channel} and said: "${message}"!`);
 });
 ```
