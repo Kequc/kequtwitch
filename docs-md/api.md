@@ -23,7 +23,9 @@ const twitch = new Twitch('your-oauth-token', { api });
 ---
 ## Request
 
-The `request` method takes a `path` as a first parameter, an options object, and returns a promise. Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `to_id` you might use `{ toId: 'user-id' }`.
+The `request` method takes a `path` as a first parameter, an options object, and returns a promise.
+
+Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `to_id` you might use `{ toId: 'user-id' }`.
 
 ```javascript
 const response = await twitch.api.request('/users', {

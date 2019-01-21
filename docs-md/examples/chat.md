@@ -10,13 +10,13 @@ Then we check if there are bits attached to the `msg`. Probably the implementati
 twitch.irc.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user === 'jtv') return;
 
-    // "/me is great!" #=> "ACTION me is great!"
+    // "/me is great!" #=> "ACTION is great!"
     const parts = msg.params[1].match(/^\u0001ACTION (.+)\u0001$/);
 
     if (parts !== null) {
         return {
             command: 'action',
-            message: parts[1] // "me is great!"
+            message: parts[1] // "is great!"
         };
     }
 

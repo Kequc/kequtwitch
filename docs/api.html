@@ -80,7 +80,8 @@
 </table>
 <hr />
 <h2>Request</h2>
-<p>The <code>request</code> method takes a <code>path</code> as a first parameter, an options object, and returns a promise. Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>to_id</code> you might use <code>{ toId: 'user-id' }</code>.</p>
+<p>The <code>request</code> method takes a <code>path</code> as a first parameter, an options object, and returns a promise.</p>
+<p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>to_id</code> you might use <code>{ toId: 'user-id' }</code>.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
     <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: <span class="hljs-string">'user-id'</span> }
 });
