@@ -2,7 +2,7 @@
     "name": "kequtwitch",
     "version": "0.3.0",
     "description": "This is a node library for interfacing with twitch",
-    "main": "twitch.js",
+    "main": "index.js",
     "scripts": {
         "test": "jest",
         "docs": "github-pages-render exec .",

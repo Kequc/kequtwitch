@@ -1,4 +1,4 @@
-const grabParameter = require('../../../twitch/irc/parse-msg/grab-parameter.js');
+const grabParameter = require('../../../src/irc/parse-msg/grab-parameter.js');
 
 describe('grabParameter', function () {
     let raw;
