@@ -1,6 +1,6 @@
 # Subscribes
 
-The [USERNOTICE](https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-commands) Twitch command contains a `msg-id` tag which can be quite useful for reporting about new subscriptions. There are lots of tags so checking out the docs is recommended.
+The [USERNOTICE](https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-commands) Twitch command contains a `msg-id` tag which can be quite useful for reporting about new subscriptions.
 
 ```javascript
 twitch.irc.inference('USERNOTICE', function (msg) {

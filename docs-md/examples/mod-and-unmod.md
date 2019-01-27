@@ -1,6 +1,6 @@
 # Mod and unmod
 
-The [MODE](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands) Twitch command delivers a slightly cryptic payload. We can expect `'+o'` as a middle parameter to mean `'mod'` and `'-o'` to mean `'unmod'`.
+The [MODE](https://dev.twitch.tv/docs/irc/membership/#mode-twitch-membership) Twitch command delivers a slightly cryptic payload. We can expect `'+o'` as a middle parameter to mean `'mod'` and `'-o'` to mean `'unmod'`.
 
 ```javascript
 twitch.irc.inference('MODE', function (msg) {
