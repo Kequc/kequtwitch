@@ -36,10 +36,10 @@ await twitch.irc.connect();
 // irc is now connected
 
 await twitch.irc.join('#mychannel');
-// #my-channel is now joined
+// #mychannel is now joined
 
 await twitch.irc.part('#mychannel');
-// #my-channel is now parted
+// #mychannel is now parted
 
 await twitch.irc.disconnect();
 // irc is now disconnected
