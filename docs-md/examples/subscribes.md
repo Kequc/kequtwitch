@@ -15,7 +15,8 @@ twitch.irc.inference('USERNOTICE', function (msg) {
 twitch.irc.on('sub', function (msg) {
     const displayName = msg.tags.displayName;
     const months = msg.tags.msgParamMonths;
-    const [channel, message] = msg.params;
+    const channel = msg.channel;
+    const message = msg.message;
 
     console.log(`${displayName} has subbed for ${months} months to ${channel} and said: "${message}"!`);
 });
@@ -23,7 +24,8 @@ twitch.irc.on('sub', function (msg) {
 twitch.irc.on('subgift', function (msg) {
     const displayName = msg.tags.displayName || 'Anonymous';
     const recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
-    const [channel, message] = msg.params;
+    const channel = msg.channel;
+    const message = msg.message;
 
     console.log(`${displayName} has gifted a sub for ${recipientDisplayName} to ${channel} and said: "${message}"!`);
 });

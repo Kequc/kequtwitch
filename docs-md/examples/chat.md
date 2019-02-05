@@ -27,7 +27,7 @@ twitch.irc.inference('PRIVMSG', function (msg) {
 
 twitch.irc.on('action', function (msg) {
     const displayName = msg.tags.displayName;
-    const channel = msg.params[0];
+    const channel = msg.channel;
     const message = msg.inferred.message;
 
     console.log(`${displayName} in ${channel} actioned "${message}"!`);
@@ -36,14 +36,16 @@ twitch.irc.on('action', function (msg) {
 twitch.irc.on('cheer', function (msg) {
     const displayName = msg.tags.displayName;
     const bits = msg.tags.bits;
-    const [channel, message] = msg.params;
+    const channel = msg.channel;
+    const message = msg.message;
 
     console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
 });
 
 twitch.irc.on('chat', function (msg) {
     const displayName = msg.tags.displayName;
-    const [channel, message] = msg.params;
+    const channel = msg.channel;
+    const message = msg.message;
 
     console.log(`${displayName} in ${channel} said "${message}"!`);
 });

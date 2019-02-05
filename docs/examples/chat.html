@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
@@ -69,7 +69,7 @@
 
 twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
-    <span class="hljs-keyword">const</span> channel = msg.params[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">const</span> channel = msg.channel;
     <span class="hljs-keyword">const</span> message = msg.inferred.message;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> actioned "<span class="hljs-subst">${message}</span>"!`</span>);
@@ -78,14 +78,16 @@ twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-funct
 twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
     <span class="hljs-keyword">const</span> bits = msg.tags.bits;
-    <span class="hljs-keyword">const</span> [channel, message] = msg.params;
+    <span class="hljs-keyword">const</span> channel = msg.channel;
+    <span class="hljs-keyword">const</span> message = msg.message;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> cheered <span class="hljs-subst">${bits}</span> and said "<span class="hljs-subst">${message}</span>"!`</span>);
 });
 
 twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
-    <span class="hljs-keyword">const</span> [channel, message] = msg.params;
+    <span class="hljs-keyword">const</span> channel = msg.channel;
+    <span class="hljs-keyword">const</span> message = msg.message;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> said "<span class="hljs-subst">${message}</span>"!`</span>);
 });

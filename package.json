@@ -1,6 +1,6 @@
 {
     "name": "kequtwitch",
-    "version": "0.3.1",
+    "version": "0.3.3",
     "description": "This is a node library for interfacing with twitch",
     "main": "index.js",
     "scripts": {
@@ -24,9 +24,6 @@
         "url": "https://github.com/Kequc/kequtwitch/issues"
     },
     "homepage": "https://kequtwitch.kequc.com",
-    "devDependencies": {
-        "jest": "^23.6.0"
-    },
     "dependencies": {
         "tinyreq": "^3.4.1"
     }

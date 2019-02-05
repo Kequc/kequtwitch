@@ -1,5 +1,7 @@
 # Home
 
+This library is agnostic to the information is receives from Twitch, it delivers you all data in a simple format without any frills. It requires a small amount of effort to produce the behaviour you want compared to similar libraries but it is ultimately still pretty easy honestly.
+
 ---
 ## Installation
 
@@ -24,7 +26,7 @@ Create an instance of `kequtwitch` passing a valid [OAuth token](http://twitchap
 const twitch = new Twitch('your-oauth-token');
 ```
 
-You are now setup to use the library. If you are on [the website](https://kequtwitch.kequc.com) please view the sidebar on the right or use [Github](https://github.com/Kequc/kequtwitch/tree/master/docs-md) for further documentation.
+You are now set up to use the library! If you are on [the website](https://kequtwitch.kequc.com) please view the sidebar on the right or use [Github](https://github.com/Kequc/kequtwitch/tree/master/docs-md) for further documentation.
 
 ---
 ## Quick start
@@ -41,4 +43,4 @@ const twitch = new Twitch('your-oauth-token');
 })();
 ```
 
-Then you can watch the chat activity in your console.
+Chat activity will appear in your console.

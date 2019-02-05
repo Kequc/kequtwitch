@@ -19,7 +19,8 @@ twitch.irc.on('mod', function (msg) {
 });
 
 twitch.irc.on('unmod', function (msg) {
-    const [channel, , user] = msg.params;
+    const channel = msg.channel;
+    const user = msg.params[2];
 
     console.log(`${user} is no longer a mod on ${channel}!`);
 });

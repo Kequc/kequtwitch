@@ -1,5 +1,5 @@
 html, body {
-    font-family: 'Inconsolata', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 19px;
     color: #f6f6f6;
     background-color: #333;
@@ -65,9 +65,10 @@ a:hover {
     top: 0;
     right: 20px;
     width: 250px;
-    background-color: #423F3F;
+    background-color: #262626;
     padding: 20px;
     box-shadow: #174952 0 0 1px;
+    font-size: 0.9rem;
 }
 #sidebar h4 {
     margin: 0;
@@ -89,6 +90,6 @@ a:hover {
     margin: 20px;
     margin-right: 330px;
     padding: 20px;
-    background-color: #423F3F;
+    background-color: #262626;
     box-shadow: #174952 0 0 1px;
 }

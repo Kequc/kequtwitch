@@ -14,6 +14,8 @@ Many are easy to understand and consistent such as the [JOIN](https://dev.twitch
 | `prefix.user` | User (Ie. `'ronni'`) |
 | `command` | The Twitch command (Ie. `'PRIVMSG'`) |
 | `params` | Array of parameters that follow the command (Ie. `['#mrkequc', 'Hi everyone!']`) |
+| `channel` | Taken from `params` if detected or `null` (Ie. `'#mrkequc'`) |
+| `message` | Taken from `params` if detected or `null` (Ie. `'Hi everyone!'`) |
 | `inferred` | Object containing special inferred information (Ie. `{}`) |
 
 ---
@@ -38,4 +40,6 @@ Emote sets are split by `','` and turned into numbers for example `[0]`.
 ---
 ## Params
 
-The first parameter is commonly the channel, therefore very often when you want to know what channel the command is related to check `msg.params[0]`. This isn't true for all commands but is good general rule to keep in mind.
+The first parameter is commonly the channel, therefore very often when you want to know what channel the command is related to you could use `msg.params[0]`. This isn't true for all commands but is good general rule to keep in mind.
+
+A `msg.channel` attribute is available, if what looks like a channel is found in `msg.params` and it isn't the message. A `msg.message` attribute is available, if the last parameter in `msg.params` uses the `:` long form notation.

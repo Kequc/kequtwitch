@@ -20,7 +20,7 @@ twitch.irc.inference('CLEARCHAT', function (msg) {
 });
 
 twitch.irc.on('clear', function (msg) {
-    const channel = msg.params[0];
+    const channel = msg.channel;
 
     console.log(`Chat in ${channel} has been cleared by a moderator!`);
 });

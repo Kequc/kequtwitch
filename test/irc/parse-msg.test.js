@@ -9,6 +9,8 @@ describe('parseMsg', function () {
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
             params: ['#dallas', 'cheer100'],
+            channel: '#dallas',
+            message: 'cheer100',
             inferred: {}
         });
     });
@@ -21,6 +23,8 @@ describe('parseMsg', function () {
             prefix: { full: null, host: null, user: null },
             command: 'COMMAND',
             params: ['params', 'hello'],
+            channel: null,
+            message: null,
             inferred: {}
         });
     });
@@ -33,6 +37,8 @@ describe('parseMsg', function () {
             prefix: { full: 'tmi.twitch.tv', host: 'tmi.twitch.tv', user: null },
             command: 'COMMAND',
             params: [],
+            channel: null,
+            message: null,
             inferred: {}
         });
     });
@@ -45,6 +51,8 @@ describe('parseMsg', function () {
             tags: {},
             prefix: {},
             params: [],
+            channel: null,
+            message: null,
             inferred: {}
         });
     });
@@ -59,6 +67,8 @@ describe('parseMsg', function () {
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
             params: ['#dallas', 'cheer100'],
+            channel: '#dallas',
+            message: 'cheer100',
             inferred: {}
         });
     });
@@ -73,6 +83,8 @@ describe('parseMsg', function () {
             prefix: { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' },
             command: 'PRIVMSG',
             params: ['#dallas', 'cheer100'],
+            channel: '#dallas',
+            message: 'cheer100',
             inferred: {}
         });
     });

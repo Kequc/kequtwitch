@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
@@ -67,7 +67,7 @@
 });
 
 twitch.irc.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> channel = msg.params[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">const</span> channel = msg.channel;
     <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);

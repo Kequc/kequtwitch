@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset-context/cssreset-context-min.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
@@ -63,7 +63,8 @@ twitch.irc.on(<span class="hljs-string">'mod'</span>, <span class="hljs-function
 });
 
 twitch.irc.on(<span class="hljs-string">'unmod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> [channel, , user] = msg.params;
+    <span class="hljs-keyword">const</span> channel = msg.channel;
+    <span class="hljs-keyword">const</span> user = msg.params[<span class="hljs-number">2</span>];
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is no longer a mod on <span class="hljs-subst">${channel}</span>!`</span>);
 });

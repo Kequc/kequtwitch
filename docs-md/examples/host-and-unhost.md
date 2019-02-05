@@ -23,7 +23,7 @@ twitch.irc.inference('HOSTTARGET', function (msg) {
 });
 
 twitch.irc.on('host', function (msg) {
-    const channel = msg.params[0];
+    const channel = msg.channel;
     const viewers = msg.inferred.viewers;
 
     console.log(`Hosting ${channel} with ${viewers} viewers!`);
