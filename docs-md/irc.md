@@ -29,7 +29,7 @@ const twitch = new Twitch('your-oauth-token', { irc });
 ---
 ## Connect join part and disconnect
 
-The `connect` method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
+If you are connected already the `connect` method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
 
 ```javascript
 await twitch.irc.connect();
