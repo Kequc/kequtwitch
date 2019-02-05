@@ -11,7 +11,7 @@ twitch.irc.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user === 'jtv') return;
 
     // "/me is great!" #=> "ACTION is great!"
-    const parts = msg.params[1].match(/^\u0001ACTION (.+)\u0001$/);
+    const parts = msg.message.match(/^\u0001ACTION (.+)\u0001$/);
 
     if (parts !== null) {
         return {
