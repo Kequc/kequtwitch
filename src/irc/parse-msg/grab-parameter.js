@@ -1,5 +1,3 @@
-module.exports = grabParameter;
-
 function grabParameter (raw, start) {
     if (start === -1) return null;
     const end = raw.substring(start).search(/\s/);
@@ -10,3 +8,5 @@ function grabParameter (raw, start) {
         return raw.substring(start);
     }
 }
+
+module.exports = grabParameter;

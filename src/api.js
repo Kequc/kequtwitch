@@ -1,5 +1,3 @@
-module.exports = Api;
-
 const tinyreq = require('tinyreq');
 const buildReq = require('./api/build-req.js');
 const convertKeys = require('./api/convert-keys.js');
@@ -49,3 +47,5 @@ class Api {
         }
     }
 }
+
+module.exports = Api;

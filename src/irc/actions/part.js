@@ -1,5 +1,3 @@
-module.exports = part;
-
 const STATUS = require('../connection-status.js');
 
 async function part (irc, channel) {
@@ -30,3 +28,5 @@ async function part (irc, channel) {
         addListeners();
     });
 }
+
+module.exports = part;

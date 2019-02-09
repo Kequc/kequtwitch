@@ -1,5 +1,3 @@
-module.exports = STATUS;
-
 const STATUS = {
     DISCONNECTED: 'disconnected',
     CONNECTING: 'connecting',
@@ -7,3 +5,5 @@ const STATUS = {
     AUTHENTICATED: 'authenticated',
     READY: 'ready'
 };
+
+module.exports = STATUS;

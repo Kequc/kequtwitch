@@ -1,5 +1,3 @@
-module.exports = parsePrefix;
-
 function parsePrefix (raw) {
     if (!raw) {
         return { full: null, host: null, user: null };
@@ -17,3 +15,5 @@ function parsePrefix (raw) {
 
     return { full, host, user };
 }
+
+module.exports = parsePrefix;

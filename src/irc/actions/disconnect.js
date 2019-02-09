@@ -1,5 +1,3 @@
-module.exports = disconnect;
-
 const STATUS = require('../connection-status.js');
 
 async function disconnect (irc) {
@@ -34,3 +32,5 @@ async function disconnect (irc) {
         addListeners();
     });
 }
+
+module.exports = disconnect;

@@ -1,5 +1,3 @@
-module.exports = buildReq;
-
 const querystring = require('querystring');
 
 function buildReq (api, path, opt) {
@@ -65,3 +63,5 @@ function buildHeaders (api, opt) {
 
     return Object.assign(headers, opt.headers);
 }
+
+module.exports = buildReq;

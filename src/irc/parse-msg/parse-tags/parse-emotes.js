@@ -1,5 +1,3 @@
-module.exports = parseEmotes;
-
 function parseEmotes (value) {
     if (typeof value !== 'string') return value;
 
@@ -22,3 +20,5 @@ function buildEmote (id, place) {
     const end = parseInt(_end, 10);
     return { id, start, end, length: end - start };
 }
+
+module.exports = parseEmotes;

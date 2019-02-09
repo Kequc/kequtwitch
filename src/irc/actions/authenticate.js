@@ -1,5 +1,3 @@
-module.exports = authenticate;
-
 const STATUS = require('../connection-status.js');
 
 const AUTH_FAILED_MESSAGES = [
@@ -50,3 +48,5 @@ async function authenticate (irc) {
         addListeners();
     });
 }
+
+module.exports = authenticate;

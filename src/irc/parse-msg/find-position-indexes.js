@@ -1,5 +1,3 @@
-module.exports = findPositionIndexes;
-
 function findPositionIndexes (raw) {
     let tags = raw.search(/(?:^|\s)@\S+/);
     let prefix = raw.search(/(?:^|\s):\S+/);
@@ -27,3 +25,5 @@ function findPositionIndexes (raw) {
 
     return { tags, prefix, command, params };
 }
+
+module.exports = findPositionIndexes;

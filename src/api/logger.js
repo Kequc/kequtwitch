@@ -1,5 +1,3 @@
-module.exports = { basic, empty, validate };
-
 const basic = {
     debug (...params) {
         console.debug(...params);
@@ -30,3 +28,5 @@ function validate (logger) {
         }
     }
 }
+
+module.exports = { basic, empty, validate };

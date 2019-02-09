@@ -1,5 +1,3 @@
-module.exports = Reader;
-
 const handleMsg = require('./handle-msg.js');
 const parseMsg = require('./parse-msg.js');
 
@@ -32,3 +30,5 @@ class Reader {
 function splitIntoLines (data) {
     return data.split('\r\n').map(part => part.trim()).filter(part => !!part);
 }
+
+module.exports = Reader;

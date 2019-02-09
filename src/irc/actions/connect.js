@@ -1,5 +1,3 @@
-module.exports = connect;
-
 const net = require('net');
 const STATUS = require('../connection-status.js');
 
@@ -57,3 +55,5 @@ async function connect (irc) {
         addListeners();
     });
 }
+
+module.exports = connect;

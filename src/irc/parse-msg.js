@@ -1,5 +1,3 @@
-module.exports = parseMsg;
-
 const findPositionIndexes = require('./parse-msg/find-position-indexes.js');
 const grabParameter = require('./parse-msg/grab-parameter.js');
 const parseParams = require('./parse-msg/parse-params.js');
@@ -52,3 +50,5 @@ function inferMessage (raw, params) {
 function isMessage (raw, message) {
     return raw.trimEnd().endsWith(':' + message);
 }
+
+module.exports = parseMsg;

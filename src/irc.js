@@ -1,5 +1,3 @@
-module.exports = Irc;
-
 const EventEmitter = require('events');
 const authenticate = require('./irc/actions/authenticate.js');
 const connect = require('./irc/actions/connect.js');
@@ -114,3 +112,5 @@ class Irc extends EventEmitter {
         await part(this, channel);
     }
 }
+
+module.exports = Irc;

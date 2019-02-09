@@ -1,5 +1,3 @@
-module.exports = { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences };
-
 const STATUS = require('./connection-status.js');
 
 function isSafeToWrite (status, when) {
@@ -34,3 +32,5 @@ function validateInferences (inferences) {
 
     Object.values(inferences).forEach(validateInference);
 }
+
+module.exports = { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences };

@@ -1,5 +1,3 @@
-module.exports = parseParams;
-
 const grabParameter = require('./grab-parameter.js');
 
 function parseParams (raw) {
@@ -27,3 +25,5 @@ function parseParams (raw) {
 
     return result;
 }
+
+module.exports = parseParams;

@@ -1,5 +1,3 @@
-module.exports = parseTags;
-
 const parseBadges = require('./parse-tags/parse-badges.js');
 const parseEmoteSets = require('./parse-tags/parse-emote-sets.js');
 const parseEmotes = require('./parse-tags/parse-emotes.js');
@@ -46,3 +44,5 @@ function tagValue (key, value) {
     default: return parseGeneric(value);
     }
 }
+
+module.exports = parseTags;

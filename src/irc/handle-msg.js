@@ -1,5 +1,3 @@
-module.exports = handleMsg;
-
 function handleMsg (irc, msg) {
     const command = msg.command || 'UNKNOWN';
 
@@ -44,3 +42,5 @@ function serverStuff (irc, msg) {
         break;
     }
 }
+
+module.exports = handleMsg;

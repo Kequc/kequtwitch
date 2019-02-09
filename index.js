@@ -1,5 +1,3 @@
-module.exports = Twitch;
-
 const Irc = require('./src/irc.js');
 const Api = require('./src/api.js');
 
@@ -55,3 +53,5 @@ class Twitch {
         }
     }
 }
+
+module.exports = Twitch;
