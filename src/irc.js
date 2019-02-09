@@ -9,7 +9,7 @@ const part = require('./irc/actions/part.js');
 const STATUS = require('./irc/connection-status.js');
 const logger = require('./irc/logger.js');
 const Reader = require('./irc/reader.js');
-const { isSafeToWrite, isValidChannel, validateChannels, isValidInference, validateInferences, validateLogger } = require('./irc/util.js');
+const { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences } = require('./irc/util.js');
 
 class Irc extends EventEmitter {
     constructor (twitch, opt = {}) {
@@ -32,7 +32,7 @@ class Irc extends EventEmitter {
 
         validateChannels(this.channels);
         validateInferences(this.inferences);
-        validateLogger(this.logger);
+        logger.validate(this.logger);
 
         this.reader = new Reader(this);
     }
@@ -60,7 +60,7 @@ class Irc extends EventEmitter {
             throw new Error(`Inference already exists: ${command}`);
         }
 
-        isValidInference(callback);
+        validateInference(callback);
         this.inferences[command] = callback;
     }
 
@@ -93,7 +93,7 @@ class Irc extends EventEmitter {
     }
 
     async join (channel) {
-        isValidChannel(channel);
+        validateChannel(channel);
 
         if (this.channels.includes(channel)) {
             throw new Error(`Already joined ${channel}`);
@@ -104,7 +104,7 @@ class Irc extends EventEmitter {
     }
 
     async part (channel) {
-        isValidChannel(channel);
+        validateChannel(channel);
 
         if (!this.channels.includes(channel)) {
             throw new Error(`Not joined ${channel}`);

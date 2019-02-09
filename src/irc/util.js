@@ -1,4 +1,4 @@
-module.exports = { isSafeToWrite, isValidChannel, validateChannels, isValidInference, validateInferences, validateLogger };
+module.exports = { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences };
 
 const STATUS = require('./connection-status.js');
 
@@ -7,7 +7,7 @@ function isSafeToWrite (status, when) {
     return statuses.indexOf(status) >= statuses.indexOf(when);
 }
 
-function isValidChannel (channel) {
+function validateChannel (channel) {
     if (!/^#[_0-9a-z]+$/.test(channel)) {
         throw new Error('Channels should be in lower case and prepended with #');
     }
@@ -18,31 +18,19 @@ function validateChannels (channels) {
         throw new Error('Channels must be an array');
     }
 
-    channels.forEach(isValidChannel);
+    channels.forEach(validateChannel);
 }
 
-function isValidInference (inference) {
+function validateInference (inference) {
     if (typeof inference !== 'function') {
-        throw new Error('Inferences should be a function');
+        throw new Error('Inference should be a function');
     }
 }
 
 function validateInferences (inferences) {
-    if (typeof inferences !== 'object') {
+    if (!(inferences instanceof Object)) {
         throw new Error('Inferences must be an object');
     }
 
-    Object.values(inferences).forEach(isValidInference);
-}
-
-function validateLogger (logger) {
-    if (typeof logger !== 'object') {
-        throw new Error('Logger must be an object');
-    }
-
-    for (const key of ['log', 'info', 'error']) {
-        if (typeof logger[key] !== 'function') {
-            throw new Error(`Logger missing required method: ${key}`);
-        }
-    }
+    Object.values(inferences).forEach(validateInference);
 }

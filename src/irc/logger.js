@@ -1,4 +1,4 @@
-module.exports = { basic, empty };
+module.exports = { basic, empty, validate };
 
 const basic = {
     log (...params) {
@@ -17,4 +17,16 @@ const empty = {
     log () {},
     info () {},
     error () {}
+}
+
+function validate (logger) {
+    if (typeof logger !== 'object') {
+        throw new Error('Logger must be an object');
+    }
+
+    for (const key of ['log', 'info', 'error']) {
+        if (typeof logger[key] !== 'function') {
+            throw new Error(`Logger missing required method: ${key}`);
+        }
+    }
 }

@@ -1,8 +1,8 @@
 module.exports = convertKeys;
 
 function convertKeys (raw) {
-    if (Array.isArray(raw)) return raw.map(convertKeys);
     if (!(raw instanceof Object)) return raw;
+    if (Array.isArray(raw)) return raw.map(convertKeys);
 
     const result = {};
 
@@ -13,6 +13,6 @@ function convertKeys (raw) {
     return result;
 }
 
-function camelcase(key) {
+function camelcase (key) {
     return key.replace(/_\w/g, m => m[1].toUpperCase());
 }

@@ -17,7 +17,7 @@ async function checkFollowers () {
         data: { toId: '$userId' }
     });
 
-    const userIds = follows.filter(isNewFollow).map(follow => follow.fromId);
+    const userIds = follows.data.filter(isNewFollow).map(follow => follow.fromId);
     lastCheckedAt = Date.now();
 
     if (userIds.length < 1) {
@@ -28,7 +28,7 @@ async function checkFollowers () {
         data: { id: userIds }
     })
 
-    for (const follower of followers) {
+    for (const follower of followers.data) {
         handleFollower(follower);
     }
 }

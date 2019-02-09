@@ -4,7 +4,6 @@ const tinyreq = require('tinyreq');
 const buildReq = require('./api/build-req.js');
 const convertKeys = require('./api/convert-keys.js');
 const logger = require('./api/logger.js');
-const { validateLogger } = require('./api/util.js');
 
 class Api {
     constructor (twitch, opt) {
@@ -19,7 +18,7 @@ class Api {
             this.logger = opt.logger || logger.basic;
         }
 
-        validateLogger(this.logger);
+        logger.validate(this.logger);
     }
 
     async request (path, opt = {}, retries = 0) {

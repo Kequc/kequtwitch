@@ -28,7 +28,7 @@ async function checkEmotesets (msg) {
     });
 
     // emit result
-    handleEmotesets(result);
+    handleEmotesets(result.emoticonSets);
 }
 
 function handleEmotesets (emotesets) {

@@ -22,9 +22,8 @@ function buildReq (api, path, opt) {
 }
 
 function buildData (api, data) {
-    if (typeof data !== 'object') {
-        return parseValue(api, data);
-    }
+    if (!(data instanceof Object)) return parseValue(api, data);
+    if (Array.isArray(data)) return data.map(value => buildData(api, value));
 
     const result = {};
 
@@ -59,8 +58,10 @@ function buildHeaders (api, opt) {
         Authorization: `${opt.kraken ? 'OAuth' : 'Bearer'} ${api.twitch.token}`,
         'Content-Type': 'application/json'
     };
+
     if (!opt.skipValidation) {
         headers['Client-Id'] = api.twitch.clientId;
     }
+
     return Object.assign(headers, opt.headers);
 }

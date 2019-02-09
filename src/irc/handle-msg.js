@@ -25,7 +25,7 @@ function handleMsg (irc, msg) {
 }
 
 function deepFreeze (data) {
-    if (typeof data !== 'object') return;
+    if (!(data instanceof Object)) return;
 
     for (const value of Object.values(data)) {
         deepFreeze(value);
