@@ -2,7 +2,6 @@
 
 Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.
 
----
 ## API options
 
 ```javascript
@@ -18,18 +17,16 @@ const twitch = new Twitch('your-oauth-token', { api });
 | - | - |
 | `helixUrl` | URL for the Helix API (Default: `'https://api.twitch.tv/helix'`) |
 | `krakenUrl` | URL for the Kraken API (Default: `'https://api.twitch.tv/kraken'`) |
-| `logger` | Logger override |
 
----
 ## Request
 
 The `request` method takes a `path` as a first parameter, an options object, and returns a promise.
 
-Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `to_id` you might use `{ toId: 'user-id' }`.
+Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `to_id` you might use `{ toId: '$userId' }`.
 
 ```javascript
-const response = await twitch.api.request('/users', {
-    data: { id: 'user-id' }
+const response = await twitch.api.request('/users/follows', {
+    data: { toId: '$userId' }
 });
 ```
 
@@ -43,7 +40,6 @@ const response = await twitch.api.request('/users', {
 | `headers` | Object containing additional headers (Default: `{}`) |
 | `maxRetries` | Number of times to retry failed requests (Default: `2`) |
 
----
 ## Special values
 
 There are special values which can be used to make use of information returned on the `kequtwitch` instance during validation. Setting any data value to one of these strings will use your corresponding information.

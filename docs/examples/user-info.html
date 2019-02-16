@@ -47,9 +47,25 @@
             </div>
 
 <div id="content">
-<h1>Examples</h1>
-<p>With basic use of the library under your belt, none of that is really useful without some examples showing you how to do some common tasks. Keeping in mind you can edit these examples however you need.</p>
-<p>The best way to figure out what you probably want to do is by studying the <a href="https://dev.twitch.tv/docs/irc/commands/">Twitch documentation</a> to figure out what parameters and tags you expect to see. From there write an inference that outputs what you need.</p>
+<h1>User info</h1>
+<p>When reading data from IRC most messages contain everything you might need such as their display name. But if you want more information about users you might want to request that data from the <a href="https://dev.twitch.tv/docs/api/reference/#get-users">/users</a> url, and if you are using that data often you will want to cache it.</p>
+<p>The following is meant to be something simple you can use.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> users = {};
+
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUser</span> (<span class="hljs-params">login</span>) </span>{
+    <span class="hljs-keyword">if</span> (!users[login]) {
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+            <span class="hljs-attr">data</span>: { login }
+        });
+
+        users[login] = result.data[<span class="hljs-number">0</span>];
+    }
+
+    <span class="hljs-keyword">return</span> users[login];
+}
+
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> getUser(login);
+</code></pre>
 
 </div>
 

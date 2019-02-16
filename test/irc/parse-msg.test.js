@@ -50,6 +50,7 @@ describe('parseMsg', function () {
             malformed: true,
             tags: {},
             prefix: {},
+            command: 'UNKNOWN',
             params: [],
             channel: null,
             message: null,

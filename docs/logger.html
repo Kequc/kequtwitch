@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -47,40 +48,21 @@
 
 <div id="content">
 <h1>Logger</h1>
-<p>You can specify a custom logger with the methods <code>log</code>, <code>info</code>, and <code>error</code> for IRC. Additionally with the methods <code>debug</code>, <code>info</code>, and <code>error</code> for API. To disable the logger use false <code>{ logger: false }</code></p>
-<p>In general <code>log</code> will output irc communication, <code>info</code> contains status information, <code>error</code> only when something unexpected happens.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> options = {
-    <span class="hljs-attr">irc</span>: {
-        <span class="hljs-attr">logger</span>: {
-            log (...params) {
-                <span class="hljs-built_in">console</span>.log(...params);
-            },
-            info (...params) {
-                <span class="hljs-keyword">const</span> first = params.shift();
-                <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`[ <span class="hljs-subst">${first}</span> ]`</span>, ...params);
-            },
-            error (...params) {
-                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, ...params);
-            }
-        }
+<p>You can specify a custom logger with the methods <code>debug</code>, <code>info</code>, and <code>error</code>. To disable the logger use false <code>{ logger: false }</code> In general <code>debug</code> will output irc/api communication, <code>info</code> contains status information, <code>error</code> only when something unexpected happens.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> logger = {
+    debug (...params) {
+        <span class="hljs-built_in">console</span>.debug(...params);
     },
-    <span class="hljs-attr">api</span>: {
-        <span class="hljs-attr">logger</span>: {
-            debug (...params) {
-                <span class="hljs-built_in">console</span>.debug(...params);
-            },
-            info (...params) {
-                <span class="hljs-keyword">const</span> first = params.shift();
-                <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`[ <span class="hljs-subst">${first}</span> ]`</span>, ...params);
-            },
-            error (...params) {
-                <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, ...params);
-            }
-        }
+    info (...params) {
+        <span class="hljs-keyword">const</span> first = params.shift();
+        <span class="hljs-built_in">console</span>.info(<span class="hljs-string">`[ <span class="hljs-subst">${first}</span> ]`</span>, ...params);
+    },
+    error (...params) {
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'Error:'</span>, ...params);
     }
 };
 
-<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, options);
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { logger });
 </code></pre>
 
 </div>

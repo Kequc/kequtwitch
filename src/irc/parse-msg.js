@@ -6,32 +6,31 @@ const parseTags = require('./parse-msg/parse-tags.js');
 
 function parseMsg (raw) {
     const indexes = findPositionIndexes(raw);
-    if (!indexes) {
-        return {
-            raw,
-            malformed: true,
-            tags: {},
-            prefix: {},
-            params: [],
-            channel: null,
-            message: null,
-            inferred: {}
-        };
-    }
 
-    const msg = {
+    if (!indexes) return {
+        raw,
+        malformed: true,
+        tags: {},
+        prefix: {},
+        command: 'UNKNOWN',
+        params: [],
+        channel: null,
+        message: null,
+        inferred: {}
+    };
+
+    const params = parseParams(indexes.params > -1 ? raw.substring(indexes.params) : null);
+
+    return {
         raw,
         tags: parseTags(grabParameter(raw, indexes.tags)),
         prefix: parsePrefix(grabParameter(raw, indexes.prefix)),
         command: grabParameter(raw, indexes.command),
-        params: parseParams(indexes.params > -1 ? raw.substring(indexes.params) : null),
+        params,
+        channel: inferChannel(raw, params),
+        message: inferMessage(raw, params),
         inferred: {}
     };
-
-    msg.channel = inferChannel(raw, msg.params);
-    msg.message = inferMessage(raw, msg.params);
-
-    return msg;
 }
 
 function inferChannel (raw, params) {

@@ -6,7 +6,6 @@ It is up to you to populate it with any additional information you need out of m
 
 The object you return becomes `inferred` on the `msg` object. By default if you don't specify an inference or return an object then `inferred` is empty.
 
----
 ## Inferred command
 
 A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want.

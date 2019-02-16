@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -70,7 +71,7 @@
 
     <span class="hljs-keyword">const</span> followers = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
         <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: userIds }
-    })
+    });
 
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> follower <span class="hljs-keyword">of</span> followers.data) {
         handleFollower(follower);

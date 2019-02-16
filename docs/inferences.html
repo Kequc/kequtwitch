@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -50,7 +51,6 @@
 <p>All <code>msg</code> objects have a <code>inferred</code> object.</p>
 <p>It is up to you to populate it with any additional information you need out of messages by defining inferences. You can have one inference for every Twitch command, they are defined in the instantiation options or dynamically using the <code>inference</code> method. All inference methods are syncronous, can only be defined once, and should return an object.</p>
 <p>The object you return becomes <code>inferred</code> on the <code>msg</code> object. By default if you don't specify an inference or return an object then <code>inferred</code> is empty.</p>
-<hr />
 <h2>Inferred command</h2>
 <p>A special parameter called <code>command</code>, if you wish to use it, will emit the message again using the name that you want.</p>
 <pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{

@@ -1,11 +1,12 @@
 const net = require('net');
+const appendData = require('../append-data.js');
 const STATUS = require('../connection-status.js');
 
 async function connect (irc) {
     irc.status = STATUS.CONNECTING;
 
     await new Promise((resolve, reject) => {
-        irc.logger.info('Connecting...');
+        irc.twitch.logger.info('Connecting...');
         irc.client = net.connect(irc.port, irc.host);
         irc.client.setEncoding('utf8');
 
@@ -13,23 +14,23 @@ async function connect (irc) {
 
         function onConnect () {
             clearTimeout(timeout);
-            irc.logger.log('!', 'CONNECTED');
+            irc.twitch.logger.debug('!', 'CONNECTED');
             irc.status = STATUS.CONNECTED;
             resolve();
         }
 
         function onData (data) {
-            irc.reader.push(data);
+            appendData(irc, data);
         }
 
         function onError (err) {
-            irc.logger.error(`Error occurred on irc connection: ${err.message}`);
+            irc.twitch.logger.error(`Error occurred on irc connection: ${err.message}`);
             irc.emit('error', err);
         }
 
         function onEnd () {
             removeListeners();
-            irc.logger.log('!', 'DISCONNECTED');
+            irc.twitch.logger.debug('!', 'DISCONNECTED');
             irc.status = STATUS.DISCONNECTED;
         }
 

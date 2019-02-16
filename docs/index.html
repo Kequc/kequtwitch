@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -48,12 +49,10 @@
 <div id="content">
 <h1>Home</h1>
 <p>This library is agnostic to the information is receives from Twitch, it delivers you all data in a simple format without any frills. It requires a small amount of effort to produce the behaviour you want compared to similar libraries but it is ultimately still pretty easy honestly.</p>
-<hr />
 <h2>Installation</h2>
 <p>This library is available on NPM. Make sure you have <a href="https://nodejs.org/en/">Node</a> installed and create a new project, then install the <code>kequtwitch</code> module.</p>
 <pre><code>npm install --save kequtwitch
 </code></pre>
-<hr />
 <h2>Usage</h2>
 <p>In your project require <code>kequtwitch</code> at the top.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);
@@ -62,7 +61,6 @@
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>);
 </code></pre>
 <p>You are now set up to use the library! If you are on <a href="https://kequtwitch.kequc.com">the website</a> please view the sidebar on the right or use <a href="https://github.com/Kequc/kequtwitch/tree/master/docs-md">Github</a> for further documentation.</p>
-<hr />
 <h2>Quick start</h2>
 <p>The easiest way to see the library working is to login to a chatroom. A streamer's channel is their username prepended with <code>#</code> in lowercase.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> Twitch = <span class="hljs-built_in">require</span>(<span class="hljs-string">'kequtwitch'</span>);

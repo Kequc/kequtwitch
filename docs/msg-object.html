@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -103,7 +104,6 @@
 </tr>
 </tbody>
 </table>
-<hr />
 <h2>Tags</h2>
 <p>Tags are converted into an object with keys that are in camelCase. If you are looking for a tag named <code>'display-name'</code> for example it can be found in the msg object at <code>msg.tags.displayName</code>. When the value is a number it is converted into a number otherwise all tags resolve a string.</p>
 <p>A few of the tags returned have special rendering.</p>
@@ -113,7 +113,6 @@
 <p>Emotes denote where in the message an emote was used and is rendered as an array containing objects with <code>id</code>, <code>start</code>, <code>end</code>, and <code>length</code> attributes. For example <code>[{ id: 25, start: 27, end: 31, length: 4 }]</code></p>
 <h4>emoteSets</h4>
 <p>Emote sets are split by <code>','</code> and turned into numbers for example <code>[0]</code>.</p>
-<hr />
 <h2>Params</h2>
 <p>The first parameter is commonly the channel, therefore very often when you want to know what channel the command is related to you could use <code>msg.params[0]</code>. This isn't true for all commands but is good general rule to keep in mind.</p>
 <p>A <code>msg.channel</code> attribute is available, if what looks like a channel is found in <code>msg.params</code> and it isn't the message. A <code>msg.message</code> attribute is available, if the last parameter in <code>msg.params</code> uses the <code>:</code> long form notation.</p>

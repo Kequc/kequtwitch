@@ -5,8 +5,6 @@ const disconnect = require('./irc/actions/disconnect.js');
 const join = require('./irc/actions/join.js');
 const part = require('./irc/actions/part.js');
 const STATUS = require('./irc/connection-status.js');
-const logger = require('./irc/logger.js');
-const Reader = require('./irc/reader.js');
 const { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences } = require('./irc/util.js');
 
 class Irc extends EventEmitter {
@@ -22,17 +20,10 @@ class Irc extends EventEmitter {
         this.host = opt.host || 'irc.chat.twitch.tv';
         this.timeout = opt.timeout || 7000;
 
-        if (opt.logger === false) {
-            this.logger = logger.empty;
-        } else {
-            this.logger = opt.logger || logger.basic;
-        }
-
         validateChannels(this.channels);
         validateInferences(this.inferences);
-        logger.validate(this.logger);
 
-        this.reader = new Reader(this);
+        this.data = '';
     }
 
     async connect () {
@@ -71,7 +62,7 @@ class Irc extends EventEmitter {
     }
 
     write (message) {
-        this.logger.log('<', message);
+        this.twitch.logger.debug('<', message);
         this.client.write(`${message}\r\n`);
     }
 

@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -48,7 +49,6 @@
 <div id="content">
 <h1>How it works</h1>
 <p>Twitch uses IRC for chat interaction and offers several HTTP endpoints.</p>
-<hr />
 <h2>Validation</h2>
 <p>When you connect to IRC or use any of the HTTP endpoints, the token you provided as a parameter in the &quot;Usage&quot; section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
 <p>This validation step gives us a few additional parameters which become available on our instance making it easy to interact with services.</p>

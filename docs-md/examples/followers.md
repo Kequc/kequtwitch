@@ -26,7 +26,7 @@ async function checkFollowers () {
 
     const followers = await twitch.api.request('/users', {
         data: { id: userIds }
-    })
+    });
 
     for (const follower of followers.data) {
         handleFollower(follower);

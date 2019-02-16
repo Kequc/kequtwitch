@@ -1,6 +1,6 @@
 const basic = {
-    log (...params) {
-        console.log(...params);
+    debug (...params) {
+        console.debug(...params);
     },
     info (...params) {
         const first = params.shift();
@@ -12,17 +12,17 @@ const basic = {
 };
 
 const empty = {
-    log () {},
+    debug () {},
     info () {},
     error () {}
-}
+};
 
 function validate (logger) {
     if (typeof logger !== 'object') {
         throw new Error('Logger must be an object');
     }
 
-    for (const key of ['log', 'info', 'error']) {
+    for (const key of ['debug', 'info', 'error']) {
         if (typeof logger[key] !== 'function') {
             throw new Error(`Logger missing required method: ${key}`);
         }

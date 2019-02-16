@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.3.3</div>
+    <div class="package">0.4.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -40,6 +40,7 @@
             <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
             <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
             <li><a href="/examples/hosted.html">Hosted</a></li>
+            <li><a href="/examples/user-info.html">User info</a></li>
         </ul>
     </li>
 </ul>
@@ -48,7 +49,6 @@
 <div id="content">
 <h1>API</h1>
 <p>Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.</p>
-<hr />
 <h2>API options</h2>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> api = {
     <span class="hljs-attr">helixUrl</span>: <span class="hljs-string">'https://api.twitch.tv/helix'</span>,
@@ -73,18 +73,13 @@
 <td><code>krakenUrl</code></td>
 <td>URL for the Kraken API (Default: <code>'https://api.twitch.tv/kraken'</code>)</td>
 </tr>
-<tr>
-<td><code>logger</code></td>
-<td>Logger override</td>
-</tr>
 </tbody>
 </table>
-<hr />
 <h2>Request</h2>
 <p>The <code>request</code> method takes a <code>path</code> as a first parameter, an options object, and returns a promise.</p>
-<p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>to_id</code> you might use <code>{ toId: 'user-id' }</code>.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
-    <span class="hljs-attr">data</span>: { <span class="hljs-attr">id</span>: <span class="hljs-string">'user-id'</span> }
+<p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>to_id</code> you might use <code>{ toId: '$userId' }</code>.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users/follows'</span>, {
+    <span class="hljs-attr">data</span>: { <span class="hljs-attr">toId</span>: <span class="hljs-string">'$userId'</span> }
 });
 </code></pre>
 <table>
@@ -125,7 +120,6 @@
 </tr>
 </tbody>
 </table>
-<hr />
 <h2>Special values</h2>
 <p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data value to one of these strings will use your corresponding information.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {

@@ -2,7 +2,6 @@
 
 Twitch uses IRC for the chatroom on the side of livestreams. This IRC implementation can be used to listen to the chat, and even interact with it.
 
----
 ## IRC options
 
 ```javascript
@@ -24,9 +23,7 @@ const twitch = new Twitch('your-oauth-token', { irc });
 | `port` | IRC port (Default: `6667`) |
 | `host` | IRC host (Default: `'irc.chat.twitch.tv'`) |
 | `timeout` | Timeout for connection join, etc. (Default: `7000`) |
-| `logger` | Logger override |
 
----
 ## Connect join part and disconnect
 
 If you are connected already the `connect` method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
@@ -45,7 +42,6 @@ await twitch.irc.disconnect();
 // irc is now disconnected
 ```
 
----
 ## Events
 
 While connected to IRC, every line is parsed into an object and then emitted via node `EventEmitter` on the `irc` instance. Event names are the Twitch command, otherwise `UNKNOWN`. In addition all messages emit the `message` event.
@@ -71,7 +67,6 @@ twitch.irc.on('message', function (msg) {
 
 Examples of listening to and making use of IRC events can be found on the [IRC examples page](docs-md/examples).
 
----
 ## Send
 
 To write a message safely into IRC use the `send` method. The first parameter is what you want to write, the second parameter is the minimum connection status it needs to wait for (Default: `'ready'`).
@@ -82,7 +77,6 @@ Useful in case the chat is reconnecting.
 twitch.irc.send('PRIVMSG #channel :Hello everyone!');
 ```
 
----
 ## Write
 
 To write a message directly into IRC without any protection use the `write` method.
@@ -91,7 +85,6 @@ To write a message directly into IRC without any protection use the `write` meth
 twitch.irc.write('PRIVMSG #channel :No idea if this message will show up');
 ```
 
----
 ## Say extension
 
 If you are going to be posting messages in the chat often it might be helpful to extend the `irc` instance with a `say` command.

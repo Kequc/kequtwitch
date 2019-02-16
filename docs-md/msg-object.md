@@ -18,7 +18,6 @@ Many are easy to understand and consistent such as the [JOIN](https://dev.twitch
 | `message` | Taken from `params` if detected or `null` (Ie. `'Hi everyone!'`) |
 | `inferred` | Object containing special inferred information (Ie. `{}`) |
 
----
 ## Tags
 
 Tags are converted into an object with keys that are in camelCase. If you are looking for a tag named `'display-name'` for example it can be found in the msg object at `msg.tags.displayName`. When the value is a number it is converted into a number otherwise all tags resolve a string.
@@ -37,7 +36,6 @@ Emotes denote where in the message an emote was used and is rendered as an array
 
 Emote sets are split by `','` and turned into numbers for example `[0]`.
 
----
 ## Params
 
 The first parameter is commonly the channel, therefore very often when you want to know what channel the command is related to you could use `msg.params[0]`. This isn't true for all commands but is good general rule to keep in mind.

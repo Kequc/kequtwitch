@@ -1,19 +1,12 @@
 function handleMsg (irc, msg) {
-    const command = msg.command || 'UNKNOWN';
-
-    Object.freeze(msg);
-    Object.freeze(msg.tags);
-    Object.freeze(msg.prefix);
-    Object.freeze(msg.params);
-
-    if (irc.inferences[command]) {
-        Object.assign(msg.inferred, irc.inferences[command](msg));
+    if (irc.inferences[msg.command]) {
+        Object.assign(msg.inferred, irc.inferences[msg.command](msg));
     }
 
-    deepFreeze(msg.inferred);
+    deepFreeze(msg);
 
     irc.emit('message', msg);
-    irc.emit(command, msg);
+    irc.emit(msg.command, msg);
 
     if (typeof msg.inferred.command === 'string') {
         irc.emit(msg.inferred.command, msg);
@@ -24,11 +17,7 @@ function handleMsg (irc, msg) {
 
 function deepFreeze (data) {
     if (!(data instanceof Object)) return;
-
-    for (const value of Object.values(data)) {
-        deepFreeze(value);
-    }
-
+    Object.values(data).forEach(deepFreeze);
     Object.freeze(data);
 }
 

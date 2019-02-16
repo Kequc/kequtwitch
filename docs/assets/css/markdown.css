@@ -1,8 +1,11 @@
 #content h1, #content h2, #content h3, #content h4 {
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 1rem 0;
     font-weight: 200;
     padding: 0;
+}
+#content h1, #content h2 {
+    border-bottom: 2px dashed #333;
+    padding-bottom: 15px;
 }
 #content h1 {
     font-size: 2.5rem;

@@ -6,7 +6,7 @@ async function disconnect (irc) {
     await new Promise((resolve, reject) => {
         if (!irc.client) resolve();
 
-        irc.logger.info('Disconnecting...');
+        irc.twitch.logger.info('Disconnecting...');
         irc.client.end();
 
         function onClose () {
