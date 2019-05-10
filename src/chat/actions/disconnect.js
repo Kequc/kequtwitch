@@ -7,10 +7,9 @@ async function disconnect (chat) {
         if (!chat.client) resolve();
 
         chat.twitch.logger.info('Disconnecting...');
-        chat.client.end();
+        chat.client.close();
 
         function onClose () {
-            if (chat.client) chat.client.destroy();
             removeListeners();
             resolve();
         }
