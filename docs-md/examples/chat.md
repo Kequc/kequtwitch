@@ -14,9 +14,11 @@ twitch.irc.inference('PRIVMSG', function (msg) {
     const parts = msg.message.match(/^\u0001ACTION (.+)\u0001$/);
 
     if (parts !== null) {
+        // We have extracted message content and are sending it in place
+        // of default params
         return {
             command: 'action',
-            message: parts[1] // "is great!"
+            params: [msg.channel, parts[1]] // "is great!"
         };
     }
 
@@ -25,27 +27,20 @@ twitch.irc.inference('PRIVMSG', function (msg) {
     };
 });
 
-twitch.irc.on('action', function (msg) {
-    const displayName = msg.tags.displayName;
-    const channel = msg.channel;
-    const message = msg.inferred.message;
+twitch.irc.on('action', function (msg, channel, message) {
+    const { displayName } = msg.tags;
 
     console.log(`${displayName} in ${channel} actioned "${message}"!`);
 });
 
-twitch.irc.on('cheer', function (msg) {
-    const displayName = msg.tags.displayName;
-    const bits = msg.tags.bits;
-    const channel = msg.channel;
-    const message = msg.message;
+twitch.irc.on('cheer', function (msg, channel, message) {
+    const { displayName, bits } = msg.tags;
 
     console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
 });
 
-twitch.irc.on('chat', function (msg) {
-    const displayName = msg.tags.displayName;
-    const channel = msg.channel;
-    const message = msg.message;
+twitch.irc.on('chat', function (msg, channel, message) {
+    const { displayName } = msg.tags;
 
     console.log(`${displayName} in ${channel} said "${message}"!`);
 });

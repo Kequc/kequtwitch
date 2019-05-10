@@ -31,9 +31,8 @@ twitch.irc.inference('PRIVMSG', function (msg) {
 });
 
 twitch.irc.on('hosted', function (msg) {
-    const user = msg.inferred.user;
-    const viewers = msg.inferred.viewers;
-    const hosting = msg.inferred.autoHosting ? 'autohosting' : 'hosting';
+    const { user, viewers, autoHosting } = msg.inferred;
+    const hosting = autoHosting ? 'auto-hosting' : 'hosting';
 
     console.log(`${user} is now ${hosting} you for ${viewers} viewers!`);
 });

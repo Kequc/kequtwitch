@@ -19,23 +19,18 @@ twitch.irc.inference('CLEARCHAT', function (msg) {
     return { command };
 });
 
-twitch.irc.on('clear', function (msg) {
-    const channel = msg.channel;
-
+twitch.irc.on('clear', function (msg, channel) {
     console.log(`Chat in ${channel} has been cleared by a moderator!`);
 });
 
-twitch.irc.on('ban', function (msg) {
-    const [channel, user] = msg.params;
-    const banReason = msg.tags.banReason;
+twitch.irc.on('ban', function (msg, channel, user) {
+    const { banReason } = msg.tags;
 
     console.log(`${user} has been banned from ${channel}. Reason: ${banReason}`);
 });
 
-twitch.irc.on('timeout', function (msg) {
-    const [channel, user] = msg.params;
-    const banReason = msg.tags.banReason;
-    const banDuration = msg.tags.banDuration;
+twitch.irc.on('timeout', function (msg, channel, user) {
+    const { banReason, banDuration } = msg.tags;
 
     console.log(`${user} has been given a timeout from ${channel} for ${banDuration} seconds. Reason: ${banReason}`);
 });

@@ -5,11 +5,12 @@ function handleMsg (irc, msg) {
 
     deepFreeze(msg);
 
-    irc.emit('message', msg);
-    irc.emit(msg.command, msg);
+    const params = msg.inferred.params || msg.params;
 
+    irc.emit('message', msg);
+    irc.emit(msg.command, msg, ...params);
     if (typeof msg.inferred.command === 'string') {
-        irc.emit(msg.inferred.command, msg);
+        irc.emit(msg.inferred.command, msg, ...params);
     }
 
     serverStuff(irc, msg);

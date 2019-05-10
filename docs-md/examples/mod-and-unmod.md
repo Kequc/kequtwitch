@@ -8,20 +8,16 @@ twitch.irc.inference('MODE', function (msg) {
     const commands = { '+o': 'mod', '-o': 'unmod' };
 
     return {
-        command: commands[key]
+        command: commands[key],
+        params: [msg.channel, msg.params[2]]
     };
 });
 
-twitch.irc.on('mod', function (msg) {
-    const [channel, , user] = msg.params;
-
+twitch.irc.on('mod', function (msg, channel, user) {
     console.log(`${user} is now modding ${channel}!`);
 });
 
-twitch.irc.on('unmod', function (msg) {
-    const channel = msg.channel;
-    const user = msg.params[2];
-
+twitch.irc.on('unmod', function (msg, channel, user) {
     console.log(`${user} is no longer a mod on ${channel}!`);
 });
 ```

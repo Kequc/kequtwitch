@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -58,9 +58,11 @@
     <span class="hljs-keyword">const</span> parts = msg.message.match(<span class="hljs-regexp">/^\u0001ACTION (.+)\u0001$/</span>);
 
     <span class="hljs-keyword">if</span> (parts !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-comment">// We have extracted message content and are sending it in place</span>
+        <span class="hljs-comment">// of default params</span>
         <span class="hljs-keyword">return</span> {
             <span class="hljs-attr">command</span>: <span class="hljs-string">'action'</span>,
-            <span class="hljs-attr">message</span>: parts[<span class="hljs-number">1</span>] <span class="hljs-comment">// "is great!"</span>
+            <span class="hljs-attr">params</span>: [msg.channel, parts[<span class="hljs-number">1</span>]] <span class="hljs-comment">// "is great!"</span>
         };
     }
 
@@ -69,27 +71,20 @@
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-    <span class="hljs-keyword">const</span> message = msg.inferred.message;
+twitch.irc.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
+    <span class="hljs-keyword">const</span> { displayName } = msg.tags;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> actioned "<span class="hljs-subst">${message}</span>"!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
-    <span class="hljs-keyword">const</span> bits = msg.tags.bits;
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-    <span class="hljs-keyword">const</span> message = msg.message;
+twitch.irc.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
+    <span class="hljs-keyword">const</span> { displayName, bits } = msg.tags;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> cheered <span class="hljs-subst">${bits}</span> and said "<span class="hljs-subst">${message}</span>"!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-    <span class="hljs-keyword">const</span> message = msg.message;
+twitch.irc.on(<span class="hljs-string">'chat'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
+    <span class="hljs-keyword">const</span> { displayName } = msg.tags;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> said "<span class="hljs-subst">${message}</span>"!`</span>);
 });

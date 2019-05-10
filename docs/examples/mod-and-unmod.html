@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -54,20 +54,16 @@
     <span class="hljs-keyword">const</span> commands = { <span class="hljs-string">'+o'</span>: <span class="hljs-string">'mod'</span>, <span class="hljs-string">'-o'</span>: <span class="hljs-string">'unmod'</span> };
 
     <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">command</span>: commands[key]
+        <span class="hljs-attr">command</span>: commands[key],
+        <span class="hljs-attr">params</span>: [msg.channel, msg.params[<span class="hljs-number">2</span>]]
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'mod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> [channel, , user] = msg.params;
-
+twitch.irc.on(<span class="hljs-string">'mod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, user</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is now modding <span class="hljs-subst">${channel}</span>!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'unmod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-    <span class="hljs-keyword">const</span> user = msg.params[<span class="hljs-number">2</span>];
-
+twitch.irc.on(<span class="hljs-string">'unmod'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, user</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is no longer a mod on <span class="hljs-subst">${channel}</span>!`</span>);
 });
 </code></pre>

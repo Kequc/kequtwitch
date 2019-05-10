@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -76,9 +76,8 @@
 });
 
 twitch.irc.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> user = msg.inferred.user;
-    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
-    <span class="hljs-keyword">const</span> hosting = msg.inferred.autoHosting ? <span class="hljs-string">'autohosting'</span> : <span class="hljs-string">'hosting'</span>;
+    <span class="hljs-keyword">const</span> { user, viewers, autoHosting } = msg.inferred;
+    <span class="hljs-keyword">const</span> hosting = autoHosting ? <span class="hljs-string">'auto-hosting'</span> : <span class="hljs-string">'hosting'</span>;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> is now <span class="hljs-subst">${hosting}</span> you for <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });

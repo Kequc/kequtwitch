@@ -6,23 +6,35 @@ It is up to you to populate it with any additional information you need out of m
 
 The object you return becomes `inferred` on the `msg` object. By default if you don't specify an inference or return an object then `inferred` is empty.
 
-## Inferred command
+## Special parameters
 
-A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want.
+A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want. A special parameter called `params` overrides params that will be emitted along with the message.
 
 ```javascript
 twitch.irc.inference('JOIN', function (msg) {
     return {
         command: 'socks-and-jelly',
+        params: ['hello', msg.prefix.user],
         userBackwards: msg.prefix.user.split('').reverse().join('')
     };
 });
 
-twitch.irc.on('JOIN', function (msg) {
-    // msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }
+// Message events are received without additional parameters
+twitch.irc.on('message', function (msg, myString, myUser) {
+    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+    // myString ~= undefined
+    // myUser ~= undefined
 });
 
-twitch.irc.on('socks-and-jelly', function (msg) {
-    // msg.inferred ~= { command: 'socks-and-jelly', userBackwards: 'cuqek' }
+twitch.irc.on('JOIN', function (msg, myString, myUser) {
+    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+    // myString ~= 'hello'
+    // myUser ~= 'kequc'
+});
+
+twitch.irc.on('socks-and-jelly', function (msg, myString, myUser) {
+    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+    // myString ~= 'hello'
+    // myUser ~= 'kequc'
 });
 ```

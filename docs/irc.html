@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -163,7 +163,7 @@
 <p>To write a message directly into IRC without any protection use the <code>write</code> method.</p>
 <pre><code class="language-javascript">twitch.irc.write(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
 </code></pre>
-<h2>Say extension</h2>
+<h2>[Say] extension</h2>
 <p>If you are going to be posting messages in the chat often it might be helpful to extend the <code>irc</code> instance with a <code>say</code> command.</p>
 <pre><code class="language-javascript">twitch.irc.say = <span class="hljs-function">(<span class="hljs-params">channel, message</span>) =&gt;</span> {
     twitch.irc.send(<span class="hljs-string">`PRIVMSG <span class="hljs-subst">${channel}</span> :<span class="hljs-subst">${message}</span>`</span>);

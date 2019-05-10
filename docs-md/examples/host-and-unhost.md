@@ -18,20 +18,15 @@ twitch.irc.inference('HOSTTARGET', function (msg) {
 
     return {
         command,
-        viewers: parseInt(viewers, 10) || 0;
+        params: [msg.channel, parseInt(viewers, 10) || 0]
     };
 });
 
-twitch.irc.on('host', function (msg) {
-    const channel = msg.channel;
-    const viewers = msg.inferred.viewers;
-
+twitch.irc.on('host', function (msg, channel, viewers) {
     console.log(`Hosting ${channel} with ${viewers} viewers!`);
 });
 
-twitch.irc.on('unhost', function (msg) {
-    const viewers = msg.inferred.viewers;
-
+twitch.irc.on('unhost', function (msg, channel, viewers) {
     console.log(`Stopped hosting with ${viewers} viewers!`);
 });
 ```

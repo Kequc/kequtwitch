@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -64,20 +64,15 @@
 
     <span class="hljs-keyword">return</span> {
         command,
-        <span class="hljs-attr">viewers</span>: <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>;
+        <span class="hljs-attr">params</span>: [msg.channel, <span class="hljs-built_in">parseInt</span>(viewers, <span class="hljs-number">10</span>) || <span class="hljs-number">0</span>]
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
-
+twitch.irc.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> viewers = msg.inferred.viewers;
-
+twitch.irc.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 </code></pre>

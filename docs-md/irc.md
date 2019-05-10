@@ -85,7 +85,7 @@ To write a message directly into IRC without any protection use the `write` meth
 twitch.irc.write('PRIVMSG #channel :No idea if this message will show up');
 ```
 
-## Say extension
+## [Say] extension
 
 If you are going to be posting messages in the chat often it might be helpful to extend the `irc` instance with a `say` command.
 

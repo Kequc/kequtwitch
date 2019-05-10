@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.0</div>
+    <div class="package">0.4.1</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -64,23 +64,18 @@
     <span class="hljs-keyword">return</span> { command };
 });
 
-twitch.irc.on(<span class="hljs-string">'clear'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> channel = msg.channel;
-
+twitch.irc.on(<span class="hljs-string">'clear'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Chat in <span class="hljs-subst">${channel}</span> has been cleared by a moderator!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'ban'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> [channel, user] = msg.params;
-    <span class="hljs-keyword">const</span> banReason = msg.tags.banReason;
+twitch.irc.on(<span class="hljs-string">'ban'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, user</span>) </span>{
+    <span class="hljs-keyword">const</span> { banReason } = msg.tags;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> has been banned from <span class="hljs-subst">${channel}</span>. Reason: <span class="hljs-subst">${banReason}</span>`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'timeout'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">const</span> [channel, user] = msg.params;
-    <span class="hljs-keyword">const</span> banReason = msg.tags.banReason;
-    <span class="hljs-keyword">const</span> banDuration = msg.tags.banDuration;
+twitch.irc.on(<span class="hljs-string">'timeout'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, user</span>) </span>{
+    <span class="hljs-keyword">const</span> { banReason, banDuration } = msg.tags;
 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${user}</span> has been given a timeout from <span class="hljs-subst">${channel}</span> for <span class="hljs-subst">${banDuration}</span> seconds. Reason: <span class="hljs-subst">${banReason}</span>`</span>);
 });
