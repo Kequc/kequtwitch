@@ -5,7 +5,7 @@ async function part (chat, channel) {
         chat.send(`PART ${channel}`, STATUS.AUTHENTICATED);
 
         function onChannelPart (msg) {
-            if (msg.prefix.user === chat.twitch.login && msg.params[0] === channel) {
+            if (msg.prefix.user === chat.twitch.login && msg.channel === channel) {
                 removeListeners();
                 resolve();
             }

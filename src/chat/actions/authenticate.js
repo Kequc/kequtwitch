@@ -20,12 +20,10 @@ async function authenticate (chat) {
         }
 
         function onNotice (msg) {
-            for (const param of msg.params) {
-                if (AUTH_FAILED_MESSAGES.includes(param)) {
-                    removeListeners();
-                    reject(new Error(msg.params[1]));
-                    return;
-                }
+            if (AUTH_FAILED_MESSAGES.includes(msg.message)) {
+                removeListeners();
+                reject(new Error(msg.message));
+                return;
             }
         }
 

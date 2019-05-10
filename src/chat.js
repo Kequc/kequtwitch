@@ -1,11 +1,12 @@
 const EventEmitter = require('events');
 const authenticate = require('./chat/actions/authenticate.js');
-const connect = require('./chat/actions/connect.js');
-const disconnect = require('./chat/actions/disconnect.js');
 const join = require('./chat/actions/join.js');
 const part = require('./chat/actions/part.js');
+const appendData = require('./chat/append-data.js');
 const STATUS = require('./chat/connection-status.js');
 const { isSafeToSend, validateChannel, validateChannels, validateInference, validateInferences } = require('./chat/util.js');
+const connect = require('./shared/connect.js');
+const disconnect = require('./shared/disconnect.js');
 
 class Chat extends EventEmitter {
     constructor (twitch, opt = {}) {
@@ -13,6 +14,7 @@ class Chat extends EventEmitter {
 
         this.twitch = twitch;
         this._status = STATUS.DISCONNECTED;
+        this._data = '';
 
         this.channels = opt.channels || [];
         this.inferences = opt.inferences || {};
@@ -22,7 +24,13 @@ class Chat extends EventEmitter {
         validateChannels(this.channels);
         validateInferences(this.inferences);
 
-        this.data = '';
+        this.on('connected', () => { this.twitch.logger.info('Chat connected'); });
+        this.on('disconnected', () => { this.twitch.logger.info('Chat disconnected'); });
+        this.on('error', (err) => { this.twitch.logger.error(err); });
+    }
+
+    onData (data) {
+        appendData(this, data);
     }
 
     async connect () {
@@ -31,7 +39,10 @@ class Chat extends EventEmitter {
         }
 
         await this.twitch.isValidated();
-        await connect(this);
+
+        this.twitch.logger.info('Chat connecting...');
+
+        await connect(this, STATUS);
         await authenticate(this);
         await Promise.all(this.channels.map(channel => join(this, channel)));
 
@@ -40,7 +51,12 @@ class Chat extends EventEmitter {
 
     async disconnect () {
         await this.twitch.isValidated();
-        await disconnect(this);
+
+        this.twitch.logger.info('Chat disconnecting...');
+
+        await disconnect(this, STATUS);
+
+        this.data = '';
     }
 
     inference (command, callback) {
@@ -70,14 +86,10 @@ class Chat extends EventEmitter {
     }
 
     set status (status) {
-        if (!Object.values(STATUS).includes(status)) {
-            throw new Error(`Invalid status: ${status}`);
+        if (this._status !== status) {
+            this._status = status;
+            this.emit(status);
         }
-
-        if (this._status === status) return;
-
-        this._status = status;
-        this.emit(status);
     }
 
     async join (channel) {
@@ -88,7 +100,10 @@ class Chat extends EventEmitter {
         }
 
         this.channels.push(channel);
-        await join(this, channel);
+
+        if (this.status !== STATUS.DISCONNECTED) {
+            await join(this, channel);
+        }
     }
 
     async part (channel) {
@@ -99,7 +114,10 @@ class Chat extends EventEmitter {
         }
 
         this.channels.splice(this.channels.indexOf(channel), 1);
-        await part(this, channel);
+
+        if (this.status !== STATUS.DISCONNECTED) {
+            await part(this, channel);
+        }
     }
 }
 

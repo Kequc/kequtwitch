@@ -5,7 +5,7 @@ async function join (chat, channel) {
         chat.send(`JOIN ${channel}`, STATUS.AUTHENTICATED);
 
         function onChannelJoin (msg) {
-            if (msg.prefix.user === chat.twitch.login && msg.params[0] === channel) {
+            if (msg.prefix.user === chat.twitch.login && msg.channel === channel) {
                 removeListeners();
                 resolve();
             }

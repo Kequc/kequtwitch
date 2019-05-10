@@ -2,7 +2,7 @@ const handleMsg = require('./handle-msg.js');
 const parseMsg = require('./parse-msg.js');
 
 function appendData (chat, data) {
-    chat.data += data;
+    chat._data += data;
 
     if (data.endsWith('\r\n')) {
         // twitch is done talking
@@ -11,8 +11,8 @@ function appendData (chat, data) {
 }
 
 function parseData (chat) {
-    const lines = splitIntoLines(chat.data);
-    chat.data = '';
+    const lines = splitIntoLines(chat._data);
+    chat._data = '';
 
     for (const line of lines) {
         chat.twitch.logger.debug('>', line);

@@ -60,6 +60,8 @@ class Twitch {
         while (this.waiting.length){
             this.waiting.shift().call();
         }
+
+        this.logger.info('Validated');
     }
 }
 
