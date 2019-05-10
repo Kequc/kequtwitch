@@ -1,6 +1,6 @@
 # Api
 
-Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.
+Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken api's.
 
 ## Options
 
@@ -15,8 +15,8 @@ const twitch = new Twitch('your-oauth-token', { api });
 
 | parameter | description |
 | - | - |
-| `helixUrl` | URL for the Helix API (Default: `'https://api.twitch.tv/helix'`) |
-| `krakenUrl` | URL for the Kraken API (Default: `'https://api.twitch.tv/kraken'`) |
+| `helixUrl` | Url for the Helix api (Default: `'https://api.twitch.tv/helix'`) |
+| `krakenUrl` | Url for the Kraken api (Default: `'https://api.twitch.tv/kraken'`) |
 
 ## Request
 
@@ -33,8 +33,8 @@ const response = await twitch.api.request('/users/follows', {
 | param | description |
 | - | - |
 | `skipValidation` | Skip waiting for validation not recommended (Default: `false`) |
-| `url` | Url of the API (Default: ``https://api.twitch.tv/helix`` or ``https://api.twitch.tv/kraken``) |
-| `kraken` | Request is made to the "Kraken" API instead of "Helix" (Default: `false`) |
+| `url` | Url of the api (Default: ``https://api.twitch.tv/helix`` or ``https://api.twitch.tv/kraken``) |
+| `kraken` | Request is made to the "Kraken" api instead of "Helix" (Default: `false`) |
 | `method` | Request method (Default: `'GET'`) |
 | `data` | Object containing post data or search parameters (Default: `{}`) |
 | `headers` | Object containing additional headers (Default: `{}`) |
