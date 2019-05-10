@@ -49,7 +49,7 @@
 <div id="content">
 <h1>Chat</h1>
 <p>This websockets implementation can be used to listen to the chatroom on the side of livestreams, and even interact with it.</p>
-<h2>IRC options</h2>
+<h2>Options</h2>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> chat = {
     <span class="hljs-attr">channels</span>: [],
     <span class="hljs-attr">interfaces</span>: {},
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 <td><code>address</code></td>
-<td>IRC address (Default: <code>wss://irc-ws.chat.twitch.tv:443</code>)</td>
+<td>Websocket address (Default: <code>wss://irc-ws.chat.twitch.tv:443</code>)</td>
 </tr>
 <tr>
 <td><code>timeout</code></td>
@@ -86,7 +86,7 @@
 </tbody>
 </table>
 <h2>Connect join part and disconnect</h2>
-<p>If you are connected already the <code>connect</code> method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
+<p>If you are connected already the <code>connect</code> method will disconnect then reconnect. When connecting to chat the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.chat.connect();
 <span class="hljs-comment">// chat is now connected</span>
 
@@ -100,7 +100,7 @@
 <span class="hljs-comment">// chat is now disconnected</span>
 </code></pre>
 <h2>Events</h2>
-<p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command, otherwise <code>UNKNOWN</code>. In addition all messages emit the <code>message</code> event.</p>
+<p>While connected to chat, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>chat</code> instance. Event names are the Twitch command, otherwise <code>UNKNOWN</code>. In addition all messages emit the <code>message</code> event.</p>
 <p>There are also connection status events.</p>
 <pre><code class="language-javascript">twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg received from chat</span>
@@ -116,23 +116,23 @@
 <tbody>
 <tr>
 <td><code>disconnected</code></td>
-<td>IRC has disconnected</td>
+<td>Chat has disconnected</td>
 </tr>
 <tr>
 <td><code>connecting</code></td>
-<td>IRC is connecting</td>
+<td>Chat is connecting</td>
 </tr>
 <tr>
 <td><code>connected</code></td>
-<td>IRC is connected</td>
+<td>Chat is connected</td>
 </tr>
 <tr>
 <td><code>authenticated</code></td>
-<td>IRC has successfully authenticated</td>
+<td>Chat has successfully authenticated</td>
 </tr>
 <tr>
 <td><code>ready</code></td>
-<td>The above and IRC has re-joined channels</td>
+<td>The above and chat has re-joined channels</td>
 </tr>
 <tr>
 <td><code>message</code></td>
@@ -148,14 +148,14 @@
 </tr>
 </tbody>
 </table>
-<p>Examples of listening to and making use of IRC events can be found on the <a href="/examples">IRC examples page</a>.</p>
+<p>Examples of listening to and making use of chat events can be found on the <a href="/examples">Examples page</a>.</p>
 <h2>Send</h2>
-<p>To write a message safely into IRC use the <code>send</code> method. The first parameter is what you want to write, the second parameter is the minimum connection status it needs to wait for (Default: <code>'ready'</code>).</p>
+<p>To write a message safely into chat use the <code>send</code> method. The first parameter is what you want to write, the second parameter is the minimum connection status it needs to wait for (Default: <code>'ready'</code>).</p>
 <p>Useful in case the chat is reconnecting.</p>
 <pre><code class="language-javascript">twitch.chat.send(<span class="hljs-string">'PRIVMSG #channel :Hello everyone!'</span>);
 </code></pre>
 <h2>Send unsafe</h2>
-<p>To write a message directly into IRC without any protection use the <code>sendUnsafe</code> method.</p>
+<p>To write a message directly into chat without any protection use the <code>sendUnsafe</code> method.</p>
 <pre><code class="language-javascript">twitch.chat.sendUnsafe(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
 </code></pre>
 <h2>[Say] extension</h2>

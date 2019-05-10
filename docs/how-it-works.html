@@ -48,9 +48,9 @@
 
 <div id="content">
 <h1>How it works</h1>
-<p>Twitch uses IRC for chat interaction and offers several HTTP endpoints.</p>
+<p>Twitch uses websocket for chat interaction and offers several HTTP endpoints.</p>
 <h2>Validation</h2>
-<p>When you connect to IRC or use any of the HTTP endpoints, the token you provided as a parameter in the &quot;Usage&quot; section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
+<p>When you connect to their websocket api or use any of the HTTP endpoints, the token you provided as a parameter in the &quot;Usage&quot; section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the <a href="https://dev.twitch.tv/docs/authentication/#validating-requests">Twitch documentation</a>, you don't have to do anything.</p>
 <p>This validation step gives us a few additional parameters which become available on our instance making it easy to interact with services.</p>
 <pre><code class="language-javascript">twitch.token; <span class="hljs-comment">// token that was provided during instantiation</span>
 twitch.validatedAt; <span class="hljs-comment">// time the token was validated</span>

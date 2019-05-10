@@ -49,7 +49,7 @@
 <div id="content">
 <h1>Talk</h1>
 <p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <a href="https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms">PRIVMSG</a> command it's generally information related to whether someone is hosting your channel.</p>
-<p>Actions are chat messages prefixed with <code>/me</code> which are delivered in IRC in the format <code>ACTION</code>, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.</p>
+<p>Actions are chat messages prefixed with <code>/me</code> which are delivered to chat in the format <code>ACTION</code>, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.</p>
 <p>Then we check if there are bits attached to the <code>msg</code>. Probably the implementation you really want is less complicated than this.</p>
 <pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user === <span class="hljs-string">'jtv'</span>) <span class="hljs-keyword">return</span>;

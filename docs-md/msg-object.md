@@ -1,6 +1,6 @@
 # Msg object
 
-A `msg` object represents a line of text delivered from the connected Twitch server. It is formatted to be easier to use than a raw line of text from IRC would normally be. But it's still a generic format.
+A `msg` object represents a line of text delivered from the connected Twitch server. It is formatted to be easier to use than a raw line of text from chat would normally be. But it's still a generic format.
 
 Many are easy to understand and consistent such as the [JOIN](https://dev.twitch.tv/docs/irc/chat-rooms/#join-twitch-chat-rooms) Twitch command, some can also be a little bit more difficult. This library lets you do anything you want with all available message information. Examples of what raw messages look like can be found on the [Twitch IRC guide](https://dev.twitch.tv/docs/irc/guide/).
 

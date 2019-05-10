@@ -2,7 +2,7 @@
 
 The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from `'jtv'`, which is a legacy (or out of date) way Twitch delivers some status messages. In the [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) command it's generally information related to whether someone is hosting your channel.
 
-Actions are chat messages prefixed with `/me` which are delivered in IRC in the format `ACTION`, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.
+Actions are chat messages prefixed with `/me` which are delivered to chat in the format `ACTION`, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.
 
 Then we check if there are bits attached to the `msg`. Probably the implementation you really want is less complicated than this.
 
