@@ -5,7 +5,7 @@ In order to know when we are being hosted by another channel we need to peek int
 In this example we need to parse the message to find out what is happening.
 
 ```javascript
-twitch.irc.inference('PRIVMSG', function (msg) {
+twitch.chat.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user !== 'jtv') {
         return;
     }
@@ -30,7 +30,7 @@ twitch.irc.inference('PRIVMSG', function (msg) {
     };
 });
 
-twitch.irc.on('hosted', function (msg) {
+twitch.chat.on('hosted', function (msg) {
     const { user, viewers, autoHosting } = msg.inferred;
     const hosting = autoHosting ? 'auto-hosting' : 'hosting';
 

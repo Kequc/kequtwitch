@@ -1,19 +1,20 @@
-function handleMsg (irc, msg) {
-    if (irc.inferences[msg.command]) {
-        Object.assign(msg.inferred, irc.inferences[msg.command](msg));
+function handleMsg (chat, msg) {
+    if (chat.inferences[msg.command]) {
+        Object.assign(msg.inferred, chat.inferences[msg.command](msg));
     }
 
     deepFreeze(msg);
 
     const params = msg.inferred.params || msg.params;
 
-    irc.emit('message', msg);
-    irc.emit(msg.command, msg, ...params);
+    chat.emit('message', msg);
+    chat.emit(msg.command, msg, ...params);
+
     if (typeof msg.inferred.command === 'string') {
-        irc.emit(msg.inferred.command, msg, ...params);
+        chat.emit(msg.inferred.command, msg, ...params);
     }
 
-    serverStuff(irc, msg);
+    serverStuff(chat, msg);
 }
 
 function deepFreeze (data) {
@@ -22,13 +23,13 @@ function deepFreeze (data) {
     Object.freeze(data);
 }
 
-function serverStuff (irc, msg) {
+function serverStuff (chat, msg) {
     switch (msg.command) {
     case 'PING':
-        irc.write(`PONG :${msg.params[0]}`);
+        chat.sendUnsafe(`PONG :${msg.params[0]}`);
         break;
     case 'RECONNECT':
-        irc.connect();
+        chat.connect();
         break;
     }
 }

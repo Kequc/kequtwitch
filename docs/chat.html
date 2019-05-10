@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.1</div>
+    <div class="package">0.5.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -22,8 +22,8 @@
         <h4><a href="/">Home</a></h4>
         <ul>
             <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">API</a></li>
-            <li><a href="/irc.html">IRC</a></li>
+            <li><a href="/api.html">Api</a></li>
+            <li><a href="/chat.html">Chat</a></li>
             <li><a href="/msg-object.html">Msg object</a></li>
             <li><a href="/inferences.html">Inferences</a></li>
             <li><a href="/logger.html">Logger</a></li>
@@ -32,7 +32,7 @@
     <li>
         <h4><a href="/examples">Examples</a></h4>
         <ul>
-            <li><a href="/examples/chat.html">Chat</a></li>
+            <li><a href="/examples/talk.html">Talk</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
             <li><a href="/examples/subscribes.html">Subscribes</a></li>
@@ -47,18 +47,17 @@
             </div>
 
 <div id="content">
-<h1>IRC</h1>
-<p>Twitch uses IRC for the chatroom on the side of livestreams. This IRC implementation can be used to listen to the chat, and even interact with it.</p>
+<h1>Chat</h1>
+<p>This websockets implementation can be used to listen to the chatroom on the side of livestreams, and even interact with it.</p>
 <h2>IRC options</h2>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> irc = {
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> chat = {
     <span class="hljs-attr">channels</span>: [],
     <span class="hljs-attr">interfaces</span>: {},
-    <span class="hljs-attr">port</span>: <span class="hljs-number">6667</span>,
-    <span class="hljs-attr">host</span>: <span class="hljs-string">'irc.chat.twitch.tv'</span>,
+    <span class="hljs-attr">address</span>: <span class="hljs-string">'wss://irc-ws.chat.twitch.tv:443'</span>,
     <span class="hljs-attr">timeout</span>: <span class="hljs-number">7000</span>
 };
 
-<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { irc });
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { chat });
 </code></pre>
 <table>
 <thead>
@@ -77,12 +76,8 @@
 <td>Object of inferences you want to use (Default: <code>{}</code>)</td>
 </tr>
 <tr>
-<td><code>port</code></td>
-<td>IRC port (Default: <code>6667</code>)</td>
-</tr>
-<tr>
-<td><code>host</code></td>
-<td>IRC host (Default: <code>'irc.chat.twitch.tv'</code>)</td>
+<td><code>address</code></td>
+<td>IRC address (Default: <code>wss://irc-ws.chat.twitch.tv:443</code>)</td>
 </tr>
 <tr>
 <td><code>timeout</code></td>
@@ -92,23 +87,23 @@
 </table>
 <h2>Connect join part and disconnect</h2>
 <p>If you are connected already the <code>connect</code> method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.irc.connect();
-<span class="hljs-comment">// irc is now connected</span>
+<pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.chat.connect();
+<span class="hljs-comment">// chat is now connected</span>
 
-<span class="hljs-keyword">await</span> twitch.irc.join(<span class="hljs-string">'#mychannel'</span>);
+<span class="hljs-keyword">await</span> twitch.chat.join(<span class="hljs-string">'#mychannel'</span>);
 <span class="hljs-comment">// #mychannel is now joined</span>
 
-<span class="hljs-keyword">await</span> twitch.irc.part(<span class="hljs-string">'#mychannel'</span>);
+<span class="hljs-keyword">await</span> twitch.chat.part(<span class="hljs-string">'#mychannel'</span>);
 <span class="hljs-comment">// #mychannel is now parted</span>
 
-<span class="hljs-keyword">await</span> twitch.irc.disconnect();
-<span class="hljs-comment">// irc is now disconnected</span>
+<span class="hljs-keyword">await</span> twitch.chat.disconnect();
+<span class="hljs-comment">// chat is now disconnected</span>
 </code></pre>
 <h2>Events</h2>
 <p>While connected to IRC, every line is parsed into an object and then emitted via node <code>EventEmitter</code> on the <code>irc</code> instance. Event names are the Twitch command, otherwise <code>UNKNOWN</code>. In addition all messages emit the <code>message</code> event.</p>
 <p>There are also connection status events.</p>
-<pre><code class="language-javascript">twitch.irc.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-comment">// msg received from irc</span>
+<pre><code class="language-javascript">twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-comment">// msg received from chat</span>
 });
 </code></pre>
 <table>
@@ -157,19 +152,20 @@
 <h2>Send</h2>
 <p>To write a message safely into IRC use the <code>send</code> method. The first parameter is what you want to write, the second parameter is the minimum connection status it needs to wait for (Default: <code>'ready'</code>).</p>
 <p>Useful in case the chat is reconnecting.</p>
-<pre><code class="language-javascript">twitch.irc.send(<span class="hljs-string">'PRIVMSG #channel :Hello everyone!'</span>);
+<pre><code class="language-javascript">twitch.chat.send(<span class="hljs-string">'PRIVMSG #channel :Hello everyone!'</span>);
 </code></pre>
-<h2>Write</h2>
-<p>To write a message directly into IRC without any protection use the <code>write</code> method.</p>
-<pre><code class="language-javascript">twitch.irc.write(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
+<h2>Send unsafe</h2>
+<p>To write a message directly into IRC without any protection use the <code>sendUnsafe</code> method.</p>
+<pre><code class="language-javascript">twitch.chat.sendUnsafe(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
 </code></pre>
 <h2>[Say] extension</h2>
-<p>If you are going to be posting messages in the chat often it might be helpful to extend the <code>irc</code> instance with a <code>say</code> command.</p>
-<pre><code class="language-javascript">twitch.irc.say = <span class="hljs-function">(<span class="hljs-params">channel, message</span>) =&gt;</span> {
-    twitch.irc.send(<span class="hljs-string">`PRIVMSG <span class="hljs-subst">${channel}</span> :<span class="hljs-subst">${message}</span>`</span>);
-};
+<p>If you are going to be posting messages in the chat often it might be helpful to extend the <code>chat</code> instance with a <code>say</code> command.</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">say</span> (<span class="hljs-params">channel, message</span>) </span>{
+    twitch.chat.send(<span class="hljs-string">`PRIVMSG <span class="hljs-subst">${channel}</span> :<span class="hljs-subst">${message}</span>`</span>);
+}
 
-twitch.irc.say(<span class="hljs-string">'#channel'</span>, <span class="hljs-string">'Hello everyone!'</span>);
+twitch.chat.say = say;
+twitch.chat.say(<span class="hljs-string">'#channel'</span>, <span class="hljs-string">'Hello everyone!'</span>);
 </code></pre>
 
 </div>

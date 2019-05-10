@@ -3,7 +3,7 @@
 The [USERNOTICE](https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-commands) Twitch command contains a `msg-id` tag which can be quite useful for reporting about new subscriptions.
 
 ```javascript
-twitch.irc.inference('USERNOTICE', function (msg) {
+twitch.chat.inference('USERNOTICE', function (msg) {
     if (msg.tags.msgId === 'sub' || msg.tags.msgId === 'resub') {
         return { command: 'sub' };
     }
@@ -12,14 +12,14 @@ twitch.irc.inference('USERNOTICE', function (msg) {
     }
 });
 
-twitch.irc.on('sub', function (msg, channel, message) {
+twitch.chat.on('sub', function (msg, channel, message) {
     const displayName = msg.tags.displayName;
     const months = msg.tags.msgParamMonths;
 
     console.log(`${displayName} has subbed for ${months} months to ${channel} and said: "${message}"!`);
 });
 
-twitch.irc.on('subgift', function (msg, channel, message) {
+twitch.chat.on('subgift', function (msg, channel, message) {
     const displayName = msg.tags.displayName || 'Anonymous';
     const recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
 

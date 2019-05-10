@@ -1,4 +1,4 @@
-const parseParams = require('../../../src/irc/parse-msg/parse-params.js');
+const parseParams = require('../../../src/chat/parse-msg/parse-params.js');
 
 describe('parseParams', function () {
     test('should return empty when params is empty', function () {

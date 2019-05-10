@@ -1,13 +1,13 @@
 const EventEmitter = require('events');
-const authenticate = require('./irc/actions/authenticate.js');
-const connect = require('./irc/actions/connect.js');
-const disconnect = require('./irc/actions/disconnect.js');
-const join = require('./irc/actions/join.js');
-const part = require('./irc/actions/part.js');
-const STATUS = require('./irc/connection-status.js');
-const { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences } = require('./irc/util.js');
+const authenticate = require('./chat/actions/authenticate.js');
+const connect = require('./chat/actions/connect.js');
+const disconnect = require('./chat/actions/disconnect.js');
+const join = require('./chat/actions/join.js');
+const part = require('./chat/actions/part.js');
+const STATUS = require('./chat/connection-status.js');
+const { isSafeToSend, validateChannel, validateChannels, validateInference, validateInferences } = require('./chat/util.js');
 
-class Irc extends EventEmitter {
+class Chat extends EventEmitter {
     constructor (twitch, opt = {}) {
         super();
 
@@ -16,8 +16,7 @@ class Irc extends EventEmitter {
 
         this.channels = opt.channels || [];
         this.inferences = opt.inferences || {};
-        this.port = opt.port || 6667;
-        this.host = opt.host || 'irc.chat.twitch.tv';
+        this.address = opt.address || 'wss://irc-ws.chat.twitch.tv:443';
         this.timeout = opt.timeout || 7000;
 
         validateChannels(this.channels);
@@ -54,16 +53,16 @@ class Irc extends EventEmitter {
     }
 
     send (message, when = STATUS.READY) {
-        if (isSafeToWrite(this.status, when)) {
-            this.write(message);
+        if (isSafeToSend(this.status, when)) {
+            this.sendUnsafe(message);
         } else {
-            this.irc.once(when, () => { this.write(message); });
+            this.chat.once(when, () => { this.sendUnsafe(message); });
         }
     }
 
-    write (message) {
+    sendUnsafe (message) {
         this.twitch.logger.debug('<', message);
-        this.client.write(`${message}\r\n`);
+        this.client.send(`${message}\r\n`);
     }
 
     get status () {
@@ -104,4 +103,4 @@ class Irc extends EventEmitter {
     }
 }
 
-module.exports = Irc;
+module.exports = Chat;

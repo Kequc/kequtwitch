@@ -35,8 +35,8 @@ const Twitch = require('kequtwitch');
 const twitch = new Twitch('your-oauth-token');
 
 (async function init () {
-    await twitch.irc.connect();
-    await twitch.irc.join('#channel');
+    await twitch.chat.connect();
+    await twitch.chat.join('#channel');
 })();
 ```
 

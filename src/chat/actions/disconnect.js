@@ -1,26 +1,26 @@
 const STATUS = require('../connection-status.js');
 
-async function disconnect (irc) {
-    irc.status = STATUS.DISCONNECTED;
+async function disconnect (chat) {
+    chat.status = STATUS.DISCONNECTED;
 
     await new Promise((resolve, reject) => {
-        if (!irc.client) resolve();
+        if (!chat.client) resolve();
 
-        irc.twitch.logger.info('Disconnecting...');
-        irc.client.end();
+        chat.twitch.logger.info('Disconnecting...');
+        chat.client.end();
 
         function onClose () {
-            if (irc.client) irc.client.destroy();
+            if (chat.client) chat.client.destroy();
             removeListeners();
             resolve();
         }
 
         function removeListeners () {
-            irc.client.off('close', onClose);
+            chat.client.off('close', onClose);
         }
 
         function addListeners () {
-            irc.client.on('close', onClose);
+            chat.client.on('close', onClose);
         }
 
         function onTimeout () {
@@ -28,7 +28,7 @@ async function disconnect (irc) {
             reject(new Error('Timeout'));
         }
 
-        setTimeout(onTimeout, irc.timeout);
+        setTimeout(onTimeout, chat.timeout);
         addListeners();
     });
 }

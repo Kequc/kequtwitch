@@ -11,7 +11,7 @@ The object you return becomes `inferred` on the `msg` object. By default if you 
 A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want. A special parameter called `params` overrides params that will be emitted along with the message.
 
 ```javascript
-twitch.irc.inference('JOIN', function (msg) {
+twitch.chat.inference('JOIN', function (msg) {
     return {
         command: 'socks-and-jelly',
         params: ['hello', msg.prefix.user],
@@ -20,20 +20,32 @@ twitch.irc.inference('JOIN', function (msg) {
 });
 
 // Message events are received without additional parameters
-twitch.irc.on('message', function (msg, myString, myUser) {
-    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+twitch.chat.on('message', function (msg, myString, myUser) {
+    // msg.inferred ~= {
+    //     command: 'socks-and-jelly',
+    //     params: ['hello', 'kequc'],
+    //     userBackwards: 'cuqek'
+    // }
     // myString ~= undefined
     // myUser ~= undefined
 });
 
-twitch.irc.on('JOIN', function (msg, myString, myUser) {
-    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+twitch.chat.on('JOIN', function (msg, myString, myUser) {
+    // msg.inferred ~= {
+    //     command: 'socks-and-jelly',
+    //     params: ['hello', 'kequc'],
+    //     userBackwards: 'cuqek'
+    // }
     // myString ~= 'hello'
     // myUser ~= 'kequc'
 });
 
-twitch.irc.on('socks-and-jelly', function (msg, myString, myUser) {
-    // msg.inferred ~= { command: 'socks-and-jelly', params: ['hello', 'kequc'], userBackwards: 'cuqek' }
+twitch.chat.on('socks-and-jelly', function (msg, myString, myUser) {
+    // msg.inferred ~= {
+    //     command: 'socks-and-jelly',
+    //     params: ['hello', 'kequc'],
+    //     userBackwards: 'cuqek'
+    // }
     // myString ~= 'hello'
     // myUser ~= 'kequc'
 });

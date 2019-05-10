@@ -1,4 +1,4 @@
-# Chat
+# Talk
 
 The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from `'jtv'`, which is a legacy (or out of date) way Twitch delivers some status messages. In the [PRIVMSG](https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms) command it's generally information related to whether someone is hosting your channel.
 
@@ -7,7 +7,7 @@ Actions are chat messages prefixed with `/me` which are delivered in IRC in the 
 Then we check if there are bits attached to the `msg`. Probably the implementation you really want is less complicated than this.
 
 ```javascript
-twitch.irc.inference('PRIVMSG', function (msg) {
+twitch.chat.inference('PRIVMSG', function (msg) {
     if (msg.prefix.user === 'jtv') return;
 
     // "/me is great!" #=> "ACTION is great!"
@@ -23,23 +23,23 @@ twitch.irc.inference('PRIVMSG', function (msg) {
     }
 
     return {
-        command: (msg.tags.bits || 0) > 0 ? 'cheer' : 'chat'
+        command: (msg.tags.bits || 0) > 0 ? 'cheer' : 'talk'
     };
 });
 
-twitch.irc.on('action', function (msg, channel, message) {
+twitch.chat.on('action', function (msg, channel, message) {
     const { displayName } = msg.tags;
 
     console.log(`${displayName} in ${channel} actioned "${message}"!`);
 });
 
-twitch.irc.on('cheer', function (msg, channel, message) {
+twitch.chat.on('cheer', function (msg, channel, message) {
     const { displayName, bits } = msg.tags;
 
     console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
 });
 
-twitch.irc.on('chat', function (msg, channel, message) {
+twitch.chat.on('talk', function (msg, channel, message) {
     const { displayName } = msg.tags;
 
     console.log(`${displayName} in ${channel} said "${message}"!`);

@@ -1,6 +1,6 @@
 # Logger
 
-You can specify a custom logger with the methods `debug`, `info`, and `error`. To disable the logger use false `{ logger: false }` In general `debug` will output irc/api communication, `info` contains status information, `error` only when something unexpected happens.
+You can specify a custom logger with the methods `debug`, `info`, and `error`. To disable the logger use false `{ logger: false }` In general `debug` will output chat/api communication, `info` contains status information, `error` only when something unexpected happens.
 
 ```javascript
 const logger = {

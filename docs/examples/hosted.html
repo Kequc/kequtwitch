@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.1</div>
+    <div class="package">0.5.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -22,8 +22,8 @@
         <h4><a href="/">Home</a></h4>
         <ul>
             <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">API</a></li>
-            <li><a href="/irc.html">IRC</a></li>
+            <li><a href="/api.html">Api</a></li>
+            <li><a href="/chat.html">Chat</a></li>
             <li><a href="/msg-object.html">Msg object</a></li>
             <li><a href="/inferences.html">Inferences</a></li>
             <li><a href="/logger.html">Logger</a></li>
@@ -32,7 +32,7 @@
     <li>
         <h4><a href="/examples">Examples</a></h4>
         <ul>
-            <li><a href="/examples/chat.html">Chat</a></li>
+            <li><a href="/examples/talk.html">Talk</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
             <li><a href="/examples/subscribes.html">Subscribes</a></li>
@@ -50,7 +50,7 @@
 <h1>Hosted</h1>
 <p>In order to know when we are being hosted by another channel we need to peek into the <code>PRIVMSG</code> command when it's delivered by <code>'jtv'</code> which is a Twitch mechanism that is arguably a little bit old.</p>
 <p>In this example we need to parse the message to find out what is happening.</p>
-<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user !== <span class="hljs-string">'jtv'</span>) {
         <span class="hljs-keyword">return</span>;
     }
@@ -75,7 +75,7 @@
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+twitch.chat.on(<span class="hljs-string">'hosted'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">const</span> { user, viewers, autoHosting } = msg.inferred;
     <span class="hljs-keyword">const</span> hosting = autoHosting ? <span class="hljs-string">'auto-hosting'</span> : <span class="hljs-string">'hosting'</span>;
 

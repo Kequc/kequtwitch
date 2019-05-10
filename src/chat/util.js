@@ -1,6 +1,6 @@
 const STATUS = require('./connection-status.js');
 
-function isSafeToWrite (status, when) {
+function isSafeToSend (status, when) {
     const statuses = Object.values(STATUS);
     return statuses.indexOf(status) >= statuses.indexOf(when);
 }
@@ -33,4 +33,4 @@ function validateInferences (inferences) {
     Object.values(inferences).forEach(validateInference);
 }
 
-module.exports = { isSafeToWrite, validateChannel, validateChannels, validateInference, validateInferences };
+module.exports = { isSafeToSend, validateChannel, validateChannels, validateInference, validateInferences };

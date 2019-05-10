@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.4.1</div>
+    <div class="package">0.5.0</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -22,8 +22,8 @@
         <h4><a href="/">Home</a></h4>
         <ul>
             <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">API</a></li>
-            <li><a href="/irc.html">IRC</a></li>
+            <li><a href="/api.html">Api</a></li>
+            <li><a href="/chat.html">Chat</a></li>
             <li><a href="/msg-object.html">Msg object</a></li>
             <li><a href="/inferences.html">Inferences</a></li>
             <li><a href="/logger.html">Logger</a></li>
@@ -32,7 +32,7 @@
     <li>
         <h4><a href="/examples">Examples</a></h4>
         <ul>
-            <li><a href="/examples/chat.html">Chat</a></li>
+            <li><a href="/examples/talk.html">Talk</a></li>
             <li><a href="/examples/emotesets.html">Emotesets</a></li>
             <li><a href="/examples/followers.html">Followers</a></li>
             <li><a href="/examples/subscribes.html">Subscribes</a></li>
@@ -49,7 +49,7 @@
 <div id="content">
 <h1>Host and unhost</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands">HOSTTARGET</a> Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.</p>
-<pre><code class="language-javascript">twitch.irc.inference(<span class="hljs-string">'HOSTTARGET'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'HOSTTARGET'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">let</span> command;
     <span class="hljs-keyword">let</span> viewers;
 
@@ -68,11 +68,11 @@
     };
 });
 
-twitch.irc.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
+twitch.chat.on(<span class="hljs-string">'host'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 
-twitch.irc.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
+twitch.chat.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 </code></pre>

@@ -1,4 +1,4 @@
-const parseMsg = require('../../src/irc/parse-msg.js');
+const parseMsg = require('../../src/chat/parse-msg.js');
 
 const EXAMPLES = {
     ':tmi.twitch.tv 001 ronni :Welcome, GLHF!': {

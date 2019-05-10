@@ -35,5 +35,5 @@ function handleEmotesets (emotesets) {
     // updated emotes arrived!
 }
 
-twitch.irc.on('USERSTATE', checkEmotesets);
-twitch.irc.on('GLOBALUSERSTATE', checkEmotesets);
+twitch.chat.on('USERSTATE', checkEmotesets);
+twitch.chat.on('GLOBALUSERSTATE', checkEmotesets);

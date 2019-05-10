@@ -1,4 +1,4 @@
-const Irc = require('./irc.js');
+const Chat = require('./chat.js');
 const Api = require('./api.js');
 const logger = require('./logger.js');
 
@@ -17,8 +17,8 @@ class Twitch {
         this.validateUrl = opt.validateUrl || 'https://id.twitch.tv/oauth2';
         this.validatePath = opt.validatePath || '/validate';
 
-        this.irc = new Irc(this, opt.irc);
         this.api = new Api(this, opt.api);
+        this.chat = new Chat(this, opt.chat);
 
         if (opt.logger === false) {
             this.logger = logger.empty;

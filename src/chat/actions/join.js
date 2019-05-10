@@ -1,22 +1,22 @@
 const STATUS = require('../connection-status.js');
 
-async function join (irc, channel) {
+async function join (chat, channel) {
     await new Promise((resolve, reject) => {
-        irc.send(`JOIN ${channel}`, STATUS.AUTHENTICATED);
+        chat.send(`JOIN ${channel}`, STATUS.AUTHENTICATED);
 
         function onChannelJoin (msg) {
-            if (msg.prefix.user === irc.twitch.login && msg.params[0] === channel) {
+            if (msg.prefix.user === chat.twitch.login && msg.params[0] === channel) {
                 removeListeners();
                 resolve();
             }
         }
 
         function addListeners () {
-            irc.on('JOIN', onChannelJoin);
+            chat.on('JOIN', onChannelJoin);
         }
 
         function removeListeners () {
-            irc.off('JOIN', onChannelJoin);
+            chat.off('JOIN', onChannelJoin);
         }
 
         function onTimeout () {
@@ -24,7 +24,7 @@ async function join (irc, channel) {
             reject(new Error('Timeout'));
         }
 
-        setTimeout(onTimeout, irc.timeout);
+        setTimeout(onTimeout, chat.timeout);
         addListeners();
     });
 }

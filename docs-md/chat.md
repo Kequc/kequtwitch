@@ -1,27 +1,25 @@
-# IRC
+# Chat
 
-Twitch uses IRC for the chatroom on the side of livestreams. This IRC implementation can be used to listen to the chat, and even interact with it.
+This websockets implementation can be used to listen to the chatroom on the side of livestreams, and even interact with it.
 
 ## IRC options
 
 ```javascript
-const irc = {
+const chat = {
     channels: [],
     interfaces: {},
-    port: 6667,
-    host: 'irc.chat.twitch.tv',
+    address: 'wss://irc-ws.chat.twitch.tv:443',
     timeout: 7000
 };
 
-const twitch = new Twitch('your-oauth-token', { irc });
+const twitch = new Twitch('your-oauth-token', { chat });
 ```
 
 | parameter | description |
 | - | - |
 | `channels` | Array of channels you want to join (Default: `[]`) |
 | `inferences` | Object of inferences you want to use (Default: `{}`) |
-| `port` | IRC port (Default: `6667`) |
-| `host` | IRC host (Default: `'irc.chat.twitch.tv'`) |
+| `address` | IRC address (Default: `wss://irc-ws.chat.twitch.tv:443`) |
 | `timeout` | Timeout for connection join, etc. (Default: `7000`) |
 
 ## Connect join part and disconnect
@@ -29,17 +27,17 @@ const twitch = new Twitch('your-oauth-token', { irc });
 If you are connected already the `connect` method will disconnect then reconnect. When connecting to IRC the channels you set on instantiation are joined automatically however you may also dynamically join and part from channels if you choose.
 
 ```javascript
-await twitch.irc.connect();
-// irc is now connected
+await twitch.chat.connect();
+// chat is now connected
 
-await twitch.irc.join('#mychannel');
+await twitch.chat.join('#mychannel');
 // #mychannel is now joined
 
-await twitch.irc.part('#mychannel');
+await twitch.chat.part('#mychannel');
 // #mychannel is now parted
 
-await twitch.irc.disconnect();
-// irc is now disconnected
+await twitch.chat.disconnect();
+// chat is now disconnected
 ```
 
 ## Events
@@ -49,8 +47,8 @@ While connected to IRC, every line is parsed into an object and then emitted via
 There are also connection status events.
 
 ```javascript
-twitch.irc.on('message', function (msg) {
-    // msg received from irc
+twitch.chat.on('message', function (msg) {
+    // msg received from chat
 });
 ```
 
@@ -74,25 +72,26 @@ To write a message safely into IRC use the `send` method. The first parameter is
 Useful in case the chat is reconnecting.
 
 ```javascript
-twitch.irc.send('PRIVMSG #channel :Hello everyone!');
+twitch.chat.send('PRIVMSG #channel :Hello everyone!');
 ```
 
-## Write
+## Send unsafe
 
-To write a message directly into IRC without any protection use the `write` method.
+To write a message directly into IRC without any protection use the `sendUnsafe` method.
 
 ```javascript
-twitch.irc.write('PRIVMSG #channel :No idea if this message will show up');
+twitch.chat.sendUnsafe('PRIVMSG #channel :No idea if this message will show up');
 ```
 
 ## [Say] extension
 
-If you are going to be posting messages in the chat often it might be helpful to extend the `irc` instance with a `say` command.
+If you are going to be posting messages in the chat often it might be helpful to extend the `chat` instance with a `say` command.
 
 ```javascript
-twitch.irc.say = (channel, message) => {
-    twitch.irc.send(`PRIVMSG ${channel} :${message}`);
-};
+function say (channel, message) {
+    twitch.chat.send(`PRIVMSG ${channel} :${message}`);
+}
 
-twitch.irc.say('#channel', 'Hello everyone!');
+twitch.chat.say = say;
+twitch.chat.say('#channel', 'Hello everyone!');
 ```

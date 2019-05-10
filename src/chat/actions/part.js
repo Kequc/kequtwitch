@@ -1,22 +1,22 @@
 const STATUS = require('../connection-status.js');
 
-async function part (irc, channel) {
+async function part (chat, channel) {
     await new Promise((resolve, reject) => {
-        irc.send(`PART ${channel}`, STATUS.AUTHENTICATED);
+        chat.send(`PART ${channel}`, STATUS.AUTHENTICATED);
 
         function onChannelPart (msg) {
-            if (msg.prefix.user === irc.twitch.login && msg.params[0] === channel) {
+            if (msg.prefix.user === chat.twitch.login && msg.params[0] === channel) {
                 removeListeners();
                 resolve();
             }
         }
 
         function addListeners () {
-            irc.on('PART', onChannelPart);
+            chat.on('PART', onChannelPart);
         }
 
         function removeListeners () {
-            irc.off('PART', onChannelPart);
+            chat.off('PART', onChannelPart);
         }
 
         function onTimeout () {
@@ -24,7 +24,7 @@ async function part (irc, channel) {
             reject(new Error('Timeout'));
         }
 
-        setTimeout(onTimeout, irc.timeout);
+        setTimeout(onTimeout, chat.timeout);
         addListeners();
     });
 }

@@ -1,4 +1,4 @@
-const parseMsg = require('../../src/irc/parse-msg.js');
+const parseMsg = require('../../src/chat/parse-msg.js');
 
 describe('parseMsg', function () {
     test('should parse a message', function () {
