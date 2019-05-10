@@ -1,8 +1,8 @@
-# API
+# Api
 
 Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken API's.
 
-## API options
+## Options
 
 ```javascript
 const api = {
