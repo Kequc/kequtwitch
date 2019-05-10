@@ -42,4 +42,4 @@ The first parameter is commonly the channel, therefore very often when you want 
 
 A `msg.channel` attribute is available, if what looks like a channel is found in `msg.params` and it isn't the message. A `msg.message` attribute is available, if the last parameter in `msg.params` uses the `:` long form notation.
 
-Furthermore params are emitted as the remaining parameters of events in the format `(msg, ...params)` so they are as easy to access as possible in event handlers.
+Furthermore params are emitted as the remaining parameters of events in the format `(msg, ...params)` so they are easy access in event handlers.
