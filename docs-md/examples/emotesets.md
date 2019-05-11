@@ -37,3 +37,6 @@ function handleEmotesets (emotesets) {
 
 twitch.chat.on('USERSTATE', checkEmotesets);
 twitch.chat.on('GLOBALUSERSTATE', checkEmotesets);
+```
+
+Quick tip: Emote urls are `https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0` where `${id}` is your character code id.
