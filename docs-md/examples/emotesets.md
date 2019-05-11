@@ -2,7 +2,7 @@
 
 Fetching emotesets whenever they are updated can be relatively simple. We might use this if we were parsing messages to use emoticons and always want to keep them up to date.
 
-Add a quick extension that watches for a change and fetches the new emotes.
+Add a quick extension that watches for a change and fetches the new emotes from [get emoticons by set](https://dev.twitch.tv/docs/v5/reference/chat/#get-chat-emoticons-by-set).
 
 ```javascript
 let lastEmotesets;
