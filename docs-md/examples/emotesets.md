@@ -15,7 +15,7 @@ async function checkEmotesets (msg) {
 
     const emotesets = msg.tags.emoteSets.join(',');
 
-    // Emotesets haven't changed
+    // emotesets haven't changed
     if (lastEmotesets === emotesets) {
         return;
     }
