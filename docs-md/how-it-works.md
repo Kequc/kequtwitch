@@ -1,10 +1,10 @@
 # How it works
 
-Twitch uses websocket for chat interaction and offers several HTTP endpoints.
+Twitch uses websockets for chat interaction and offers several http endpoints.
 
 ## Validation
 
-When you connect to their websocket api or use any of the HTTP endpoints, the token you provided as a parameter in the "Usage" section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the [Twitch documentation](https://dev.twitch.tv/docs/authentication/#validating-requests), you don't have to do anything.
+When you connect to websockets or use any http endpoints, the token you provided as a parameter in the "Usage" section is validated on Twitch servers. Validation occurs passively once an hour when needed as per the [Twitch documentation](https://dev.twitch.tv/docs/authentication/#validating-requests), you don't have to do anything.
 
 This validation step gives us a few additional parameters which become available on our instance making it easy to interact with services.
 

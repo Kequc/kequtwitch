@@ -60,10 +60,10 @@ twitch.chat.on('message', function (msg) {
 | `authenticated` | Chat has successfully authenticated |
 | `ready` | The above and chat has re-joined channels |
 | `message` | Message |
-| `<COMMAND>` | Message |
+| `COMMAND` | Message |
 | `error` | An error has occurred |
 
-Examples of listening to and making use of chat events can be found on the [Examples page](docs-md/examples).
+Examples of listening to and making use of chat events can be found on the [examples page](docs-md/examples).
 
 ## Send
 

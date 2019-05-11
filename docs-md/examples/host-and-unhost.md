@@ -7,7 +7,7 @@ twitch.chat.inference('HOSTTARGET', function (msg) {
     let command;
     let viewers;
 
-    if (msg.params[1][0] === '-') {
+    if (msg.params[1].startsWith('- ')) {
         // "- 10"
         command = 'unhost';
         viewers = msg.params[1].replace('- ', '');
@@ -27,6 +27,6 @@ twitch.chat.on('host', function (msg, channel, viewers) {
 });
 
 twitch.chat.on('unhost', function (msg, channel, viewers) {
-    console.log(`Stopped hosting with ${viewers} viewers!`);
+    console.log(`Stopped hosting ${channel} with ${viewers} viewers!`);
 });
 ```

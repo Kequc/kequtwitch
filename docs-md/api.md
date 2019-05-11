@@ -1,6 +1,6 @@
 # Api
 
-Intended to make interaction with Twitch HTTP endpoints as easy as possible, making available both Helix and Kraken api's.
+Intended to make interaction with Twitch http endpoints as easy as possible, making available both Helix and Kraken api's.
 
 ## Options
 

@@ -53,7 +53,7 @@
     <span class="hljs-keyword">let</span> command;
     <span class="hljs-keyword">let</span> viewers;
 
-    <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] === <span class="hljs-string">'-'</span>) {
+    <span class="hljs-keyword">if</span> (msg.params[<span class="hljs-number">1</span>].startsWith(<span class="hljs-string">'- '</span>)) {
         <span class="hljs-comment">// "- 10"</span>
         command = <span class="hljs-string">'unhost'</span>;
         viewers = msg.params[<span class="hljs-number">1</span>].replace(<span class="hljs-string">'- '</span>, <span class="hljs-string">''</span>);
@@ -73,7 +73,7 @@ twitch.chat.on(<span class="hljs-string">'host'</span>, <span class="hljs-functi
 });
 
 twitch.chat.on(<span class="hljs-string">'unhost'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, viewers</span>) </span>{
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Stopped hosting <span class="hljs-subst">${channel}</span> with <span class="hljs-subst">${viewers}</span> viewers!`</span>);
 });
 </code></pre>
 

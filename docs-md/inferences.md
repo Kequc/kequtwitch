@@ -8,7 +8,9 @@ The object you return becomes `inferred` on the `msg` object. By default if you 
 
 ## Special parameters
 
-A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want. A special parameter called `params` overrides params that will be emitted along with the message.
+A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want.
+
+A special parameter called `params` overrides params that will be emitted along with the message.
 
 ```javascript
 twitch.chat.inference('JOIN', function (msg) {
