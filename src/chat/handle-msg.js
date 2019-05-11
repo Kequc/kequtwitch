@@ -1,11 +1,11 @@
 function handleMsg (chat, msg) {
     if (chat.inferences[msg.command]) {
-        Object.assign(msg.inferred, chat.inferences[msg.command](msg));
+        Object.assign(msg.inferred, chat.inferences[msg.command](msg, ...msg.params));
     }
 
     deepFreeze(msg);
 
-    const params = msg.inferred.params || msg.params;
+    const params = getParams(msg);
 
     chat.emit('message', msg);
     chat.emit(msg.command, msg, ...params);
@@ -15,6 +15,13 @@ function handleMsg (chat, msg) {
     }
 
     serverStuff(chat, msg);
+}
+
+function getParams (msg) {
+    if (Array.isArray(msg.inferred.params)) {
+        return msg.inferred.params;
+    }
+    return msg.params;
 }
 
 function deepFreeze (data) {
