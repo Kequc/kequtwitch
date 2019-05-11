@@ -48,7 +48,7 @@
 
 <div id="content">
 <h1>Ban and timeout</h1>
-<p>The <a href="https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands">CLEARCHAT</a> Twitch command often contains information about users being banned or given a timeout.</p>
+<p>The <a href="https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-commands">CLEARCHAT</a> Twitch command contains information about users being banned or given a timeout.</p>
 <p>Messages with fewer than 2 parameters are a real <code>CLEARCHAT</code> event where the chatroom was emptied. Messages with 3 parameters and a <code>banDuration</code> are only a temporary ban, and otherwise a permanent one.</p>
 <pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'CLEARCHAT'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">let</span> command;

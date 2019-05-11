@@ -5,11 +5,9 @@ A common interest is when someone new follows your channel, unfortunately this i
 This solution uses polling to find new user ids, then looks up those users.
 
 ```javascript
-let lastCheckedAt = Date.now();
-
-function isNewFollow (follow) {
-    return new Date(follow.followedAt).getTime() > lastCheckedAt;
-}
+// 2 minutes
+setInterval(checkFollowers, 1000 * 60 * 2);
+twitch.api.followsAt = Date.now();
 
 async function checkFollowers () {
     // fetch
@@ -18,26 +16,32 @@ async function checkFollowers () {
     });
 
     const userIds = follows.data.filter(isNewFollow).map(follow => follow.fromId);
-    lastCheckedAt = Date.now();
+    twitch.api.followsAt = Date.now();
 
+    // no new followers
     if (userIds.length < 1) {
         return;
     }
 
+    // get user data
     const followers = await twitch.api.request('/users', {
         data: { id: userIds }
     });
 
+    // emit
     for (const follower of followers.data) {
         handleFollower(follower);
     }
 }
 
+function isNewFollow (follow) {
+    return new Date(follow.followedAt).getTime() > twitch.api.followsAt;
+}
+
+// data arrived!
 function handleFollower (follower) {
     const displayName = follower.displayName;
 
     console.log(`New follower: ${displayName}!`);
 }
-
-// 2 minutes
-setInterval(checkFollowers, 1000 * 60 * 2);
+```

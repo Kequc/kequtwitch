@@ -4,10 +4,10 @@ The [USERNOTICE](https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-comm
 
 ```javascript
 twitch.chat.inference('USERNOTICE', function (msg) {
-    if (msg.tags.msgId === 'sub' || msg.tags.msgId === 'resub') {
+    if (['sub', 'resub'].includes(msg.tags.msgId)) {
         return { command: 'sub' };
     }
-    if (msg.tags.msgId === 'subgift' || msg.tags.msgId === 'anonsubgift') {
+    if (['subgift', 'anonsubgift'].includes(msg.tags.msgId)) {
         return { command: 'subgift' };
     }
 });

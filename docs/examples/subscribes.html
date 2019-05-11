@@ -50,10 +50,10 @@
 <h1>Subscribes</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-commands">USERNOTICE</a> Twitch command contains a <code>msg-id</code> tag which can be quite useful for reporting about new subscriptions.</p>
 <pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'USERNOTICE'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-keyword">if</span> (msg.tags.msgId === <span class="hljs-string">'sub'</span> || msg.tags.msgId === <span class="hljs-string">'resub'</span>) {
+    <span class="hljs-keyword">if</span> ([<span class="hljs-string">'sub'</span>, <span class="hljs-string">'resub'</span>].includes(msg.tags.msgId)) {
         <span class="hljs-keyword">return</span> { <span class="hljs-attr">command</span>: <span class="hljs-string">'sub'</span> };
     }
-    <span class="hljs-keyword">if</span> (msg.tags.msgId === <span class="hljs-string">'subgift'</span> || msg.tags.msgId === <span class="hljs-string">'anonsubgift'</span>) {
+    <span class="hljs-keyword">if</span> ([<span class="hljs-string">'subgift'</span>, <span class="hljs-string">'anonsubgift'</span>].includes(msg.tags.msgId)) {
         <span class="hljs-keyword">return</span> { <span class="hljs-attr">command</span>: <span class="hljs-string">'subgift'</span> };
     }
 });

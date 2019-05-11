@@ -48,9 +48,10 @@
 
 <div id="content">
 <h1>Emotesets</h1>
-<p>Fetching emotesets whenever they are updated can be relatively simple. We might use this if we were parsing messages to use emoticons and always want to keep them up to date.</p>
+<p>Fetching emotesets whenever they are updated can be relatively simple. We might use this if we were listing available emoticons and always want to keep them up to date.</p>
 <p>Add a quick extension that watches for a change and fetches the new emotes from <a href="https://dev.twitch.tv/docs/v5/reference/chat/#get-chat-emoticons-by-set">get emoticons by set</a>.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">let</span> lastEmotesets;
+<pre><code class="language-javascript">twitch.chat.on(<span class="hljs-string">'USERSTATE'</span>, checkEmotesets);
+twitch.chat.on(<span class="hljs-string">'GLOBALUSERSTATE'</span>, checkEmotesets);
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkEmotesets</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// look for new emotesets</span>
@@ -61,10 +62,10 @@
     <span class="hljs-keyword">const</span> emotesets = msg.tags.emoteSets.join(<span class="hljs-string">','</span>);
 
     <span class="hljs-comment">// emotesets haven't changed</span>
-    <span class="hljs-keyword">if</span> (lastEmotesets === emotesets) {
+    <span class="hljs-keyword">if</span> (twitch.chat.emotesets === emotesets) {
         <span class="hljs-keyword">return</span>;
     }
-    lastEmotesets = emotesets;
+    twitch.chat.emotesets = emotesets;
 
     <span class="hljs-comment">// fetch</span>
     <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
@@ -79,9 +80,6 @@
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
     <span class="hljs-comment">// updated emotes arrived!</span>
 }
-
-twitch.chat.on(<span class="hljs-string">'USERSTATE'</span>, checkEmotesets);
-twitch.chat.on(<span class="hljs-string">'GLOBALUSERSTATE'</span>, checkEmotesets);
 </code></pre>
 <p>Quick tip: Emote urls are <code>https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0</code> where <code>${id}</code> is your character code id.</p>
 
