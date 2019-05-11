@@ -63,7 +63,7 @@ twitch.chat.on('message', function (msg) {
 | `COMMAND` | Message |
 | `error` | An error has occurred |
 
-Examples of listening to and making use of chat events can be found on the [examples page](docs-md/examples).
+Examples of listening to and making use of chat events can be found on the [examples](docs-md/examples) page.
 
 ## Send
 
