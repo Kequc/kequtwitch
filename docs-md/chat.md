@@ -7,7 +7,7 @@ This websockets implementation can be used to listen to the chatroom on the side
 ```javascript
 const chat = {
     channels: [],
-    interfaces: {},
+    inferences: {},
     address: 'wss://irc-ws.chat.twitch.tv:443',
     timeout: 7000
 };
