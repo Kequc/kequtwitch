@@ -1,6 +1,6 @@
 # Home
 
-This library is indifferent to the information is receives from Twitch, it delivers you all data in a simple format without any frills. It requires a small amount of effort to produce the behaviour you want compared to similar libraries but it is ultimately still pretty easy honestly.
+This library is agnostic to the information is receives from Twitch, it delivers you all data in a simple format without any frills. It requires a small amount of effort to produce the behaviour you want compared to similar libraries but it is ultimately still pretty easy honestly.
 
 ## Installation
 
