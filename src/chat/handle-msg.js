@@ -5,16 +5,21 @@ function handleMsg (chat, msg) {
 
     deepFreeze(msg);
 
-    const params = getParams(msg);
-
     chat.emit('message', msg);
-    chat.emit(msg.command, msg, ...params);
+    chat.emit(msg.command, msg, ...msg.params);
 
     if (typeof msg.inferred.command === 'string') {
+        const params = getParams(msg);
         chat.emit(msg.inferred.command, msg, ...params);
     }
 
     serverStuff(chat, msg);
+}
+
+function deepFreeze (data) {
+    if (!(data instanceof Object)) return;
+    Object.values(data).forEach(deepFreeze);
+    Object.freeze(data);
 }
 
 function getParams (msg) {
@@ -22,12 +27,6 @@ function getParams (msg) {
         return msg.inferred.params;
     }
     return msg.params;
-}
-
-function deepFreeze (data) {
-    if (!(data instanceof Object)) return;
-    Object.values(data).forEach(deepFreeze);
-    Object.freeze(data);
 }
 
 function serverStuff (chat, msg) {

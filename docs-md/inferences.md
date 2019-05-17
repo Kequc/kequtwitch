@@ -21,27 +21,26 @@ twitch.chat.inference('JOIN', function (msg) {
     };
 });
 
-// Message events are received without additional parameters
-twitch.chat.on('message', function (msg, myString, myUser) {
+// Message events are received without parameters
+twitch.chat.on('message', function (msg) {
     // msg.inferred ~= {
     //     command: 'socks-and-jelly',
     //     params: ['hello', 'kequc'],
     //     userBackwards: 'cuqek'
     // }
-    // myString ~= undefined
-    // myUser ~= undefined
 });
 
-twitch.chat.on('JOIN', function (msg, myString, myUser) {
+// Command events have default parameters
+twitch.chat.on('JOIN', function (msg, channel) {
     // msg.inferred ~= {
     //     command: 'socks-and-jelly',
     //     params: ['hello', 'kequc'],
     //     userBackwards: 'cuqek'
     // }
-    // myString ~= 'hello'
-    // myUser ~= 'kequc'
+    // channel ~= '#channel'
 });
 
+// Custom events have custom parameters
 twitch.chat.on('socks-and-jelly', function (msg, myString, myUser) {
     // msg.inferred ~= {
     //     command: 'socks-and-jelly',

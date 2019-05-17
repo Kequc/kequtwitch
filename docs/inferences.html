@@ -10,7 +10,7 @@
 </head>
     <body>
 <div id="header">
-    <div class="package">0.5.2</div>
+    <div class="package">0.5.3</div>
     <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
     <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
     <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -62,27 +62,26 @@
     };
 });
 
-<span class="hljs-comment">// Message events are received without additional parameters</span>
-twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, myString, myUser</span>) </span>{
+<span class="hljs-comment">// Message events are received without parameters</span>
+twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// msg.inferred ~= {</span>
     <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
     <span class="hljs-comment">//     params: ['hello', 'kequc'],</span>
     <span class="hljs-comment">//     userBackwards: 'cuqek'</span>
     <span class="hljs-comment">// }</span>
-    <span class="hljs-comment">// myString ~= undefined</span>
-    <span class="hljs-comment">// myUser ~= undefined</span>
 });
 
-twitch.chat.on(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, myString, myUser</span>) </span>{
+<span class="hljs-comment">// Command events have default parameters</span>
+twitch.chat.on(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel</span>) </span>{
     <span class="hljs-comment">// msg.inferred ~= {</span>
     <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
     <span class="hljs-comment">//     params: ['hello', 'kequc'],</span>
     <span class="hljs-comment">//     userBackwards: 'cuqek'</span>
     <span class="hljs-comment">// }</span>
-    <span class="hljs-comment">// myString ~= 'hello'</span>
-    <span class="hljs-comment">// myUser ~= 'kequc'</span>
+    <span class="hljs-comment">// channel ~= '#channel'</span>
 });
 
+<span class="hljs-comment">// Custom events have custom parameters</span>
 twitch.chat.on(<span class="hljs-string">'socks-and-jelly'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, myString, myUser</span>) </span>{
     <span class="hljs-comment">// msg.inferred ~= {</span>
     <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
