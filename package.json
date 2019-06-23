@@ -1,6 +1,6 @@
 {
     "name": "kequtwitch",
-    "version": "0.5.4",
+    "version": "0.5.5",
     "description": "This is a node library for interfacing with twitch",
     "main": "index.js",
     "scripts": {
@@ -8,6 +8,10 @@
         "docs": "github-pages-render",
         "docs:server": "github-pages-render server"
     },
+    "files": [
+        "src/*",
+        "index.js"
+    ],
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/Kequc/kequtwitch.git"
@@ -26,6 +30,6 @@
     "homepage": "https://kequtwitch.kequc.com",
     "dependencies": {
         "tinyreq": "^3.4.1",
-        "ws": "^7.0.0"
+        "ws": "^7.0.1"
     }
 }
