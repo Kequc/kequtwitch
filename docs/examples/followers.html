@@ -51,7 +51,8 @@
 <p>This solution uses polling to find new user ids, then looks up those users.</p>
 <pre><code class="language-javascript"><span class="hljs-comment">// 2 minutes</span>
 setInterval(checkFollowers, <span class="hljs-number">1000</span> * <span class="hljs-number">60</span> * <span class="hljs-number">2</span>);
-twitch.api.followsAt = <span class="hljs-built_in">Date</span>.now();
+
+<span class="hljs-keyword">let</span> lastFollowedAt = <span class="hljs-built_in">Date</span>.now();
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkFollowers</span> (<span class="hljs-params"></span>) </span>{
     <span class="hljs-comment">// fetch</span>
@@ -60,7 +61,7 @@ twitch.api.followsAt = <span class="hljs-built_in">Date</span>.now();
     });
 
     <span class="hljs-keyword">const</span> userIds = follows.data.filter(isNewFollow).map(<span class="hljs-function"><span class="hljs-params">follow</span> =&gt;</span> follow.fromId);
-    twitch.api.followsAt = <span class="hljs-built_in">Date</span>.now();
+    lastFollowedAt = <span class="hljs-built_in">Date</span>.now();
 
     <span class="hljs-comment">// no new followers</span>
     <span class="hljs-keyword">if</span> (userIds.length &lt; <span class="hljs-number">1</span>) {
@@ -79,7 +80,7 @@ twitch.api.followsAt = <span class="hljs-built_in">Date</span>.now();
 }
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isNewFollow</span> (<span class="hljs-params">follow</span>) </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(follow.followedAt).getTime() &gt; twitch.api.followsAt;
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(follow.followedAt).getTime() &gt; lastFollowedAt;
 }
 
 <span class="hljs-comment">// data arrived!</span>
