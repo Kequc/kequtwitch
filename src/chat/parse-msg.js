@@ -16,7 +16,7 @@ function parseMsg (raw) {
         params: [],
         channel: null,
         message: null,
-        inferred: {}
+        extended: {}
     };
 
     const params = parseParams(indexes.params > -1 ? raw.substring(indexes.params) : null);
@@ -29,7 +29,7 @@ function parseMsg (raw) {
         params,
         channel: inferChannel(raw, params),
         message: inferMessage(raw, params),
-        inferred: {}
+        extended: {}
     };
 }
 

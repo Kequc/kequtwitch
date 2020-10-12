@@ -10,6 +10,14 @@ class Api {
         this.krakenUrl = opt.krakenUrl || 'https://api.twitch.tv/kraken';
     }
 
+    helix (path, opt = {}) {
+        return this.request(path, Object.assign({}, opt, { kraken: false }))
+    }
+
+    kraken (path, opt = {}) {
+        return this.request(path, Object.assign({}, opt, { kraken: true }))
+    }
+
     async request (path, opt = {}, retries = 0) {
         if (!opt.skipValidation) {
             await this.twitch.isValidated();

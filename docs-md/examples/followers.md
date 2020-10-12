@@ -11,7 +11,7 @@ twitch.api.followsAt = Date.now();
 
 async function checkFollowers () {
     // fetch
-    const follows = await twitch.api.request('/users/follows', {
+    const follows = await twitch.api.helix('/users/follows', {
         data: { toId: '$userId' }
     });
 
@@ -24,7 +24,7 @@ async function checkFollowers () {
     }
 
     // get user data
-    const followers = await twitch.api.request('/users', {
+    const followers = await twitch.api.helix('/users', {
         data: { id: userIds }
     });
 

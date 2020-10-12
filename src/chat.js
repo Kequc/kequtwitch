@@ -4,7 +4,7 @@ const join = require('./chat/actions/join.js');
 const part = require('./chat/actions/part.js');
 const appendData = require('./chat/append-data.js');
 const STATUS = require('./chat/connection-status.js');
-const { isSafeToSend, validateChannel, validateChannels, validateInference, validateInferences } = require('./chat/util.js');
+const { isSafeToSend, validateChannel, validateChannels, validateExtension, validateExtensions } = require('./chat/util.js');
 const connect = require('./shared/connect.js');
 const disconnect = require('./shared/disconnect.js');
 
@@ -17,12 +17,12 @@ class Chat extends EventEmitter {
         this._data = '';
 
         this.channels = opt.channels || [];
-        this.inferences = opt.inferences || {};
+        this.extensions = opt.extensions || {};
         this.address = opt.address || 'wss://irc-ws.chat.twitch.tv:443';
         this.timeout = opt.timeout || 7000;
 
         validateChannels(this.channels);
-        validateInferences(this.inferences);
+        validateExtensions(this.extensions);
 
         this.on('connected', () => { this.twitch.logger.info('Chat connected'); });
         this.on('disconnected', () => { this.twitch.logger.info('Chat disconnected'); });
@@ -59,13 +59,17 @@ class Chat extends EventEmitter {
         this.data = '';
     }
 
-    inference (command, callback) {
-        if (this.inferences[command]) {
-            throw new Error(`Inference already exists: ${command}`);
+    extend (command, callback) {
+        if (this.extensions[command]) {
+            throw new Error(`Extension already exists: ${command}`);
         }
 
-        validateInference(callback);
-        this.inferences[command] = callback;
+        validateExtension(callback);
+        this.extensions[command] = callback;
+    }
+
+    say (channel, message) {
+        this.send(`PRIVMSG ${channel} :${message}`);
     }
 
     send (message, when = STATUS.READY) {
@@ -80,7 +84,7 @@ class Chat extends EventEmitter {
         this.twitch.logger.debug('<', message);
         this.client.send(`${message}\r\n`);
     }
-
+    
     get status () {
         return this._status;
     }

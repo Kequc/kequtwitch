@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-</head>
+    <head>
+        <title>Kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
     <body>
-<div id="header">
-    <div class="package">0.5.5</div>
-    <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-    <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
-</div>
+        <div id="header">
+            <div class="package">0.6.0</div>
+            <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+            <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
+        </div>
         <div id="container">
             <div id="sidebar">
-<ul class="list">
-    <li>
-        <h4><a href="/">Home</a></h4>
-        <ul>
-            <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">Api</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/msg-object.html">Msg object</a></li>
-            <li><a href="/inferences.html">Inferences</a></li>
-            <li><a href="/logger.html">Logger</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4><a href="/examples">Examples</a></h4>
-        <ul>
-            <li><a href="/examples/talk.html">Talk</a></li>
-            <li><a href="/examples/emotesets.html">Emotesets</a></li>
-            <li><a href="/examples/followers.html">Followers</a></li>
-            <li><a href="/examples/subscribes.html">Subscribes</a></li>
-            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
-            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
-            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
-            <li><a href="/examples/hosted.html">Hosted</a></li>
-            <li><a href="/examples/user-info.html">User info</a></li>
-        </ul>
-    </li>
-</ul>
+                <ul class="list">
+                    <li>
+                        <h4><a href="/">Home</a></h4>
+                        <ul>
+                            <li><a href="/how-it-works.html">How it works</a></li>
+                            <li><a href="/api.html">Api</a></li>
+                            <li><a href="/chat.html">Chat</a></li>
+                            <li><a href="/msg-object.html">Msg object</a></li>
+                            <li><a href="/extensions.html">Extensions</a></li>
+                            <li><a href="/logger.html">Logger</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><a href="/examples">Examples</a></h4>
+                        <ul>
+                            <li><a href="/examples/talk.html">Talk</a></li>
+                            <li><a href="/examples/emotesets.html">Emotesets</a></li>
+                            <li><a href="/examples/followers.html">Followers</a></li>
+                            <li><a href="/examples/subscribes.html">Subscribes</a></li>
+                            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
+                            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
+                            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
+                            <li><a href="/examples/hosted.html">Hosted</a></li>
+                            <li><a href="/examples/user-info.html">User info</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
 <div id="content">
@@ -75,10 +75,15 @@
 </tbody>
 </table>
 <h2>Request</h2>
-<p>The <code>request</code> method takes a <code>path</code> as a first parameter, an options object, and returns a promise.</p>
-<p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>to_id</code> you might use <code>{ toId: '$userId' }</code>.</p>
+<p>The <code>request</code> method takes <code>path</code> as a first parameter, an options object, and returns a promise.</p>
+<p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>{ to_id }</code> you might use <code>{ toId }</code>.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users/follows'</span>, {
-    <span class="hljs-attr">data</span>: { <span class="hljs-attr">toId</span>: <span class="hljs-string">'$userId'</span> }
+    <span class="hljs-attr">data</span>: { toId }
+});
+
+<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+    <span class="hljs-attr">data</span>: { emotesets },
+    <span class="hljs-attr">kraken</span>: <span class="hljs-literal">true</span>
 });
 </code></pre>
 <table>
@@ -115,10 +120,20 @@
 </tr>
 <tr>
 <td><code>maxRetries</code></td>
-<td>Number of times to retry failed requests (Default: <code>2</code>)</td>
+<td>Number of times to retry failed attempts (Default: <code>2</code>)</td>
 </tr>
 </tbody>
 </table>
+<h2>Helix and kraken</h2>
+<p>The <code>helix</code> and <code>kraken</code> methods are more explicit convenience methods which alias the <code>request</code> method.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.helix(<span class="hljs-string">'/users/follows'</span>, {
+    <span class="hljs-attr">data</span>: { toId }
+});
+
+<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.kraken(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+    <span class="hljs-attr">data</span>: { emotesets }
+});
+</code></pre>
 <h2>Special values</h2>
 <p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data value to one of these strings will use your corresponding information.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {

@@ -13,10 +13,10 @@ Many are easy to understand and consistent such as the [JOIN](https://dev.twitch
 | `prefix.host` | Host (Ie. `'ronni.tmi.twitch.tv'`) |
 | `prefix.user` | User (Ie. `'ronni'`) |
 | `command` | The Twitch command (Ie. `'PRIVMSG'`) |
-| `params` | Array of parameters that follow the command (Ie. `['#mrkequc', 'Hi everyone!']`) |
-| `channel` | Taken from `params` if detected or `null` (Ie. `'#mrkequc'`) |
+| `params` | Array of parameters that follow the command (Ie. `['#channel', 'Hi everyone!']`) |
+| `channel` | Taken from `params` if detected or `null` (Ie. `'#channel'`) |
 | `message` | Taken from `params` if detected or `null` (Ie. `'Hi everyone!'`) |
-| `inferred` | Object containing special inferred information (Ie. `{}`) |
+| `extended` | Object containing special extended information (Ie. `{}`) |
 
 ## Tags
 

@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-</head>
+    <head>
+        <title>Kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
     <body>
-<div id="header">
-    <div class="package">0.5.5</div>
-    <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-    <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
-</div>
+        <div id="header">
+            <div class="package">0.6.0</div>
+            <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+            <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
+        </div>
         <div id="container">
             <div id="sidebar">
-<ul class="list">
-    <li>
-        <h4><a href="/">Home</a></h4>
-        <ul>
-            <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">Api</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/msg-object.html">Msg object</a></li>
-            <li><a href="/inferences.html">Inferences</a></li>
-            <li><a href="/logger.html">Logger</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4><a href="/examples">Examples</a></h4>
-        <ul>
-            <li><a href="/examples/talk.html">Talk</a></li>
-            <li><a href="/examples/emotesets.html">Emotesets</a></li>
-            <li><a href="/examples/followers.html">Followers</a></li>
-            <li><a href="/examples/subscribes.html">Subscribes</a></li>
-            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
-            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
-            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
-            <li><a href="/examples/hosted.html">Hosted</a></li>
-            <li><a href="/examples/user-info.html">User info</a></li>
-        </ul>
-    </li>
-</ul>
+                <ul class="list">
+                    <li>
+                        <h4><a href="/">Home</a></h4>
+                        <ul>
+                            <li><a href="/how-it-works.html">How it works</a></li>
+                            <li><a href="/api.html">Api</a></li>
+                            <li><a href="/chat.html">Chat</a></li>
+                            <li><a href="/msg-object.html">Msg object</a></li>
+                            <li><a href="/extensions.html">Extensions</a></li>
+                            <li><a href="/logger.html">Logger</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><a href="/examples">Examples</a></h4>
+                        <ul>
+                            <li><a href="/examples/talk.html">Talk</a></li>
+                            <li><a href="/examples/emotesets.html">Emotesets</a></li>
+                            <li><a href="/examples/followers.html">Followers</a></li>
+                            <li><a href="/examples/subscribes.html">Subscribes</a></li>
+                            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
+                            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
+                            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
+                            <li><a href="/examples/hosted.html">Hosted</a></li>
+                            <li><a href="/examples/user-info.html">User info</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
 <div id="content">
@@ -51,7 +51,7 @@
 <h2>Options</h2>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> chat = {
     <span class="hljs-attr">channels</span>: [],
-    <span class="hljs-attr">inferences</span>: {},
+    <span class="hljs-attr">extensions</span>: {},
     <span class="hljs-attr">address</span>: <span class="hljs-string">'wss://irc-ws.chat.twitch.tv:443'</span>,
     <span class="hljs-attr">timeout</span>: <span class="hljs-number">7000</span>
 };
@@ -71,8 +71,8 @@
 <td>Array of channels you want to join (Default: <code>[]</code>)</td>
 </tr>
 <tr>
-<td><code>inferences</code></td>
-<td>Object of inferences you want to use (Default: <code>{}</code>)</td>
+<td><code>extensions</code></td>
+<td>Object of extensions you want to use (Default: <code>{}</code>)</td>
 </tr>
 <tr>
 <td><code>address</code></td>
@@ -89,11 +89,11 @@
 <pre><code class="language-javascript"><span class="hljs-keyword">await</span> twitch.chat.connect();
 <span class="hljs-comment">// chat is now connected</span>
 
-<span class="hljs-keyword">await</span> twitch.chat.join(<span class="hljs-string">'#mychannel'</span>);
-<span class="hljs-comment">// #mychannel is now joined</span>
+<span class="hljs-keyword">await</span> twitch.chat.join(<span class="hljs-string">'#channel'</span>);
+<span class="hljs-comment">// #channel is now joined</span>
 
-<span class="hljs-keyword">await</span> twitch.chat.part(<span class="hljs-string">'#mychannel'</span>);
-<span class="hljs-comment">// #mychannel is now parted</span>
+<span class="hljs-keyword">await</span> twitch.chat.part(<span class="hljs-string">'#channel'</span>);
+<span class="hljs-comment">// #channel is now parted</span>
 
 <span class="hljs-keyword">await</span> twitch.chat.disconnect();
 <span class="hljs-comment">// chat is now disconnected</span>
@@ -157,14 +157,9 @@
 <p>To write a message directly into chat without any protection use the <code>sendUnsafe</code> method.</p>
 <pre><code class="language-javascript">twitch.chat.sendUnsafe(<span class="hljs-string">'PRIVMSG #channel :No idea if this message will show up'</span>);
 </code></pre>
-<h2>[Say] extension</h2>
-<p>If you are going to be posting messages in the chat often it might be helpful to extend the <code>chat</code> instance with a <code>say</code> command.</p>
-<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">say</span> (<span class="hljs-params">channel, message</span>) </span>{
-    twitch.chat.send(<span class="hljs-string">`PRIVMSG <span class="hljs-subst">${channel}</span> :<span class="hljs-subst">${message}</span>`</span>);
-}
-
-twitch.chat.say = say;
-twitch.chat.say(<span class="hljs-string">'#channel'</span>, <span class="hljs-string">'Hello everyone!'</span>);
+<h2>Say</h2>
+<p>A convenience method for writing a message into chat, is the same as using the example from <code>send</code> above.</p>
+<pre><code class="language-javascript">twitch.chat.say(<span class="hljs-string">'#channel'</span>, <span class="hljs-string">'Hello everyone!'</span>);
 </code></pre>
 
 </div>

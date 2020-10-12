@@ -20,13 +20,18 @@ const twitch = new Twitch('your-oauth-token', { api });
 
 ## Request
 
-The `request` method takes a `path` as a first parameter, an options object, and returns a promise.
+The `request` method takes `path` as a first parameter, an options object, and returns a promise.
 
-Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `to_id` you might use `{ toId: '$userId' }`.
+Keys are returned in `camelCase`, for example if you are trying to access a value named `from_id` it can be found at `response.fromId`. Similarly attributes are defined in `camelCase`, if you are trying to set a data attribute named `{ to_id }` you might use `{ toId }`.
 
 ```javascript
 const response = await twitch.api.request('/users/follows', {
-    data: { toId: '$userId' }
+    data: { toId }
+});
+
+const response = await twitch.api.request('/chat/emoticon_images', {
+    data: { emotesets },
+    kraken: true
 });
 ```
 
@@ -38,7 +43,21 @@ const response = await twitch.api.request('/users/follows', {
 | `method` | Request method (Default: `'GET'`) |
 | `data` | Object containing post data or search parameters (Default: `{}`) |
 | `headers` | Object containing additional headers (Default: `{}`) |
-| `maxRetries` | Number of times to retry failed requests (Default: `2`) |
+| `maxRetries` | Number of times to retry failed attempts (Default: `2`) |
+
+## Helix and kraken
+
+The `helix` and `kraken` methods are more explicit convenience methods which alias the `request` method.
+
+```javascript
+const response = await twitch.api.helix('/users/follows', {
+    data: { toId }
+});
+
+const response = await twitch.api.kraken('/chat/emoticon_images', {
+    data: { emotesets }
+});
+```
 
 ## Special values
 

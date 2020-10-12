@@ -7,7 +7,7 @@ This websockets implementation can be used to listen to the chatroom on the side
 ```javascript
 const chat = {
     channels: [],
-    inferences: {},
+    extensions: {},
     address: 'wss://irc-ws.chat.twitch.tv:443',
     timeout: 7000
 };
@@ -18,7 +18,7 @@ const twitch = new Twitch('your-oauth-token', { chat });
 | parameter | description |
 | - | - |
 | `channels` | Array of channels you want to join (Default: `[]`) |
-| `inferences` | Object of inferences you want to use (Default: `{}`) |
+| `extensions` | Object of extensions you want to use (Default: `{}`) |
 | `address` | Websocket address (Default: `wss://irc-ws.chat.twitch.tv:443`) |
 | `timeout` | Timeout for connection join, etc. (Default: `7000`) |
 
@@ -30,11 +30,11 @@ If you are connected already the `connect` method will disconnect then reconnect
 await twitch.chat.connect();
 // chat is now connected
 
-await twitch.chat.join('#mychannel');
-// #mychannel is now joined
+await twitch.chat.join('#channel');
+// #channel is now joined
 
-await twitch.chat.part('#mychannel');
-// #mychannel is now parted
+await twitch.chat.part('#channel');
+// #channel is now parted
 
 await twitch.chat.disconnect();
 // chat is now disconnected
@@ -83,15 +83,10 @@ To write a message directly into chat without any protection use the `sendUnsafe
 twitch.chat.sendUnsafe('PRIVMSG #channel :No idea if this message will show up');
 ```
 
-## [Say] extension
+## Say
 
-If you are going to be posting messages in the chat often it might be helpful to extend the `chat` instance with a `say` command.
+A convenience method for writing a message into chat, is the same as using the example from `send` above.
 
 ```javascript
-function say (channel, message) {
-    twitch.chat.send(`PRIVMSG ${channel} :${message}`);
-}
-
-twitch.chat.say = say;
 twitch.chat.say('#channel', 'Hello everyone!');
 ```

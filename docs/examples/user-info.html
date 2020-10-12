@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-</head>
+    <head>
+        <title>Kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
     <body>
-<div id="header">
-    <div class="package">0.5.5</div>
-    <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-    <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
-</div>
+        <div id="header">
+            <div class="package">0.6.0</div>
+            <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+            <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
+        </div>
         <div id="container">
             <div id="sidebar">
-<ul class="list">
-    <li>
-        <h4><a href="/">Home</a></h4>
-        <ul>
-            <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">Api</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/msg-object.html">Msg object</a></li>
-            <li><a href="/inferences.html">Inferences</a></li>
-            <li><a href="/logger.html">Logger</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4><a href="/examples">Examples</a></h4>
-        <ul>
-            <li><a href="/examples/talk.html">Talk</a></li>
-            <li><a href="/examples/emotesets.html">Emotesets</a></li>
-            <li><a href="/examples/followers.html">Followers</a></li>
-            <li><a href="/examples/subscribes.html">Subscribes</a></li>
-            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
-            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
-            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
-            <li><a href="/examples/hosted.html">Hosted</a></li>
-            <li><a href="/examples/user-info.html">User info</a></li>
-        </ul>
-    </li>
-</ul>
+                <ul class="list">
+                    <li>
+                        <h4><a href="/">Home</a></h4>
+                        <ul>
+                            <li><a href="/how-it-works.html">How it works</a></li>
+                            <li><a href="/api.html">Api</a></li>
+                            <li><a href="/chat.html">Chat</a></li>
+                            <li><a href="/msg-object.html">Msg object</a></li>
+                            <li><a href="/extensions.html">Extensions</a></li>
+                            <li><a href="/logger.html">Logger</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><a href="/examples">Examples</a></h4>
+                        <ul>
+                            <li><a href="/examples/talk.html">Talk</a></li>
+                            <li><a href="/examples/emotesets.html">Emotesets</a></li>
+                            <li><a href="/examples/followers.html">Followers</a></li>
+                            <li><a href="/examples/subscribes.html">Subscribes</a></li>
+                            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
+                            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
+                            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
+                            <li><a href="/examples/hosted.html">Hosted</a></li>
+                            <li><a href="/examples/user-info.html">User info</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
 <div id="content">
@@ -53,7 +53,7 @@
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUser</span> (<span class="hljs-params">login</span>) </span>{
     <span class="hljs-keyword">if</span> (!users[login]) {
-        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {
+        <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.helix(<span class="hljs-string">'/users'</span>, {
             <span class="hljs-attr">data</span>: { login }
         });
 
@@ -63,7 +63,7 @@
     <span class="hljs-keyword">return</span> users[login];
 }
 
-<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> getUser(<span class="hljs-string">'kequc'</span>);
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> getUser(<span class="hljs-string">'ronni'</span>);
 </code></pre>
 
 </div>

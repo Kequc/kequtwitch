@@ -5,7 +5,7 @@ The [CLEARCHAT](https://dev.twitch.tv/docs/irc/commands/#clearchat-twitch-comman
 Messages with fewer than 2 parameters are a real `CLEARCHAT` event where the chatroom was emptied. Messages with 3 parameters and a `banDuration` are only a temporary ban, and otherwise a permanent one.
 
 ```javascript
-twitch.chat.inference('CLEARCHAT', function (msg) {
+twitch.chat.extend('CLEARCHAT', function (msg) {
     let command;
 
     if (msg.params.length < 2) {
@@ -26,12 +26,14 @@ twitch.chat.on('clear', function (msg, channel) {
 twitch.chat.on('ban', function (msg, channel, user) {
     const { banReason } = msg.tags;
 
-    console.log(`${user} has been banned from ${channel}. Reason: ${banReason}`);
+    console.log(`${user} has been banned from ${channel}.`);
+    console.log(`Reason: "${banReason}" permanently.`);
 });
 
 twitch.chat.on('timeout', function (msg, channel, user) {
     const { banReason, banDuration } = msg.tags;
 
-    console.log(`${user} has been given a timeout from ${channel} for ${banDuration} seconds. Reason: ${banReason}`);
+    console.log(`${user} has been given a timeout from ${channel}.`);
+    console.log(`Reason: "${banReason}" for ${banDuration} seconds.`);
 });
 ```

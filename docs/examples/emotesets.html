@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-</head>
+    <head>
+        <title>Kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
     <body>
-<div id="header">
-    <div class="package">0.5.5</div>
-    <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-    <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
-</div>
+        <div id="header">
+            <div class="package">0.6.0</div>
+            <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+            <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
+        </div>
         <div id="container">
             <div id="sidebar">
-<ul class="list">
-    <li>
-        <h4><a href="/">Home</a></h4>
-        <ul>
-            <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">Api</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/msg-object.html">Msg object</a></li>
-            <li><a href="/inferences.html">Inferences</a></li>
-            <li><a href="/logger.html">Logger</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4><a href="/examples">Examples</a></h4>
-        <ul>
-            <li><a href="/examples/talk.html">Talk</a></li>
-            <li><a href="/examples/emotesets.html">Emotesets</a></li>
-            <li><a href="/examples/followers.html">Followers</a></li>
-            <li><a href="/examples/subscribes.html">Subscribes</a></li>
-            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
-            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
-            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
-            <li><a href="/examples/hosted.html">Hosted</a></li>
-            <li><a href="/examples/user-info.html">User info</a></li>
-        </ul>
-    </li>
-</ul>
+                <ul class="list">
+                    <li>
+                        <h4><a href="/">Home</a></h4>
+                        <ul>
+                            <li><a href="/how-it-works.html">How it works</a></li>
+                            <li><a href="/api.html">Api</a></li>
+                            <li><a href="/chat.html">Chat</a></li>
+                            <li><a href="/msg-object.html">Msg object</a></li>
+                            <li><a href="/extensions.html">Extensions</a></li>
+                            <li><a href="/logger.html">Logger</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><a href="/examples">Examples</a></h4>
+                        <ul>
+                            <li><a href="/examples/talk.html">Talk</a></li>
+                            <li><a href="/examples/emotesets.html">Emotesets</a></li>
+                            <li><a href="/examples/followers.html">Followers</a></li>
+                            <li><a href="/examples/subscribes.html">Subscribes</a></li>
+                            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
+                            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
+                            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
+                            <li><a href="/examples/hosted.html">Hosted</a></li>
+                            <li><a href="/examples/user-info.html">User info</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
 <div id="content">
@@ -51,6 +51,8 @@
 <p>Add a quick extension that watches for a change and fetches the new emotes from <a href="https://dev.twitch.tv/docs/v5/reference/chat/#get-chat-emoticons-by-set">get emoticons by set</a>.</p>
 <pre><code class="language-javascript">twitch.chat.on(<span class="hljs-string">'USERSTATE'</span>, checkEmotesets);
 twitch.chat.on(<span class="hljs-string">'GLOBALUSERSTATE'</span>, checkEmotesets);
+
+<span class="hljs-keyword">let</span> lastEmotesets;
 
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkEmotesets</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-comment">// look for new emotesets</span>
@@ -61,26 +63,25 @@ twitch.chat.on(<span class="hljs-string">'GLOBALUSERSTATE'</span>, checkEmoteset
     <span class="hljs-keyword">const</span> emotesets = msg.tags.emoteSets.join(<span class="hljs-string">','</span>);
 
     <span class="hljs-comment">// emotesets haven't changed</span>
-    <span class="hljs-keyword">if</span> (twitch.chat.emotesets === emotesets) {
+    <span class="hljs-keyword">if</span> (lastEmotesets === emotesets) {
         <span class="hljs-keyword">return</span>;
     }
-    twitch.chat.emotesets = emotesets;
+    lastEmotesets = emotesets;
 
     <span class="hljs-comment">// fetch</span>
-    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/chat/emoticon_images'</span>, {
-        <span class="hljs-attr">data</span>: { emotesets },
-        <span class="hljs-attr">kraken</span>: <span class="hljs-literal">true</span>
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> twitch.api.kraken(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+        <span class="hljs-attr">data</span>: { emotesets }
     });
 
     <span class="hljs-comment">// emit result</span>
     handleEmotesets(result.emoticonSets);
 }
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleEmotesets</span> (<span class="hljs-params">emotesets</span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleEmotesets</span> (<span class="hljs-params">emoticonSets</span>) </span>{
     <span class="hljs-comment">// updated emotes arrived!</span>
 }
 </code></pre>
-<p>Quick tip: Emote urls are <code>https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0</code> where <code>${id}</code> is your character code id.</p>
+<p>Tip: Emote urls are <code>https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0</code> where <code>${id}</code> is your character code id.</p>
 
 </div>
 

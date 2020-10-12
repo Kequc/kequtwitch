@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Kequtwitch</title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-</head>
+    <head>
+        <title>Kequtwitch</title>
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata|Open+Sans" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/hljs.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+    </head>
     <body>
-<div id="header">
-    <div class="package">0.5.5</div>
-    <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
-    <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
-    <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
-</div>
+        <div id="header">
+            <div class="package">0.6.0</div>
+            <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
+            <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
+            <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
+        </div>
         <div id="container">
             <div id="sidebar">
-<ul class="list">
-    <li>
-        <h4><a href="/">Home</a></h4>
-        <ul>
-            <li><a href="/how-it-works.html">How it works</a></li>
-            <li><a href="/api.html">Api</a></li>
-            <li><a href="/chat.html">Chat</a></li>
-            <li><a href="/msg-object.html">Msg object</a></li>
-            <li><a href="/inferences.html">Inferences</a></li>
-            <li><a href="/logger.html">Logger</a></li>
-        </ul>
-    </li>
-    <li>
-        <h4><a href="/examples">Examples</a></h4>
-        <ul>
-            <li><a href="/examples/talk.html">Talk</a></li>
-            <li><a href="/examples/emotesets.html">Emotesets</a></li>
-            <li><a href="/examples/followers.html">Followers</a></li>
-            <li><a href="/examples/subscribes.html">Subscribes</a></li>
-            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
-            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
-            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
-            <li><a href="/examples/hosted.html">Hosted</a></li>
-            <li><a href="/examples/user-info.html">User info</a></li>
-        </ul>
-    </li>
-</ul>
+                <ul class="list">
+                    <li>
+                        <h4><a href="/">Home</a></h4>
+                        <ul>
+                            <li><a href="/how-it-works.html">How it works</a></li>
+                            <li><a href="/api.html">Api</a></li>
+                            <li><a href="/chat.html">Chat</a></li>
+                            <li><a href="/msg-object.html">Msg object</a></li>
+                            <li><a href="/extensions.html">Extensions</a></li>
+                            <li><a href="/logger.html">Logger</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4><a href="/examples">Examples</a></h4>
+                        <ul>
+                            <li><a href="/examples/talk.html">Talk</a></li>
+                            <li><a href="/examples/emotesets.html">Emotesets</a></li>
+                            <li><a href="/examples/followers.html">Followers</a></li>
+                            <li><a href="/examples/subscribes.html">Subscribes</a></li>
+                            <li><a href="/examples/mod-and-unmod.html">Mod and unmod</a></li>
+                            <li><a href="/examples/ban-and-timeout.html">Ban and timeout</a></li>
+                            <li><a href="/examples/host-and-unhost.html">Host and unhost</a></li>
+                            <li><a href="/examples/hosted.html">Hosted</a></li>
+                            <li><a href="/examples/user-info.html">User info</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
 <div id="content">
 <h1>Subscribes</h1>
 <p>The <a href="https://dev.twitch.tv/docs/irc/commands/#usernotice-twitch-commands">USERNOTICE</a> Twitch command contains a <code>msg-id</code> tag which can be quite useful for reporting about new subscriptions.</p>
-<pre><code class="language-javascript">twitch.chat.inference(<span class="hljs-string">'USERNOTICE'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.chat.extend(<span class="hljs-string">'USERNOTICE'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">if</span> ([<span class="hljs-string">'sub'</span>, <span class="hljs-string">'resub'</span>].includes(msg.tags.msgId)) {
         <span class="hljs-keyword">return</span> { <span class="hljs-attr">command</span>: <span class="hljs-string">'sub'</span> };
     }
@@ -61,14 +61,16 @@ twitch.chat.on(<span class="hljs-string">'sub'</span>, <span class="hljs-functio
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName;
     <span class="hljs-keyword">const</span> months = msg.tags.msgParamMonths;
 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> has subbed for <span class="hljs-subst">${months}</span> months to <span class="hljs-subst">${channel}</span> and said: "<span class="hljs-subst">${message}</span>"!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> has subbed for <span class="hljs-subst">${months}</span> months!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Saying: "<span class="hljs-subst">${message}</span>" to <span class="hljs-subst">${channel}</span>`</span>);
 });
 
 twitch.chat.on(<span class="hljs-string">'subgift'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
     <span class="hljs-keyword">const</span> displayName = msg.tags.displayName || <span class="hljs-string">'Anonymous'</span>;
     <span class="hljs-keyword">const</span> recipientDisplayName = msg.tags.msgParamRecipientDisplayName;
 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> has gifted a sub for <span class="hljs-subst">${recipientDisplayName}</span> to <span class="hljs-subst">${channel}</span> and said: "<span class="hljs-subst">${message}</span>"!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> has gifted a sub for <span class="hljs-subst">${recipientDisplayName}</span>!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Saying: "<span class="hljs-subst">${message}</span>" to <span class="hljs-subst">${channel}</span>`</span>);
 });
 </code></pre>
 

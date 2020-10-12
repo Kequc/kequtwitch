@@ -9,7 +9,7 @@ const users = {};
 
 async function getUser (login) {
     if (!users[login]) {
-        const result = await twitch.api.request('/users', {
+        const result = await twitch.api.helix('/users', {
             data: { login }
         });
 
@@ -19,5 +19,5 @@ async function getUser (login) {
     return users[login];
 }
 
-const user = await getUser('kequc');
+const user = await getUser('ronni');
 ```

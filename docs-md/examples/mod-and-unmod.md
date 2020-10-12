@@ -3,7 +3,7 @@
 The [MODE](https://dev.twitch.tv/docs/irc/membership/#mode-twitch-membership) Twitch command delivers a slightly cryptic payload. We can expect `'+o'` as a middle parameter to mean `'mod'` and `'-o'` to mean `'unmod'`.
 
 ```javascript
-twitch.chat.inference('MODE', function (msg, channel, key, user) {
+twitch.chat.extend('MODE', function (msg, channel, key, user) {
     const commands = { '+o': 'mod', '-o': 'unmod' };
 
     return {

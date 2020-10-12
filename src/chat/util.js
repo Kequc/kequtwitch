@@ -19,18 +19,18 @@ function validateChannels (channels) {
     channels.forEach(validateChannel);
 }
 
-function validateInference (inference) {
-    if (typeof inference !== 'function') {
-        throw new Error('Inference should be a function');
+function validateExtension (extension) {
+    if (typeof extension !== 'function') {
+        throw new Error('Extension must be a function');
     }
 }
 
-function validateInferences (inferences) {
-    if (!(inferences instanceof Object)) {
-        throw new Error('Inferences must be an object');
+function validateExtensions (extensions) {
+    if (!(extensions instanceof Object)) {
+        throw new Error('Extensions must be an object');
     }
 
-    Object.values(inferences).forEach(validateInference);
+    Object.values(extensions).forEach(validateExtension);
 }
 
-module.exports = { isSafeToSend, validateChannel, validateChannels, validateInference, validateInferences };
+module.exports = { isSafeToSend, validateChannel, validateChannels, validateExtension, validateExtensions };

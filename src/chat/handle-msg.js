@@ -1,6 +1,6 @@
 function handleMsg (chat, msg) {
-    if (chat.inferences[msg.command]) {
-        Object.assign(msg.inferred, chat.inferences[msg.command](msg, ...msg.params));
+    if (chat.extensions[msg.command]) {
+        Object.assign(msg.extended, chat.extensions[msg.command](msg, ...msg.params));
     }
 
     deepFreeze(msg);
@@ -8,9 +8,9 @@ function handleMsg (chat, msg) {
     chat.emit('message', msg);
     chat.emit(msg.command, msg, ...msg.params);
 
-    if (typeof msg.inferred.command === 'string') {
+    if (typeof msg.extended.command === 'string') {
         const params = getParams(msg);
-        chat.emit(msg.inferred.command, msg, ...params);
+        chat.emit(msg.extended.command, msg, ...params);
     }
 
     serverStuff(chat, msg);
@@ -23,8 +23,8 @@ function deepFreeze (data) {
 }
 
 function getParams (msg) {
-    if (Array.isArray(msg.inferred.params)) {
-        return msg.inferred.params;
+    if (Array.isArray(msg.extended.params)) {
+        return msg.extended.params;
     }
     return msg.params;
 }

@@ -45,10 +45,9 @@ class Twitch {
         this.isValidating = true;
         this.logger.info('Validating...');
 
-        const result = await this.api.request(this.validatePath, {
+        const result = await this.api.kraken(this.validatePath, {
             url: this.validateUrl,
-            skipValidation: true,
-            kraken: true
+            skipValidation: true
         });
 
         this.clientId = result.clientId;

@@ -4,4 +4,4 @@ With basic use of the library under your belt, none of that is really useful wit
 
 The best way to figure out what you probably want to do is by studying the [Twitch documentation](https://dev.twitch.tv/docs/irc/commands/) to figure out what parameters and tags you expect to see.
 
-From there write an inference that outputs what you need.
+From there write an extension that outputs what you need.

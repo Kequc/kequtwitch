@@ -7,7 +7,7 @@ Actions are chat messages prefixed with `/me` which are delivered to chat in the
 Then we check if there are bits attached to the `msg`. Probably the implementation you really want is less complicated than this.
 
 ```javascript
-twitch.chat.inference('PRIVMSG', function (msg) {
+twitch.chat.extend('PRIVMSG', function (msg) {
     if (msg.prefix.user === 'jtv') return;
 
     // "/me is great!" #=> "ACTION is great!"

@@ -3,7 +3,7 @@
 The [HOSTTARGET](https://dev.twitch.tv/docs/irc/commands/#hosttarget-twitch-commands) Twitch command includes differently formatted parameters depending on whether you start hosting a channel or stop hosting one. So it can be helpful to split this up into separate events.
 
 ```javascript
-twitch.chat.inference('HOSTTARGET', function (msg) {
+twitch.chat.extend('HOSTTARGET', function (msg) {
     let command;
     let viewers;
 

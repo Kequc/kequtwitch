@@ -11,7 +11,7 @@ describe('parseMsg', function () {
             params: ['#dallas', 'cheer100'],
             channel: '#dallas',
             message: 'cheer100',
-            inferred: {}
+            extended: {}
         });
     });
 
@@ -25,7 +25,7 @@ describe('parseMsg', function () {
             params: ['params', 'hello'],
             channel: null,
             message: null,
-            inferred: {}
+            extended: {}
         });
     });
 
@@ -39,7 +39,7 @@ describe('parseMsg', function () {
             params: [],
             channel: null,
             message: null,
-            inferred: {}
+            extended: {}
         });
     });
 
@@ -54,7 +54,7 @@ describe('parseMsg', function () {
             params: [],
             channel: null,
             message: null,
-            inferred: {}
+            extended: {}
         });
     });
 
@@ -70,7 +70,7 @@ describe('parseMsg', function () {
             params: ['#dallas', 'cheer100'],
             channel: '#dallas',
             message: 'cheer100',
-            inferred: {}
+            extended: {}
         });
     });
 
@@ -86,7 +86,7 @@ describe('parseMsg', function () {
             params: ['#dallas', 'cheer100'],
             channel: '#dallas',
             message: 'cheer100',
-            inferred: {}
+            extended: {}
         });
     });
 });
