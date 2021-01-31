@@ -1,21 +1,20 @@
+const assert = require('assert');
 const parsePrefix = require('../../../src/chat/parse-msg/parse-prefix.js');
 
-describe('parsePrefix', function () {
-    test('should return nulls when param is empty', function () {
-        expect(parsePrefix(null)).toEqual({ full: null, host: null, user: null });
-        expect(parsePrefix('')).toEqual({ full: null, host: null, user: null });
-        expect(parsePrefix()).toEqual({ full: null, host: null, user: null });
-    });
+it('should return nulls when param is empty', function () {
+    assert.deepStrictEqual(parsePrefix(null), { full: null, host: null, user: null });
+    assert.deepStrictEqual(parsePrefix(''), { full: null, host: null, user: null });
+    assert.deepStrictEqual(parsePrefix(), { full: null, host: null, user: null });
+});
 
-    test('should trim the first character', function () {
-        expect(parsePrefix(':somevalue')).toEqual({ full: 'somevalue', host: 'somevalue', user: null });
-    });
+it('should trim the first character', function () {
+    assert.deepStrictEqual(parsePrefix(':somevalue'), { full: 'somevalue', host: 'somevalue', user: null });
+});
 
-    test('should find user', function () {
-        expect(parsePrefix(':ronni!ronni@ronni.tmi.twitch.tv')).toEqual({ full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' });
-    });
+it('should find user', function () {
+    assert.deepStrictEqual(parsePrefix(':ronni!ronni@ronni.tmi.twitch.tv'), { full: 'ronni!ronni@ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' });
+});
 
-    test('should find user when shorthand', function () {
-        expect(parsePrefix(':ronni.tmi.twitch.tv')).toEqual({ full: 'ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' });
-    });
+it('should find user when shorthand', function () {
+    assert.deepStrictEqual(parsePrefix(':ronni.tmi.twitch.tv'), { full: 'ronni.tmi.twitch.tv', host: 'ronni.tmi.twitch.tv', user: 'ronni' });
 });

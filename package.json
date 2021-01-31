@@ -4,7 +4,7 @@
     "description": "This is a node library for interfacing with twitch",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "kequtest",
         "docs": "github-pages-render",
         "docs:server": "github-pages-render server"
     },

@@ -1,3 +1,4 @@
+const assert = require('assert');
 const parseMsg = require('../../src/chat/parse-msg.js');
 
 const EXAMPLES = {
@@ -450,8 +451,8 @@ const EXAMPLES = {
 };
 
 for (const raw of Object.keys(EXAMPLES)) {
-    test(raw, function () {
+    it(raw.substr(0, 80), function () {
         const expected = Object.assign({ raw, extended: {} }, EXAMPLES[raw]);
-        expect(parseMsg(raw)).toEqual(expected);
+        assert.deepStrictEqual(parseMsg(raw), expected);
     });
 }

@@ -1,42 +1,41 @@
+const assert = require('assert');
 const grabParameter = require('../../../src/chat/parse-msg/grab-parameter.js');
 
-describe('grabParameter', function () {
-    let raw;
+let raw;
 
-    beforeEach(function () {
-        raw = ':ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #dallas :cheer100';
-    });
+beforeEach(function () {
+    raw = ':ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #dallas :cheer100';
+});
 
-    test('should return null if index is -1', function () {
-        expect(grabParameter(raw, -1)).toBe(null);
-    });
+it('should return null if index is -1', function () {
+    assert.strictEqual(grabParameter(raw, -1), null);
+});
 
-    test('should return a parameter from the start of a string', function () {
-        const start = 0;
-        const expected = raw.substring(start, raw.indexOf(' '));
-        expect(expected.length).toBeGreaterThan(0);
-        expect(grabParameter(raw, start)).toBe(expected);
-    });
+it('should return a parameter from the start of a string', function () {
+    const start = 0;
+    const expected = raw.substring(start, raw.indexOf(' '));
+    assert.ok(expected.length > 0);
+    assert.strictEqual(grabParameter(raw, start), expected);
+});
 
-    test('should return a parameter from the middle of a string', function () {
-        const start = raw.indexOf('PRIVMSG');
-        expect(start).toBeGreaterThan(-1);
-        expect(grabParameter(raw, start)).toBe('PRIVMSG');
-    });
+it('should return a parameter from the middle of a string', function () {
+    const start = raw.indexOf('PRIVMSG');
+    assert.ok(start > -1);
+    assert.strictEqual(grabParameter(raw, start), 'PRIVMSG');
+});
 
-    test('should return a parameter from the end of a string', function () {
-        const start = raw.indexOf(':cheer100');
-        expect(start).toBeGreaterThan(-1);
-        expect(grabParameter(raw, start)).toBe(':cheer100');
-    });
+it('should return a parameter from the end of a string', function () {
+    const start = raw.indexOf(':cheer100');
+    assert.ok(start > -1);
+    assert.strictEqual(grabParameter(raw, start), ':cheer100');
+});
 
-    test('should recover from extra white space', function () {
-        raw = ` ${raw} `.replace(/\s/g, '    ');
-        const start1 = 4;
-        const expected1 = raw.substring(start1, raw.indexOf(' ', 4));
-        expect(grabParameter(raw, start1)).toBe(expected1);
-        const start2 = raw.indexOf(':cheer100');
-        expect(start2).toBeGreaterThan(-1);
-        expect(grabParameter(raw, start2)).toBe(':cheer100');
-    });
+it('should recover from extra white space', function () {
+    raw = ` ${raw} `.replace(/\s/g, '    ');
+    const start1 = 4;
+    const expected1 = raw.substring(start1, raw.indexOf(' ', 4));
+    assert.strictEqual(grabParameter(raw, start1), expected1);
+    const start2 = raw.indexOf(':cheer100');
+    assert.ok(start2 > -1);
+    assert.strictEqual(grabParameter(raw, start2), ':cheer100');
 });

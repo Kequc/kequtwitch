@@ -1,8 +1,7 @@
 {
     "env": {
         "node": true,
-        "es6": true,
-        "jest": true
+        "es6": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -10,24 +9,23 @@
         "ecmaVersion": 8
     },
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-console": "off",
-        "no-useless-escape": "off",
-        "no-constant-condition": "off"
-    }
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "space-before-function-paren": ["error", "always"]
+    },
+    "overrides": [
+        {
+            "files": ["*.test.js"],
+            "globals": {
+                "describe": "readonly",
+                "it": "readonly",
+                "before": "readonly",
+                "beforeEach": "readonly",
+                "afterEach": "readonly",
+                "after": "readonly",
+            }
+        }
+    ]
 }
