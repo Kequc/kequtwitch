@@ -60,12 +60,9 @@ class Chat extends EventEmitter {
     }
 
     extend (command, callback) {
-        if (this.extensions[command]) {
-            throw new Error(`Extension already exists: ${command}`);
-        }
-
         validateExtension(callback);
-        this.extensions[command] = callback;
+        this.extensions[command] = this.extensions[command] || [];
+        this.extensions[command].push(callback);
     }
 
     say (channel, message) {

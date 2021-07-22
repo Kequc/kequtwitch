@@ -2,9 +2,22 @@
 
 All `msg` objects have a `extended` object.
 
-It is up to you to populate it with any additional information you need out of messages by defining extensions. You can have one extension for every Twitch command, they are defined in the instantiation options or dynamically using the `extend` method. All extension methods are syncronous, can only be defined once, and should return an object.
+It is up to you to populate it with any additional information you need out of messages by defining extensions. You can add extensions for every (uppercase) Twitch command, they are defined in the instantiation options or dynamically using the `extend` method. All extension methods are syncronous, and should return an object, otherwise they don't do anything.
 
 The object you return becomes `extended` on the `msg` object. By default if you don't specify an extension or don't return an object then `extended` is empty.
+
+## Init
+
+During initialization extensions can be added directly to the constructor.
+
+```javascript
+const extensions = {
+    JOIN: [myExtension1, myExtension2], // where each is a function
+    PRIVMSG: [myExtension3]
+};
+
+const twitch = new Twitch('your-oauth-token', { extensions });
+```
 
 ## Special parameters
 
@@ -21,36 +34,28 @@ twitch.chat.extend('JOIN', function (msg) {
     };
 });
 
-// Message events are received without parameters
-twitch.chat.on('message', function (msg) {
-    // msg.extended ~= {
-    //     command: 'socks-and-jelly',
-    //     params: ['hello', 'ronni'],
-    //     userBackwards: 'innor'
-    // }
-    // msg.params ~= ['#channel']
+// Message event is generic and without params
+twitch.chat.on('message', function (msg, ...params) {
+    // msg.extended = {}
+    // msg.params = ['#channel']
+    // params = []
 });
 
-// Command events have default parameters
-twitch.chat.on('JOIN', function (msg, param1) {
-    // msg.extended ~= {
-    //     command: 'socks-and-jelly',
-    //     params: ['hello', 'ronni'],
-    //     userBackwards: 'innor'
-    // }
-    // msg.params ~= ['#channel']
-    // param1 ~= '#channel'
+// Command events have default msg params
+twitch.chat.on('JOIN', function (msg, ...params) {
+    // msg.extended = {}
+    // msg.params = ['#channel']
+    // params = ['#channel']
 });
 
-// Custom events have custom parameters
-twitch.chat.on('socks-and-jelly', function (msg, param1, param2) {
-    // msg.extended ~= {
+// Custom events have custom params (if specified otherwise default params)
+twitch.chat.on('socks-and-jelly', function (msg, ...params) {
+    // msg.extended = {
     //     command: 'socks-and-jelly',
     //     params: ['hello', 'ronni'],
     //     userBackwards: 'innor'
     // }
-    // msg.params ~= ['#channel']
-    // param1 ~= 'hello'
-    // param2 ~= 'ronni'
+    // msg.params = ['#channel']
+    // params = ['hello', 'ronni]
 });
 ```

@@ -30,7 +30,13 @@ function validateExtensions (extensions) {
         throw new Error('Extensions must be an object');
     }
 
-    Object.values(extensions).forEach(validateExtension);
+    for (const key of Object.keys(extensions)) {
+        if (!Array.isArray(extensions[key])) {
+            throw new Error(`Extension key "${key}" must resolve an array`);
+        }
+
+        extensions[key].forEach(validateExtension);
+    }
 }
 
 module.exports = { isSafeToSend, validateChannel, validateChannels, validateExtension, validateExtensions };

@@ -1,16 +1,17 @@
 function handleMsg (chat, msg) {
-    if (chat.extensions[msg.command]) {
-        Object.assign(msg.extended, chat.extensions[msg.command](msg, ...msg.params));
-    }
-
     deepFreeze(msg);
-
     chat.emit('message', msg);
     chat.emit(msg.command, msg, ...msg.params);
 
-    if (typeof msg.extended.command === 'string') {
-        const params = getParams(msg);
-        chat.emit(msg.extended.command, msg, ...params);
+    if (chat.extensions[msg.command]) {
+        for (const extension of chat.extensions[msg.command]) {
+            const extended = extension(msg, ...msg.params);
+            if (typeof extended.command === 'string') {
+                const clone = Object.assign({}, msg, { extended });
+                deepFreeze(clone);
+                chat.emit(extended.command, clone, ...getParams(msg));
+            }
+        }
     }
 
     serverStuff(chat, msg);
