@@ -18,6 +18,20 @@ const twitch = new Twitch('your-oauth-token', { api });
 | `helixUrl` | Url for the Helix api (Default: `'https://api.twitch.tv/helix'`) |
 | `krakenUrl` | Url for the Kraken api (Default: `'https://api.twitch.tv/kraken'`) |
 
+## Helix and kraken
+
+The `helix` and `kraken` methods are explicit convenience methods which alias the `request` method.
+
+```javascript
+const response = await twitch.api.helix('/users/follows', {
+    data: { toId }
+});
+
+const response = await twitch.api.kraken('/chat/emoticon_images', {
+    data: { emotesets }
+});
+```
+
 ## Request
 
 The `request` method takes `path` as a first parameter, an options object, and returns a promise.
@@ -44,20 +58,6 @@ const response = await twitch.api.request('/chat/emoticon_images', {
 | `data` | Object containing post data or search parameters (Default: `{}`) |
 | `headers` | Object containing additional headers (Default: `{}`) |
 | `maxRetries` | Number of times to retry failed attempts (Default: `2`) |
-
-## Helix and kraken
-
-The `helix` and `kraken` methods are more explicit convenience methods which alias the `request` method.
-
-```javascript
-const response = await twitch.api.helix('/users/follows', {
-    data: { toId }
-});
-
-const response = await twitch.api.kraken('/chat/emoticon_images', {
-    data: { emotesets }
-});
-```
 
 ## Special values
 

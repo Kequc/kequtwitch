@@ -12,7 +12,7 @@ During initialization extensions can be added directly to the constructor.
 
 ```javascript
 const extensions = {
-    JOIN: [myExtension1, myExtension2], // where each is a function
+    JOIN: [myExtension1, myExtension2], // where each extension is a function
     PRIVMSG: [myExtension3]
 };
 
@@ -21,9 +21,7 @@ const twitch = new Twitch('your-oauth-token', { extensions });
 
 ## Special parameters
 
-A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want.
-
-A special parameter called `params` overrides params that will be emitted along with the message.
+A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want. A special parameter called `params` overrides params that will be emitted along with the message.
 
 ```javascript
 twitch.chat.extend('JOIN', function (msg) {
