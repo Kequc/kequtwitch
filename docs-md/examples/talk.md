@@ -7,36 +7,43 @@ Actions are chat messages prefixed with `/me` which are delivered to chat in the
 Then we check if there are bits attached to the `msg`. Probably the implementation you really want is less complicated than this.
 
 ```javascript
-twitch.chat.extend('PRIVMSG', function (msg) {
+twitch.chat.extend('PRIVMSG', function (msg, channel, message) {
     if (msg.prefix.user === 'jtv') return;
 
     // "/me is great!" #=> "ACTION is great!"
-    const parts = msg.message.match(/^\u0001ACTION (.+)\u0001$/);
+    const parts = message.match(/^\u0001ACTION (.+)\u0001$/);
 
     if (parts !== null) {
         // We have extracted message content and are sending it in place
         // of default params
         return {
             command: 'action',
-            params: [msg.channel, parts[1]] // "is great!"
+            params: [channel, parts[1]] // "is great!"
         };
     }
 
-    return {
-        command: (msg.tags.bits || 0) > 0 ? 'cheer' : 'talk'
-    };
+    return { command: 'talk' };
 });
 
-twitch.chat.on('action', function (msg, channel, message) {
+twitch.chat.extend('PRIVMSG', function (msg) {
+    if (msg.prefix.user === 'jtv') return;
+
+    if ((msg.tags.bits || 0) > 0) {
+        return { command: 'cheer' };
+    }
+}
+
+twitch.chat.on('action', function (msg, channel, action) {
     const { displayName } = msg.tags;
 
-    console.log(`${displayName} in ${channel} actioned "${message}"!`);
+    console.log(`*${displayName} ${action}* in ${channel}!`);
 });
 
 twitch.chat.on('cheer', function (msg, channel, message) {
     const { displayName, bits } = msg.tags;
 
-    console.log(`${displayName} in ${channel} cheered ${bits} and said "${message}"!`);
+    console.log(`${displayName} in ${channel} cheered ${bits}!`);
+    console.log(message);
 });
 
 twitch.chat.on('talk', function (msg, channel, message) {

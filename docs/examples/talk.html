@@ -50,36 +50,43 @@
 <p>The most common thing you might be interested in is what people are saying in the chatroom. The following is an overly complex example that delivers three separate events. First we ignore any messages from <code>'jtv'</code>, which is a legacy (or out of date) way Twitch delivers some status messages. In the <a href="https://dev.twitch.tv/docs/irc/chat-rooms/#privmsg-twitch-chat-rooms">PRIVMSG</a> command it's generally information related to whether someone is hosting your channel.</p>
 <p>Actions are chat messages prefixed with <code>/me</code> which are delivered to chat in the format <code>ACTION</code>, wrapped with some special characters, so while not necessary to deliver a different event it's nice to be able to do so with the message stripped off to what the user really typed.</p>
 <p>Then we check if there are bits attached to the <code>msg</code>. Probably the implementation you really want is less complicated than this.</p>
-<pre><code class="language-javascript">twitch.chat.extend(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+<pre><code class="language-javascript">twitch.chat.extend(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
     <span class="hljs-keyword">if</span> (msg.prefix.user === <span class="hljs-string">'jtv'</span>) <span class="hljs-keyword">return</span>;
 
     <span class="hljs-comment">// "/me is great!" #=&gt; "ACTION is great!"</span>
-    <span class="hljs-keyword">const</span> parts = msg.message.match(<span class="hljs-regexp">/^\u0001ACTION (.+)\u0001$/</span>);
+    <span class="hljs-keyword">const</span> parts = message.match(<span class="hljs-regexp">/^\u0001ACTION (.+)\u0001$/</span>);
 
     <span class="hljs-keyword">if</span> (parts !== <span class="hljs-literal">null</span>) {
         <span class="hljs-comment">// We have extracted message content and are sending it in place</span>
         <span class="hljs-comment">// of default params</span>
         <span class="hljs-keyword">return</span> {
             <span class="hljs-attr">command</span>: <span class="hljs-string">'action'</span>,
-            <span class="hljs-attr">params</span>: [msg.channel, parts[<span class="hljs-number">1</span>]] <span class="hljs-comment">// "is great!"</span>
+            <span class="hljs-attr">params</span>: [channel, parts[<span class="hljs-number">1</span>]] <span class="hljs-comment">// "is great!"</span>
         };
     }
 
-    <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">command</span>: (msg.tags.bits || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'cheer'</span> : <span class="hljs-string">'talk'</span>
-    };
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">command</span>: <span class="hljs-string">'talk'</span> };
 });
 
-twitch.chat.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
+twitch.chat.extend(<span class="hljs-string">'PRIVMSG'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
+    <span class="hljs-keyword">if</span> (msg.prefix.user === <span class="hljs-string">'jtv'</span>) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">if</span> ((msg.tags.bits || <span class="hljs-number">0</span>) &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">command</span>: <span class="hljs-string">'cheer'</span> };
+    }
+}
+
+twitch.chat.on(<span class="hljs-string">'action'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, action</span>) </span>{
     <span class="hljs-keyword">const</span> { displayName } = msg.tags;
 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> actioned "<span class="hljs-subst">${message}</span>"!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`*<span class="hljs-subst">${displayName}</span> <span class="hljs-subst">${action}</span>* in <span class="hljs-subst">${channel}</span>!`</span>);
 });
 
 twitch.chat.on(<span class="hljs-string">'cheer'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{
     <span class="hljs-keyword">const</span> { displayName, bits } = msg.tags;
 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> cheered <span class="hljs-subst">${bits}</span> and said "<span class="hljs-subst">${message}</span>"!`</span>);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${displayName}</span> in <span class="hljs-subst">${channel}</span> cheered <span class="hljs-subst">${bits}</span>!`</span>);
+    <span class="hljs-built_in">console</span>.log(message);
 });
 
 twitch.chat.on(<span class="hljs-string">'talk'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, channel, message</span>) </span>{

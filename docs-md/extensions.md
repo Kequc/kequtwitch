@@ -41,7 +41,7 @@ twitch.chat.on('socks-and-jelly', function (msg, ...params) {
     //     userBackwards: 'innor'
     // }
     // msg.params = ['#channel']
-    // params = ['hello', 'ronni]
+    // params = ['hello', 'ronni']
 });
 ```
 
