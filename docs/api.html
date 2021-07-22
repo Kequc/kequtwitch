@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="header">
-            <div class="package">0.6.1</div>
+            <div class="package">0.7.0</div>
             <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
             <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
             <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -74,6 +74,16 @@
 </tr>
 </tbody>
 </table>
+<h2>Helix and kraken</h2>
+<p>The <code>helix</code> and <code>kraken</code> methods are explicit convenience methods which alias the <code>request</code> method.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.helix(<span class="hljs-string">'/users/follows'</span>, {
+    <span class="hljs-attr">data</span>: { toId }
+});
+
+<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.kraken(<span class="hljs-string">'/chat/emoticon_images'</span>, {
+    <span class="hljs-attr">data</span>: { emotesets }
+});
+</code></pre>
 <h2>Request</h2>
 <p>The <code>request</code> method takes <code>path</code> as a first parameter, an options object, and returns a promise.</p>
 <p>Keys are returned in <code>camelCase</code>, for example if you are trying to access a value named <code>from_id</code> it can be found at <code>response.fromId</code>. Similarly attributes are defined in <code>camelCase</code>, if you are trying to set a data attribute named <code>{ to_id }</code> you might use <code>{ toId }</code>.</p>
@@ -124,16 +134,6 @@
 </tr>
 </tbody>
 </table>
-<h2>Helix and kraken</h2>
-<p>The <code>helix</code> and <code>kraken</code> methods are more explicit convenience methods which alias the <code>request</code> method.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.helix(<span class="hljs-string">'/users/follows'</span>, {
-    <span class="hljs-attr">data</span>: { toId }
-});
-
-<span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.kraken(<span class="hljs-string">'/chat/emoticon_images'</span>, {
-    <span class="hljs-attr">data</span>: { emotesets }
-});
-</code></pre>
 <h2>Special values</h2>
 <p>There are special values which can be used to make use of information returned on the <code>kequtwitch</code> instance during validation. Setting any data value to one of these strings will use your corresponding information.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> twitch.api.request(<span class="hljs-string">'/users'</span>, {

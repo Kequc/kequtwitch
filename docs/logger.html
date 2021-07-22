@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="header">
-            <div class="package">0.6.1</div>
+            <div class="package">0.7.0</div>
             <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
             <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
             <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -47,7 +47,7 @@
 
 <div id="content">
 <h1>Logger</h1>
-<p>You can specify a custom logger with the methods <code>debug</code>, <code>info</code>, and <code>error</code>. To disable the logger use false <code>{ logger: false }</code> In general <code>debug</code> will output chat/api communication, <code>info</code> contains status information, <code>error</code> only when something unexpected happens.</p>
+<p>You can specify a custom logger with the methods <code>debug</code>, <code>info</code>, and <code>error</code>. In general <code>debug</code> will output chat/api communication, <code>info</code> contains status information, <code>error</code> only when something unexpected happens.</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">const</span> logger = {
     debug (...params) {
         <span class="hljs-built_in">console</span>.debug(...params);
@@ -62,6 +62,10 @@
 };
 
 <span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { logger });
+</code></pre>
+<h2>Disable</h2>
+<p>To disable the logger use false <code>{ logger: false }</code>.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { <span class="hljs-attr">logger</span>: <span class="hljs-literal">false</span> });
 </code></pre>
 
 </div>

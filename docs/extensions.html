@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="header">
-            <div class="package">0.6.1</div>
+            <div class="package">0.7.0</div>
             <a href="https://www.npmjs.com/package/kequtwitch" class="badge" title="Npmjs.com"><img src="/assets/images/npmjs.png" alt="Npmjs" /></a>
             <a href="https://github.com/Kequc/kequtwitch" class="badge" title="Github.com"><img src="/assets/images/github.png" alt="Github" /></a>
             <a href="/" class="home"><strong>Kequtwitch</strong> <span class="headline">is a twitch library</span></a>
@@ -48,11 +48,19 @@
 <div id="content">
 <h1>Extensions</h1>
 <p>All <code>msg</code> objects have a <code>extended</code> object.</p>
-<p>It is up to you to populate it with any additional information you need out of messages by defining extensions. You can have one extension for every Twitch command, they are defined in the instantiation options or dynamically using the <code>extend</code> method. All extension methods are syncronous, can only be defined once, and should return an object.</p>
+<p>It is up to you to populate it with any additional information you need out of messages by defining extensions. You can add extensions for every (uppercase) Twitch command, they are defined in the instantiation options or dynamically using the <code>extend</code> method. All extension methods are syncronous, and should return an object, otherwise they don't do anything.</p>
 <p>The object you return becomes <code>extended</code> on the <code>msg</code> object. By default if you don't specify an extension or don't return an object then <code>extended</code> is empty.</p>
+<h2>Init</h2>
+<p>During initialization extensions can be added directly to the constructor.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> extensions = {
+    <span class="hljs-attr">JOIN</span>: [myExtension1, myExtension2], <span class="hljs-comment">// where each extension is a function</span>
+    <span class="hljs-attr">PRIVMSG</span>: [myExtension3]
+};
+
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { extensions });
+</code></pre>
 <h2>Special parameters</h2>
-<p>A special parameter called <code>command</code>, if you wish to use it, will emit the message again using the name that you want.</p>
-<p>A special parameter called <code>params</code> overrides params that will be emitted along with the message.</p>
+<p>A special parameter called <code>command</code>, if you wish to use it, will emit the message again using the name that you want. A special parameter called <code>params</code> overrides params that will be emitted along with the message.</p>
 <pre><code class="language-javascript">twitch.chat.extend(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
     <span class="hljs-keyword">return</span> {
         <span class="hljs-attr">command</span>: <span class="hljs-string">'socks-and-jelly'</span>,
@@ -61,37 +69,29 @@
     };
 });
 
-<span class="hljs-comment">// Message events are received without parameters</span>
-twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
-    <span class="hljs-comment">// msg.extended ~= {</span>
-    <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
-    <span class="hljs-comment">//     params: ['hello', 'ronni'],</span>
-    <span class="hljs-comment">//     userBackwards: 'innor'</span>
-    <span class="hljs-comment">// }</span>
-    <span class="hljs-comment">// msg.params ~= ['#channel']</span>
+<span class="hljs-comment">// Message event is generic and without params</span>
+twitch.chat.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, ...params</span>) </span>{
+    <span class="hljs-comment">// msg.extended = {}</span>
+    <span class="hljs-comment">// msg.params = ['#channel']</span>
+    <span class="hljs-comment">// params = []</span>
 });
 
-<span class="hljs-comment">// Command events have default parameters</span>
-twitch.chat.on(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, param1</span>) </span>{
-    <span class="hljs-comment">// msg.extended ~= {</span>
-    <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
-    <span class="hljs-comment">//     params: ['hello', 'ronni'],</span>
-    <span class="hljs-comment">//     userBackwards: 'innor'</span>
-    <span class="hljs-comment">// }</span>
-    <span class="hljs-comment">// msg.params ~= ['#channel']</span>
-    <span class="hljs-comment">// param1 ~= '#channel'</span>
+<span class="hljs-comment">// Command events have default msg params</span>
+twitch.chat.on(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, ...params</span>) </span>{
+    <span class="hljs-comment">// msg.extended = {}</span>
+    <span class="hljs-comment">// msg.params = ['#channel']</span>
+    <span class="hljs-comment">// params = ['#channel']</span>
 });
 
-<span class="hljs-comment">// Custom events have custom parameters</span>
-twitch.chat.on(<span class="hljs-string">'socks-and-jelly'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, param1, param2</span>) </span>{
-    <span class="hljs-comment">// msg.extended ~= {</span>
+<span class="hljs-comment">// Custom events have custom params (if specified otherwise default params)</span>
+twitch.chat.on(<span class="hljs-string">'socks-and-jelly'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, ...params</span>) </span>{
+    <span class="hljs-comment">// msg.extended = {</span>
     <span class="hljs-comment">//     command: 'socks-and-jelly',</span>
     <span class="hljs-comment">//     params: ['hello', 'ronni'],</span>
     <span class="hljs-comment">//     userBackwards: 'innor'</span>
     <span class="hljs-comment">// }</span>
-    <span class="hljs-comment">// msg.params ~= ['#channel']</span>
-    <span class="hljs-comment">// param1 ~= 'hello'</span>
-    <span class="hljs-comment">// param2 ~= 'ronni'</span>
+    <span class="hljs-comment">// msg.params = ['#channel']</span>
+    <span class="hljs-comment">// params = ['hello', 'ronni]</span>
 });
 </code></pre>
 
