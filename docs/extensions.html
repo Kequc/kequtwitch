@@ -50,15 +50,6 @@
 <p>All <code>msg</code> objects have a <code>extended</code> object.</p>
 <p>It is up to you to populate it with any additional information you need out of messages by defining extensions. You can add extensions for every (uppercase) Twitch command, they are defined in the instantiation options or dynamically using the <code>extend</code> method. All extension methods are syncronous, and should return an object, otherwise they don't do anything.</p>
 <p>The object you return becomes <code>extended</code> on the <code>msg</code> object. By default if you don't specify an extension or don't return an object then <code>extended</code> is empty.</p>
-<h2>Init</h2>
-<p>During initialization extensions can be added directly to the constructor.</p>
-<pre><code class="language-javascript"><span class="hljs-keyword">const</span> extensions = {
-    <span class="hljs-attr">JOIN</span>: [myExtension1, myExtension2], <span class="hljs-comment">// where each extension is a function</span>
-    <span class="hljs-attr">PRIVMSG</span>: [myExtension3]
-};
-
-<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { extensions });
-</code></pre>
 <h2>Special parameters</h2>
 <p>A special parameter called <code>command</code>, if you wish to use it, will emit the message again using the name that you want. A special parameter called <code>params</code> overrides params that will be emitted along with the message.</p>
 <pre><code class="language-javascript">twitch.chat.extend(<span class="hljs-string">'JOIN'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>{
@@ -93,6 +84,17 @@ twitch.chat.on(<span class="hljs-string">'socks-and-jelly'</span>, <span class="
     <span class="hljs-comment">// msg.params = ['#channel']</span>
     <span class="hljs-comment">// params = ['hello', 'ronni]</span>
 });
+</code></pre>
+<h2>Instantiation</h2>
+<p>During initialization extensions can be added directly to the constructor.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> chat = {
+    <span class="hljs-attr">extensions</span>: {
+        <span class="hljs-attr">JOIN</span>: [myExtension1, myExtension2], <span class="hljs-comment">// where each extension is a function</span>
+        <span class="hljs-attr">PRIVMSG</span>: [myExtension3]
+    }
+};
+
+<span class="hljs-keyword">const</span> twitch = <span class="hljs-keyword">new</span> Twitch(<span class="hljs-string">'your-oauth-token'</span>, { chat });
 </code></pre>
 
 </div>

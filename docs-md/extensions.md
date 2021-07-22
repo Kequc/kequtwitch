@@ -6,19 +6,6 @@ It is up to you to populate it with any additional information you need out of m
 
 The object you return becomes `extended` on the `msg` object. By default if you don't specify an extension or don't return an object then `extended` is empty.
 
-## Init
-
-During initialization extensions can be added directly to the constructor.
-
-```javascript
-const extensions = {
-    JOIN: [myExtension1, myExtension2], // where each extension is a function
-    PRIVMSG: [myExtension3]
-};
-
-const twitch = new Twitch('your-oauth-token', { extensions });
-```
-
 ## Special parameters
 
 A special parameter called `command`, if you wish to use it, will emit the message again using the name that you want. A special parameter called `params` overrides params that will be emitted along with the message.
@@ -56,4 +43,19 @@ twitch.chat.on('socks-and-jelly', function (msg, ...params) {
     // msg.params = ['#channel']
     // params = ['hello', 'ronni]
 });
+```
+
+## Instantiation
+
+During initialization extensions can be added directly to the constructor.
+
+```javascript
+const chat = {
+    extensions: {
+        JOIN: [myExtension1, myExtension2], // where each extension is a function
+        PRIVMSG: [myExtension3]
+    }
+};
+
+const twitch = new Twitch('your-oauth-token', { chat });
 ```
